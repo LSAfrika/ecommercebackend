@@ -1,4 +1,4 @@
 node_modules
 .env
-./public/products
-./public/users
+public/products
+public/user

@@ -29,9 +29,11 @@ app.get('/',async(req,res)=>{
 const entry=async()=>{
 
   try {
-console.log('app entry point');
+// console.log('app entry point');
     await mongoose.connect(LocalDBconnection, { useNewUrlParser: true,useunifiedtopology: true})
-    console.log(`SERVER RUNNING ONN PORT ${PORT}`);
+
+    app.listen(PORT,()=> console.log(`SERVER RUNNING ONN PORT ${PORT}`))
+  
 
   } catch (error) {
     console.log(error.message);
