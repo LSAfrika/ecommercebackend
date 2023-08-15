@@ -1,0 +1,378 @@
+
+const {usermodel} = require('../models/user.model')
+const bcrypt = require('bcrypt')
+const JWT = require('jsonwebtoken')
+require('dotenv').config()
+
+exports.register=async(req,res)=>{
+
+    try {
+        const {email,username,password,reenterpassword}=req.body
+
+
+
+        const finduser = await usermodel.findOne({email:email.toLowerCase()})
+
+        if(finduser)
+        {
+          return  res.status(409).send({message: 'email already exists'})
+        }
+        if(password!==reenterpassword){
+            return res.status(500).send('password missmatch')
+        }
+
+       const hash=await bcrypt.hash(password,10)
+
+        console.log('hash password: ',hash);
+       const newuser = new usermodel({
+
+        email:email.toLowerCase(),
+        username,
+        password:hash,
+        fovoritestores:[]
+       
+
+    })
+
+
+    const newuserresult = await newuser.save()
+
+  const userresponse={
+        _id:newuserresult._id,
+       email: newuserresult.email,
+       profileimg:newuserresult.profileimg,
+       username:newuserresult.username,
+     
+    }
+
+    const token=await JWT.sign(userresponse,process.env.HASHKEY,{
+      expiresIn: '1w' ,issuer:'http://localhost:3000'
+   })
+
+   const refreshtoken=JWT.sign({  _id:userresponse._id},process.env.REFRESHTOKEN,{
+     expiresIn:'1m'
+   })
+
+      return res.send({message:`welcome ${userresponse.username}`,token,refreshtoken})
+
+
+    //res.status(200).send({message:'user created successfully',...userresponse})
+
+
+
+       // next()
+    } catch (error) {
+
+      console.log('registering new user error:\n',error)
+        return res.status(500).send({errormessage:error.message,servermessage:'an error occured'})
+
+
+    }
+
+}
+
+exports.login=async (req,res)=>{
+
+    try {
+        const {email,password}=req.body
+         console.log(email,password);
+        const finduser = await usermodel.findOne({email:email.toLowerCase()})
+        if(!finduser){
+          return  res.status(404).send({message: 'please check email and password'})
+        }
+         const passwordcompare= await bcrypt.compare(password, finduser.password)
+
+         if(passwordcompare!==true){
+
+            return res.status(500).send({message:'please check email and password'})
+         }
+
+         const payload ={
+             _id:finduser._id,
+             email:finduser.email,
+             username:finduser.username,
+             profileimg:finduser.profileimg,
+                   
+            
+         }
+
+
+          const token=await JWT.sign(payload,process.env.HASHKEY,{
+            expiresIn: '1w' ,issuer:'http://localhost:3000'
+         })
+      
+         const refreshtoken=JWT.sign({  _id:payload._id},process.env.REFRESHTOKEN,{
+           expiresIn:'30d',issuer:'http://localhost:3000'
+         })
+      
+         console.log(`${payload.username} has successfully loged in`)
+
+            return res.send({message:`welcome back ${payload.username}`,token,refreshtoken})
+
+
+    } catch (error) {
+        res.send(error.message)
+
+    }
+
+
+}
+
+
+
+
+exports.updateuser=async(req,res)=>{
+
+  try {
+   const {userid,username,status}=req.body
+
+   console.log('user id',userid);
+   console.log('username',username)
+   console.log('status',status)
+  //  console.log('files',req.files.profilepic.mimetype)
+
+   const updateuser= await usermodel.findById(userid)
+   console.log('user to update',updateuser);
+
+   //  return
+   if(updateuser==null) return res.status(404).send({message:'no user found'})
+
+   if(req.files){
+
+
+      if(status !=undefined && status!='')updateuser.status=status
+      if(username !=undefined && username!='')updateuser.username=username
+
+      let picfile=req.files.profilepic
+// console.log('update image',picfile);
+      extension=req.files.profilepic.mimetype.split('/')[1]
+      // if(picfile.length === undefined) {
+          // let trimmedfilename=picfile.name.replace(/ /g,'')
+          let filename= userid+'.'+extension
+
+          console.log(filename);
+          let uploadPath = `public/user/` +filename;
+          let viewpath='http://localhost:3000/'+`user/${filename}`
+          // filespatharraytosave.push(viewpath)
+
+          picfile.mv(uploadPath, function(err) {
+              if (err) {
+                return res.status(500).send(err);
+              }
+
+                   console.log('updated profile path: ',viewpath);
+                  //  res.send('File successfully uploaded ' );
+
+
+
+
+                  });
+
+      // console.log('single file save: \n',filespatharraytosave);
+      updateuser.profileimg=viewpath
+      console.log('user to save', updateuser);
+
+await updateuser.save()
+
+console.log('updated profile',updateuser);
+const payload={
+  _id:updateuser._id,
+  email:updateuser.email,
+  profileimg:updateuser.profileimg,
+  username:updateuser.username,
+  lastseen:updateuser.lastseen,
+  status:updateuser.status
+}
+
+const token = JWT.sign(payload,process.env.HASHKEY,{
+  expiresIn:'1w'
+})
+// console.log('REFRESH: ',process.env.REFRESH_TOKEN);
+
+const refreshtoken=JWT.sign({  _id:payload._id},process.env.REFRESHTOKEN,{
+  expiresIn:'3d'
+})
+
+
+// console.log('token: ',token,'refresh: ',refreshtoken);
+
+      return    res.send({
+        updateuser,
+          token,
+          refreshtoken,
+          message:'user updated successfully'})
+
+
+
+      }else{
+
+          if(username !=undefined && username!='')updateuser.username=username
+      if(status !=undefined && status!='')updateuser.status=status
+
+          console.log(updateuser.username);
+
+  await updateuser.save()
+
+  const payload={
+    _id:updateuser._id,
+    email:updateuser.email,
+    profileimg:updateuser.profileimg,
+    username:updateuser.username,
+    lastseen:updateuser.lastseen,
+    status:updateuser.status
+  }
+
+  const token = JWT.sign(payload,process.env.HASHKEY,{
+    expiresIn:'1w'
+  })
+  // console.log('REFRESH: ',process.env.REFRESH_TOKEN);
+
+  const refreshtoken=JWT.sign({  _id:payload._id},process.env.REFRESHTOKEN,{
+    expiresIn:'3d'
+  })
+
+
+              res.send({
+                updateuser,
+              token,
+              refreshtoken,
+              message:'user updated successfully'})
+      }
+
+
+
+  } catch (error) {
+
+      console.log(error);
+      res.send({errormessage:error.message})
+
+  }
+
+}
+
+exports.getuserfovoritedstores=async(req,res)=>{
+  try {
+    const {userid}=req.body
+
+    let favusers=[]
+    let counter=0
+const userprofile=await usermodel.findById(userid).select('email username fovoritecontacts')
+// const allusers=await usermodel.find()
+
+if(userprofile == null) return res.status(404).send({message:'no user found'})
+if(userprofile.fovoritecontacts.length == 0) return res.send(favusers)
+
+userprofile.fovoritecontacts.forEach(async(user) => {
+
+  console.log('user id fav',user);
+  const founduser= await usermodel.findById(user).select('username profileimg online lastseen status')
+
+  if(founduser != null) {
+
+    favusers.push(founduser)
+  }
+
+  counter++
+
+  if(counter>=userprofile.fovoritecontacts.length){
+
+    res.send(favusers)
+  }
+
+  
+});
+// res.send(userprofile)
+
+
+  } catch (error) {
+
+    res.send({message:'error while getting personal contacts',errmessage:error.message})
+    
+  }
+
+ 
+
+}
+
+exports.adduserfovoritedstores=async(req,res)=>{
+  try {
+    const {userid,favoriteuserid}=req.body
+const userprofile=await usermodel.findById(userid).select('email username fovoritecontacts')
+// const allusers=await usermodel.find()
+
+if(userprofile == null) return res.status(404).send({message:'no user found'})
+
+const indexoffavoriteuser= userprofile.fovoritecontacts.indexOf(favoriteuserid)
+
+if(indexoffavoriteuser !=-1){
+  let favcontacts=[]
+
+  userprofile.fovoritecontacts.splice(indexoffavoriteuser,1)
+  const userfavoritecontacts= await userprofile.save()
+  if (userfavoritecontacts.fovoritecontacts.length==0) res.send({message:'no personal contacts to remove',favcontacts})
+
+
+  userfavoritecontacts.fovoritecontacts.forEach(async(userobjectid)=>{
+
+const favoriteuserdetails =await usermodel.findById(userobjectid).select('lastseen online profileimg status username')
+// console.log('populated fav user',favoriteuserdetails);
+
+if(favoriteuserdetails !=null){  
+   favoriteuserdetails
+favcontacts.push(favoriteuserdetails)
+
+  
+  if(favcontacts.length>=userfavoritecontacts.fovoritecontacts.length)  res.send({message:'removed user to personal contact list',favcontacts})
+
+}
+
+})
+
+
+  
+
+  // return res.send({message:'removed user to personal contact list',userprofile})
+
+}
+
+if(indexoffavoriteuser ==-1){
+  
+let favcontacts=[]
+  
+  userprofile.fovoritecontacts.push(favoriteuserid)
+   const userfavoritecontacts= await userprofile.save()
+
+  userfavoritecontacts.fovoritecontacts.forEach(async(userobjectid)=>{
+
+const favoriteuserdetails =await usermodel.findById(userobjectid).select('lastseen online profileimg status username')
+// console.log('populated fav user',favoriteuserdetails);
+
+if(favoriteuserdetails !=null){  
+   favoriteuserdetails
+favcontacts.push(favoriteuserdetails)
+
+  
+  if(favcontacts.length>=userfavoritecontacts.fovoritecontacts.length)  res.send({message:'added user to personal contact list',favcontacts})
+
+}
+
+})
+
+
+
+
+}
+// res.send({userprofile,favid:favoriteuserid})
+
+
+
+
+  } catch (error) {
+
+    res.send({message:'error while getting personal contacts',errmessage:error.message})
+    
+  }
+
+ 
+
+}

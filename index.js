@@ -4,7 +4,7 @@ const cors=require('cors')
 const mongoose = require('mongoose')
 const expressuploader=require('express-fileupload')
 
-const LocalDBconnection =`mongodb://localhost:27017/ngchat`
+const LocalDBconnection =`mongodb://localhost:27017/ngcommerce`
 const PORT=process.env.PORT || 3000
 
 app.use(cors('*'))
@@ -18,9 +18,10 @@ app.get('/',async(req,res)=>{
     res.send({message:'root route working'})
 })
 
-// app.use('/user',require('./routes/users.routes'))
-// app.use('/products',require('./routes/products.routes'))
-// app.use('/cart',require('./routes/cart.routes'))
+ app.use('/user',require('./routes/users.routes'))
+ app.use('/products',require('./routes/products.routes'))
+ app.use('/cart',require('./routes/cart.routes'))
+ app.use('/stores',require('./routes/stores.routes'))
 
 
 
