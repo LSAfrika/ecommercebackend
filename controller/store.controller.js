@@ -76,9 +76,15 @@ exports.updatetore=async(req,res)=>{
 
 
 exports.getstores=async(req,res)=>{
-
-
   try {
+
+    const {pagination}=req.query
+    const returnsize=1
+    const skip=pagination*returnsize
+    const getstores =await storemodel.find().skip(skip)
+    //.limit(returnsize)
+
+    res.send({allstores:getstores})
     
   } catch (error) {
     
@@ -90,8 +96,14 @@ exports.getstores=async(req,res)=>{
   exports.getstore=async(req,res)=>{
     
     try {
+
+      const {storeid}=req.params
+      const getstore =await storemodel.findById(storeid)
+      //.limit(returnsize)
+  
+      res.send({getstore})
       
-    } catch (error) {
+    }catch (error) {
       
       console.log(`get store error ${error.message}`)
       res.send({errormessage:'get store error',error})
