@@ -3,6 +3,9 @@ const{productmodel}=require('../models/products.model')
 exports.createproduct=async(req,res)=>{
 
     try {
+        const {userid}=req.body
+
+        res.send(userid)
         
     } catch (error) {
         console.log('create product error',error.message)

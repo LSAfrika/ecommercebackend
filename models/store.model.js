@@ -10,7 +10,7 @@ exports.storemodel = mongoose.model('store',mongoose.Schema({
 
  
     storeimage:{type:String,required:true ,default:'/default/store.png' },
-    storeproducts:[{type:String,required:true }],
+    storeproducts:[{type:String }],
     membersince:{type:Number,reuired:true,default:Date.now()},
   
 },{timestamps:true}
