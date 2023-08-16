@@ -1,7 +1,7 @@
 const{storemodel}=require('../models/store.model')
 const{usermodel}=require('../models/user.model')
 const fs = require("fs");
-const mongoose= require('mongoose')
+
 
 
 
@@ -98,6 +98,34 @@ exports.getstores=async(req,res)=>{
       res.send({errormessage:'get store error',error})
     }
   }
+
+
+exports.deactivatestore=async(req,res)=>{
+  try {
+    const {userid}=req.body
+    console.log('current user',userid);
+    const store= await storemodel.findOne({storeowner:userid})
+   
+    if(store==null ) return res.send({exceptionmessage:'no store found'})
+
+    if(store.storedeactivated==true){
+      store.storedeactivated=false
+      await store.save()
+      return res.send({message:'store reactivated',store})
+    }
+    if(store.storedeactivated==false){
+      store.storedeactivated=true
+      await store.save()
+      return res.send({message:'store deactivated',store})
+    }
+
+
+      
+  } catch (error) {
+    console.log('deactivate store error: \n',error.message);
+    res.send({errormessage:'error occured while deactivating store',error})
+  }
+}
 
 
 
