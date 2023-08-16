@@ -9,7 +9,6 @@ exports.storemodel = mongoose.model('store',mongoose.Schema({
     storeowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
     storedeactivated:{type:Boolean,required:true,default:false},
     storeimage:{type:String,required:true ,default:'/default/store.png' },
-    storeproducts:[{type:String }],
     membersince:{type:Number,reuired:true,default:Date.now()},
   
 },{timestamps:true}

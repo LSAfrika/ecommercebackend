@@ -1,11 +1,21 @@
 const{productmodel}=require('../models/products.model')
+const{storemodel}=require('../models/store.model')
 
 exports.createproduct=async(req,res)=>{
 
     try {
-        const {userid}=req.body
+        const {userid,productname,productprice,category}=req.body
+        const store=await storemodel.findOne({storeowner:userid})
 
-        res.send(userid)
+        if(store==null)return res.send({exceptionmessage:'store not found'})
+        const new_product= await productmodel.create({
+        productname,
+        productprice,
+        category,
+        store:store._id,
+        productimages:['/default/store.png'] })
+
+        res.send({message:'product created',new_product})
         
     } catch (error) {
         console.log('create product error',error.message)
@@ -13,25 +23,6 @@ exports.createproduct=async(req,res)=>{
     }
 }
 
-exports.getallproducts=async(req,res)=>{
-    
-    try {
-        
-    } catch (error) {
-        console.log('get all products error',error.message)
-        res.send({errormessage:error.message,error})
-    }
-}
-
-exports.getsingleproduct=async(req,res)=>{
-    
-    try {
-        
-    } catch (error) {
-        console.log('get single product error',error.message)
-        res.send({errormessage:error.message,error})
-    }
-}
 
 exports.updateproduct=async(req,res)=>{
     
@@ -52,3 +43,75 @@ exports.deleteproduct=async(req,res)=>{
         res.send({errormessage:error.message,error})
     }
 }
+
+exports.getallproducts=async(req,res)=>{
+    
+    try {
+        const{pagination}=req.query
+        returnsize=2
+        skip=returnsize*pagination
+        const products=await productmodel.find().skip(skip)
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+        .limit(returnsize)
+        res.send(products)
+        
+    } catch (error) {
+        console.log('get all products error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+exports.getsingleproduct=async(req,res)=>{
+    
+    try {
+        const{productid}=req.params
+        const product= await productmodel.findById(productid)
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+
+        if(product==null)return res.send({exceptionmessage:'product not found'})
+        res.send(product)
+        
+    } catch (error) {
+        console.log('get single product error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+
+exports.getallproductssinglestore=async(req,res)=>{
+    
+    try {
+
+        const {pagination}=req.query
+        returnsize=3
+        skip=pagination*returnsize
+        const {storeid}=req.params
+        const storeproducts= await productmodel.find({store:storeid})
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+        .skip(skip).limit(returnsize)
+        res.send({storeproducts})
+        
+    } catch (error) {
+        console.log('get all products error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+exports.getallproductscategory=async(req,res)=>{
+    
+    try {
+        
+        const {categoryid,pagination}=req.query
+        returnsize=1
+        skip=pagination*returnsize
+        const categoryproducts= await productmodel.find({category:categoryid}).skip(skip).limit(returnsize)
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+
+        res.send({categoryproducts})
+
+    } catch (error) {
+        console.log('get all products category error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
