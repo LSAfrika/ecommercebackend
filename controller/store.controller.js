@@ -24,18 +24,18 @@ exports.createstore=async(req,res)=>{
 
     if(req.files){
     console.log('store image provided');
-    const storeimagepath=  createstoreimagefolder(req.files.storepic,newstore._id) || '/default/store.png'
-    console.log('store image view path:',storeimagepath);
+    const storeimagepath=  createstoreimagefolder(req.files.storepic,newstore._id) 
+
     const updatestore= await storemodel.findById(newstore._id)
 
     if(updatestore)updatestore.storeimage=storeimagepath,    await updatestore.save()
 
-    res.send(updatestore)
+    return  res.send(updatestore)
 
-    }else{
-
-      res.send(newstore)
     }
+
+   res.send(newstore)
+    
 
     
 
@@ -50,10 +50,27 @@ exports.createstore=async(req,res)=>{
 exports.updatetore=async(req,res)=>{
     
   try {
+
+    const {userid,storename}=req.body
+
+    const user= await usermodel.findById(userid)
+    const store= await storemodel.findOne({storeowner:userid})
+    if(user==null ) return res.send({exceptionmessage:'update user not found'})
+    if(store==null ) return res.send({exceptionmessage:'update store not found'})
+
+    if(storename)store.storename=storename
+    if(req.files){
+      const storeimageviewpath= updatestoreimage(req.files.storepic,store._id)
+      store.storeimage= storeimageviewpath || '/default/store.png'
+    }
+
+    await store.save()
+    res.send({message:'store updated succesfully',store})
+
     
   } catch (error) {
     
-    console.log(`update store error ${error.message}`)
+    console.log(`update store error \n ${error.message}`)
     res.send({errormessage:'update store error',error})
   }
 }
@@ -108,46 +125,58 @@ exports.getstores=async(req,res)=>{
           if (err)   throw new Error(err.message);
           
   
-          console.log("updated profile path: ", viewpath);
+          console.log("created profile path: ", viewpath);
           
          });
 
-        return viewpath
+        return viewpath || '/default/store.png'
 
 
- //fs.mkdirSync(`${STOREIMAGEUPLOADPATH}${mongooseid}`, (err) => {if (err)console.log(err.message);});
-
-      // if(fs.existsSync(`${STOREIMAGEUPLOADPATH}${mongooseid}`)){
-      //   console.log('folder exists');
-      //   path = `storeimage/${mongooseid}/`;
-
-       
-     
-      //   extension = storepic.mimetype.split("/")[1];
-       
-      //   let filename = userid + "." + extension;
   
-      //   console.log(filename);
-      //   let uploadPath = `${STOREIMAGEUPLOADPATH}${mongooseid}/` + filename;
-      //   let viewpath = `${path}${filename}`;
-        
-  
-      //   storepic.mv(uploadPath, function (err) {
-      //     if (err) {
-      //       return res.status(500).send(err);
-      //     }
-  
-      //     console.log("updated profile path: ", viewpath);
-          
-      //   });
-        
-      //   return viewpath || '/default/store.png'
+    } catch (error) {
+  console.log('error in store upload logic: ',error.message);
+    }
+  };
 
-      
-      // }
-      // else{
 
-      //}
+
+  
+  const updatestoreimage =  (_storepic,uid) => {
+    try {
+   
+      const folderid =  uid;
+      const STOREIMAGEUPLOADPATH='public/storeimage/'
+      let storepic = _storepic;
+      console.log('update function called');
+      if(fs.existsSync(`${STOREIMAGEUPLOADPATH}${folderid}`)){
+              console.log('folder exists');
+              
+          path = `storeimage/${folderid}/`;
+          extension = storepic.mimetype.split("/")[1];
+         let filename = folderid + "." + extension;
+         console.log(filename);
+         let uploadPath = `${STOREIMAGEUPLOADPATH}${folderid}/${filename}` 
+         let viewpath = `${path}${filename}`;
+
+
+
+
+             storepic.mv(uploadPath, function (err) {
+         if (err)   throw new Error(err.message);
+         
+ 
+         console.log("updated profile path: ", viewpath);
+         
+        });
+
+       return viewpath || '/default/store.png'
+
+            }else{
+              console.log('no folder exists',`${STOREIMAGEUPLOADPATH}${folderid}`);
+            }
+
+
+
   
     } catch (error) {
   console.log('error in store upload logic: ',error.message);
