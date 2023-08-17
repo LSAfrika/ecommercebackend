@@ -1,0 +1,664 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "express  commerce endpoints",
+    "dateExported": "2023-08-17T13:17:39.333Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
+            "name": "user",
+            "containerId": "",
+            "created": "2023-08-15T07:51:43.020Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "product",
+            "containerId": "",
+            "created": "2023-08-15T07:51:54.572Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "stores",
+            "containerId": "",
+            "created": "2023-08-15T07:52:03.820Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
+            "name": "cart",
+            "containerId": "",
+            "created": "2023-08-15T07:52:11.898Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "9da389e3-cec5-4454-88e7-1ef6026d6b5d",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
+            "name": "register user",
+            "url": "http://localhost:3000/user/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-08-15T08:01:11.248Z",
+            "modified": "2023-08-15T08:19:24.538Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"test@gmail.com\",\n  \"username\":\"test\",\n  \"password\":\"123456\",\n  \"reenterpassword\":\"123456\"\n  \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "c8b8967d-0029-4d69-bb3a-5f96f8180290",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "create store",
+            "url": "http://localhost:3000/stores/createstore",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-08-16T05:02:37.284Z",
+            "modified": "2023-08-16T07:25:38.849Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTYzNzY0LCJleHAiOjE2OTI3Njg1NjQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.dg9TgJ_K9Yf7diCFCscVDfA1I-bUIpPKX3FHx6cMu-U"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "storename",
+                        "value": "view electronics"
+                    },
+                    {
+                        "name": "storepic",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "storepic",
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Penguins.jpg"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "ce4b279a-c7f6-4db9-910e-cd40bb3daaf2",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
+            "name": "get cart",
+            "url": "http://localhost:3000/cart/getcart",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-08-17T09:24:06.903Z",
+            "modified": "2023-08-17T09:25:28.985Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "edd55625-942c-49fd-a8fd-c73605234309",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
+            "name": "change password user",
+            "url": "http://localhost:3000/user/register",
+            "method": "POST",
+            "sortNum": 11250,
+            "created": "2023-08-15T08:30:22.382Z",
+            "modified": "2023-08-15T08:30:22.382Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"test@gmail.com\",\n  \"username\":\"test\",\n  \"password\":\"123456\",\n  \"reenterpassword\":\"123456\"\n  \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5c228e38-9be0-42d0-ba12-31fd7ca3ba7c",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
+            "name": "update user",
+            "url": "http://localhost:3000/user/updatebio",
+            "method": "PATCH",
+            "sortNum": 12500,
+            "created": "2023-08-15T08:29:31.814Z",
+            "modified": "2023-08-16T04:53:17.285Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwicHJvZmlsZWltZyI6Ii9kZWZhdWx0L3Byb2ZpbGUucG5nIiwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNjkyMTYxNDY4LCJleHAiOjE2OTI3NjYyNjgsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.BMXpy9lnQJZVUXpxaAEcWz6E1CcgQn8UrP5IeiBKQo8"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "oldpassword",
+                        "value": "123456"
+                    },
+                    {
+                        "name": "newpassword",
+                        "value": "1234567"
+                    },
+                    {
+                        "name": "reenternewpassword",
+                        "value": "1234567"
+                    },
+                    {
+                        "name": "username",
+                        "value": "testupdated"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "55625873-4c90-4938-a315-37673dca2fe1",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "update store",
+            "url": "http://localhost:3000/stores/updatestore",
+            "method": "PATCH",
+            "sortNum": 12500,
+            "created": "2023-08-16T07:57:45.937Z",
+            "modified": "2023-08-17T04:26:08.670Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTYzNzY0LCJleHAiOjE2OTI3Njg1NjQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.dg9TgJ_K9Yf7diCFCscVDfA1I-bUIpPKX3FHx6cMu-U"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "storename",
+                        "value": "view electronics update11"
+                    },
+                    {
+                        "name": "storepic",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "storepic",
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Lighthouse.jpg"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "76d93ec4-7c00-4f21-8d0d-46413931998f",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
+            "name": "fetch bio",
+            "url": "http://localhost:3000/user/bio",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2023-08-15T08:22:06.010Z",
+            "modified": "2023-08-15T08:28:03.818Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRiMzUwYzFiMDhlMDQ2NGFjODE0ZWQiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0IiwicHJvZmlsZWltZyI6Ii9kZWZhdWx0L3Byb2ZpbGUucG5nIiwiaWF0IjoxNjkyMDg3ODg2LCJleHAiOjE2OTI2OTI2ODYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.d8qdgiP1LrLrtniG2EIeaJAXgV0RDyDtG7Ki-L9GI7s"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"test@gmail.com\",\n  \"username\":\"test\",\n  \"password\":\"123456\",\n  \"reenterpassword\":\"123456\"\n  \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "53c61675-51ac-49e2-846c-6cf8035f8b81",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "get stores",
+            "url": "http://localhost:3000/stores/allstores?pagination=0",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2023-08-16T05:04:08.534Z",
+            "modified": "2023-08-16T09:06:02.544Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRiMzUwYzFiMDhlMDQ2NGFjODE0ZWQiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0IiwicHJvZmlsZWltZyI6Ii9kZWZhdWx0L3Byb2ZpbGUucG5nIiwiaWF0IjoxNjkyMDg3ODg2LCJleHAiOjE2OTI2OTI2ODYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.d8qdgiP1LrLrtniG2EIeaJAXgV0RDyDtG7Ki-L9GI7s"
+                }
+            ],
+            "params": [
+                {
+                    "name": "pagination",
+                    "value": "0",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "f84aaccb-dedd-451f-a38f-5a4ca44b8f41",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "get store",
+            "url": "http://localhost:3000/stores/store/64dc79f245fd9690ea559d43",
+            "method": "GET",
+            "sortNum": 17500,
+            "created": "2023-08-16T09:07:58.250Z",
+            "modified": "2023-08-16T09:09:36.762Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRiMzUwYzFiMDhlMDQ2NGFjODE0ZWQiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0IiwicHJvZmlsZWltZyI6Ii9kZWZhdWx0L3Byb2ZpbGUucG5nIiwiaWF0IjoxNjkyMDg3ODg2LCJleHAiOjE2OTI2OTI2ODYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.d8qdgiP1LrLrtniG2EIeaJAXgV0RDyDtG7Ki-L9GI7s"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3994a79d-a33e-4352-97cf-4c4980e41dcb",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
+            "name": "login user ",
+            "url": "http://localhost:3000/user/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-08-15T08:19:39.635Z",
+            "modified": "2023-08-16T05:29:24.186Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"Test@gmail.com\",\n  \"username\":\"test\",\n  \"password\":\"1234567\",\n  \"reenterpassword\":\"123456\"\n  \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "645ce9e9-d8b0-459c-ac37-e6f438513778",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
+            "name": "post cart",
+            "url": "http://localhost:3000/cart/addtocart",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-08-17T09:34:40.579Z",
+            "modified": "2023-08-17T09:41:22.295Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "product",
+                        "value": "64ddead8b361e1f44037a338"
+                    },
+                    {
+                        "name": "product",
+                        "value": "64ddeac7b361e1f44037a333"
+                    },
+                    {
+                        "name": "product",
+                        "value": "64ddeac7b361e1f44037a333"
+                    },
+                    {
+                        "name": "product",
+                        "value": "64ddeab6b361e1f44037a32d"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "2aeef79a-59ae-4bc5-9332-e94f0c3100c9",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "create product",
+            "url": "http://localhost:3000/products/createproduct",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-08-16T04:58:05.809Z",
+            "modified": "2023-08-17T09:39:36.795Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "xperia 10"
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "42000"
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "product",
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Hydrangeas.jpg"
+                    },
+                    {
+                        "name": "product",
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Jellyfish.jpg"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "9d6a8cb1-6b4d-4836-b80f-32716c8ed4f9",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "set store status",
+            "url": "http://localhost:3000/stores/storeststus",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-08-16T05:03:16.062Z",
+            "modified": "2023-08-16T08:47:57.596Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "560e9054-48af-4a81-9b8f-65d1b761c53d",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "delete product",
+            "url": "http://localhost:3000/products/deleteproduct/64ddb540d2ed2d4dd6debfdc",
+            "method": "DELETE",
+            "sortNum": 32500,
+            "created": "2023-08-17T07:47:50.560Z",
+            "modified": "2023-08-17T08:08:04.250Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2901af1c-6c03-4afe-a332-d2ed6aab8082",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "delete product image",
+            "url": "http://localhost:3000/products/deleteproductimage/64ddb75f9066edd30923d31d",
+            "method": "DELETE",
+            "sortNum": 33750,
+            "created": "2023-08-17T08:13:32.150Z",
+            "modified": "2023-08-17T09:17:39.369Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [
+                {
+                    "name": "index",
+                    "value": "10",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "215a69e4-d6ad-465e-a03c-295dc906ae34",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "update product",
+            "url": "http://localhost:3000/products/updateproduct/64ddb75f9066edd30923d31d",
+            "method": "PATCH",
+            "sortNum": 35000,
+            "created": "2023-08-17T06:08:40.298Z",
+            "modified": "2023-08-17T06:53:23.607Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "red mi 10 updated 1"
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "3500"
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "product",
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\hello world.jpg"
+                    },
+                    {
+                        "name": "product",
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Lighthouse.jpg"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "d646cc39-381a-4d11-bc9a-07912f33a7e2",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "get products",
+            "url": "http://localhost:3000/products/getallproducts?pagination=0",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-08-16T09:34:12.624Z",
+            "modified": "2023-08-16T09:58:03.816Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [
+                {
+                    "name": "pagination",
+                    "value": "0",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "samsung s 10",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "20000",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "c5f74628-1264-48e9-8988-5a903741650f",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "get products categories",
+            "url": "http://localhost:3000/products/getallproductscategory?categoryid=Phones&pagination=0",
+            "method": "GET",
+            "sortNum": 45000,
+            "created": "2023-08-16T09:59:27.628Z",
+            "modified": "2023-08-16T10:04:56.589Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [
+                {
+                    "name": "categoryid",
+                    "value": "Phones",
+                    "isPath": false
+                },
+                {
+                    "name": "pagination",
+                    "value": "0",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "samsung s 10",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "20000",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "87921c36-194d-4063-bca3-edbc6d1513a6",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "get products store",
+            "url": "http://localhost:3000/products/getallproductsstore/64dc79f245fd9690ea559d43?pagination=0",
+            "method": "GET",
+            "sortNum": 47500,
+            "created": "2023-08-16T10:06:51.480Z",
+            "modified": "2023-08-16T10:09:43.730Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [
+                {
+                    "name": "pagination",
+                    "value": "0",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "samsung s 10",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "20000",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "262d46a2-0843-4754-9b9b-7691014e7589",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "get product",
+            "url": "http://localhost:3000/products/getsingleproduct/64dc97fcbf66c343efd3ff53",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-08-16T09:34:41.823Z",
+            "modified": "2023-08-16T09:50:09.660Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
