@@ -147,3 +147,71 @@ exports.createstorefolder =  (_storepic,uid) => {
   console.log('error in store upload logic: ',error.message);
     }
   };
+
+  exports.updateproductfolder =  (productimagesarray,productid,res) => {
+    try {
+   
+      let productsviewpath=[]
+      const folderid =  productid;
+            const PRODUCTIMAGESUPLOADPATH='public/products/'
+            let productimages = productimagesarray;
+      // console.log('update function called',storepic);
+      if(fs.existsSync(`${PRODUCTIMAGESUPLOADPATH}${folderid}`)){
+              console.log('folder exists');
+
+
+        productimages.forEach(image=>{
+
+
+
+          path = `products/${folderid}/`;
+          extension = image.mimetype.split("/")[1];
+          originalname=image.name.split('.')[0]
+         let filename = Date.now()+folderid+originalname + "." + extension;
+         console.log(filename);
+         let uploadPath = `${PRODUCTIMAGESUPLOADPATH}${folderid}/${filename}` 
+         let viewpath = `${path}${filename}`;
+  
+  
+  
+  
+             image.mv(uploadPath,async function (err) {
+         if (err)   throw new Error(err.message);
+         
+  
+         console.log("updated product images: ", viewpath);
+         productsviewpath.push(viewpath)
+
+         if(productsviewpath.length>=productimages.length){
+
+          const producttoupdate=await productmodel.findById(productid)
+          producttoupdate.productimages=[...producttoupdate.productimages,...productsviewpath]
+          await producttoupdate.save()
+
+          res.send({message:'product updated (photos):',product:producttoupdate})
+
+         }
+         
+        });
+        })
+
+
+
+              
+
+     
+
+            }else{
+              console.log('no folder exists',`${PRODUCTIMAGESUPLOADPATH}${folderid}`);
+              res.status(500).send({exceptionmessage:'folder not found'})
+            }
+
+
+
+  
+    } catch (error) {
+  console.log('error in store upload logic: ',error.message);
+  res.status(500).send({exceptionmessage:'error while updating product images',error})
+
+    }
+  };

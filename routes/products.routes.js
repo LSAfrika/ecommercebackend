@@ -4,8 +4,8 @@ const{createproduct,getallproducts,getsingleproduct,updateproduct,deleteproduct,
 const{authentication}=require('../middleware/auth.middleware')
 
 router.post('/createproduct',authentication,createproduct)
-router.patch('/updateproduct',authentication,updateproduct)
-router.patch('/deleteproduct',authentication,deleteproduct)
+router.patch('/updateproduct/:productid',authentication,updateproduct)
+router.delete('/deleteproduct',authentication,deleteproduct)
 
 router.get('/getallproducts',getallproducts)
 router.get('/getallproductscategory',getallproductscategory)

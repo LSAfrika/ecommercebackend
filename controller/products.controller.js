@@ -1,6 +1,6 @@
 const{productmodel}=require('../models/products.model')
 const{storemodel}=require('../models/store.model')
-const{createproductfolder}=require('../uitility/folder.utilities')
+const{createproductfolder,updateproductfolder}=require('../uitility/folder.utilities')
 
 exports.createproduct=async(req,res)=>{
 
@@ -37,6 +37,26 @@ exports.createproduct=async(req,res)=>{
 exports.updateproduct=async(req,res)=>{
     
     try {
+        const {productid}=req.params
+        const {productprice,productname}=req.body
+
+        console.log('price:',productprice,'\n productname:',productname);
+        const producttoupdate= await productmodel.findById(productid)
+        if(producttoupdate==null) return res.send({exceptionmessage:'product to update not found'})
+
+        if(productprice)producttoupdate.productprice=productprice
+        if(productname)producttoupdate.productname=productname
+
+        await producttoupdate.save()
+        
+        if(req.files==null) return res.send({message:'product updated',prodcut:producttoupdate})
+
+        const productimages= Array.isArray(req.files.product)? req.files.product:[req.files.product]
+
+        updateproductfolder(productimages,producttoupdate._id,res)
+
+
+
         
     } catch (error) {
         console.log('update product error',error.message)
