@@ -107,7 +107,8 @@ exports.deleteproductimage=async(req,res)=>{
         const {productid}=req.params
         const {index}=req.query
         const {userid}=req.body
-
+console.log(index);
+        if(index==-1||index==undefined)return res.send({exceptionmessage:'index to delete not provided'})
         const store=await storemodel.findOne({storeowner:userid})
        
         if(store==null)return res.send({exceptionmessage:'store not found'})
