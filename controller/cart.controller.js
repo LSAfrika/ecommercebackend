@@ -3,6 +3,10 @@ const{cartmodel}=require('../models/cart.model')
 
 exports.getcart=async(req,res)=>{
     try {
+        const{userid}=req.body
+        const usercart= await cartmodel.findById(userid)
+        if(usercart==null)res.send({exceptionmessage:'no cart found'})
+        res.send({cart:usercart})
         
     } catch (error) {
         console.log('get cart error',error.message)
@@ -10,8 +14,25 @@ exports.getcart=async(req,res)=>{
         
     }
 }
-exports.addcart=async(req,res)=>{
+exports.addtocart=async(req,res)=>{
     try {
+        const{userid,product}=req.body
+
+        console.log(product);
+        return
+        let usercart= await cartmodel.findById(userid)
+        if(usercart==null){
+
+            usercart=await cartmodel.create({
+                cartowner:userid,
+
+            })
+        }
+
+        if(usercart!==null){
+
+        }
+
         
     } catch (error) {
         console.log('add cart error',error.message)
@@ -21,6 +42,8 @@ exports.addcart=async(req,res)=>{
 }
 exports.updatecart=async(req,res)=>{
     try {
+        const{userid}=req.body
+
         
     } catch (error) {
         console.log('update cart error',error.message)
@@ -30,6 +53,7 @@ exports.updatecart=async(req,res)=>{
 }
 exports.deletecart=async(req,res)=>{
     try {
+        const{userid}=req.body
         
     } catch (error) {
         console.log('delete cart error',error.message)
@@ -39,6 +63,7 @@ exports.deletecart=async(req,res)=>{
 }
 exports.checkoutcart=async(req,res)=>{
     try {
+        const{userid}=req.body
         
     } catch (error) {
         console.log('check out cart error',error.message)
