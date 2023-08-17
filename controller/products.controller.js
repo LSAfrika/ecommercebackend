@@ -1,6 +1,7 @@
 const{productmodel}=require('../models/products.model')
 const{storemodel}=require('../models/store.model')
 const{createproductfolder,updateproductfolder}=require('../uitility/folder.utilities')
+const fs = require("fs");
 
 exports.createproduct=async(req,res)=>{
 
@@ -49,8 +50,10 @@ exports.updateproduct=async(req,res)=>{
 
         await producttoupdate.save()
         
+        
         if(req.files==null) return res.send({message:'product updated',prodcut:producttoupdate})
 
+        if(producttoupdate.productimages.length>=6) return res.send({message:'product updated',exceptionmessage:'a product can\'t have more than 6 images'})
         const productimages= Array.isArray(req.files.product)? req.files.product:[req.files.product]
 
         updateproductfolder(productimages,producttoupdate._id,res)
@@ -67,6 +70,30 @@ exports.updateproduct=async(req,res)=>{
 exports.deleteproduct=async(req,res)=>{
     
     try {
+        const {productid}=req.params
+        const {userid}=req.body
+
+        const store=await storemodel.findOne({storeowner:userid})
+       
+        if(store==null)return res.send({exceptionmessage:'store not found'})
+
+      
+        const producttodelete= await productmodel.findById(productid)
+        if(producttodelete==null) return res.send({exceptionmessage:'product to delete not found'})
+
+        if(producttodelete.store.toString() !==store._id.toString())return res.send({exceprionmessage:'store product missmatch',productstoreid:producttodelete.store,storeid:store._id})
+
+        fs.rm(`./public/products/${producttodelete._id}`, { recursive: true }, err => {
+            if (err) {
+              throw err
+            }
+          
+            console.log(`${producttodelete._id} is deleted!`)
+          });
+
+        await productmodel.deleteOne({_id:producttodelete._id})
+
+        res.send({message:'product deleted'})
         
     } catch (error) {
         console.log('delete product error',error.message)
@@ -74,15 +101,78 @@ exports.deleteproduct=async(req,res)=>{
     }
 }
 
+exports.deleteproductimage=async(req,res)=>{
+    
+    try {
+        const {productid}=req.params
+        const {index}=req.query
+        const {userid}=req.body
+
+        const store=await storemodel.findOne({storeowner:userid})
+       
+        if(store==null)return res.send({exceptionmessage:'store not found'})
+
+      
+        const producttodeleteimage= await productmodel.findById(productid)
+        if(producttodeleteimage==null) return res.send({exceptionmessage:'product to delete not found'})
+
+        if(producttodeleteimage.store.toString() !==store._id.toString())return res.send({exceprionmessage:'store product missmatch',productstoreid:producttodeleteimage.store,storeid:store._id})
+
+// console.log(producttodeleteimage);
+if(producttodeleteimage.productimages.length==1)return res.send({exceptionmessage:'product has to have an image can\'t delete last image'})
+if(producttodeleteimage.productimages.length-1<index)return res.send({exceptionmessage:'index greater than length of productimages'})
+
+        const imagepath=producttodeleteimage.productimages[index]
+        const imagetodelete=producttodeleteimage.productimages[index].split('/')
+        const imagename=imagetodelete[imagetodelete.length-1]
+
+
+
+
+        
+        
+        console.log('filename for deleteion',imagename);
+        
+        if(fs.existsSync(`./public/${imagepath}`)==true) console.log('file exists');
+        if(fs.existsSync(`./public/${imagepath}`)==false) return res.send({exceptionmessage:'file dosen\'t exist'})
+        
+
+
+
+       // return res.send({imagename})
+
+
+        fs.unlinkSync(`./public/${imagepath}`, err => {
+            if (err) {
+              throw err
+            }
+          
+            console.log(`${imagename} is deleted!`)
+          });
+
+          producttodeleteimage.productimages.splice(index,1)
+
+          await producttodeleteimage.save()
+
+        res.send({message:`product image at index ${index} has been deleted`,product:producttodeleteimage})
+        
+    } catch (error) {
+        console.log('delete product image error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+
 exports.getallproducts=async(req,res)=>{
     
     try {
         const{pagination}=req.query
         returnsize=2
         skip=returnsize*pagination
-        const products=await productmodel.find().skip(skip)
+        const products=await productmodel.find().sort({createdAt:-1})
+        //.skip(skip)
         .populate({path:'store',select:'storename storeimage',model:'store'})
-        .limit(returnsize)
+        //.limit(returnsize)
         res.send(products)
         
     } catch (error) {
@@ -116,7 +206,7 @@ exports.getallproductssinglestore=async(req,res)=>{
         returnsize=3
         skip=pagination*returnsize
         const {storeid}=req.params
-        const storeproducts= await productmodel.find({store:storeid})
+        const storeproducts= await productmodel.find({store:storeid}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
         res.send({storeproducts})
@@ -134,7 +224,7 @@ exports.getallproductscategory=async(req,res)=>{
         const {categoryid,pagination}=req.query
         returnsize=1
         skip=pagination*returnsize
-        const categoryproducts= await productmodel.find({category:categoryid}).skip(skip).limit(returnsize)
+        const categoryproducts= await productmodel.find({category:categoryid}).sort({createdAt:-1}).skip(skip).limit(returnsize)
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
         res.send({categoryproducts})
