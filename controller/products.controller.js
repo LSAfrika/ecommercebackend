@@ -1,13 +1,19 @@
 const{productmodel}=require('../models/products.model')
 const{storemodel}=require('../models/store.model')
+const{createproductfolder}=require('../uitility/folder.utilities')
 
 exports.createproduct=async(req,res)=>{
 
     try {
         const {userid,productname,productprice,category}=req.body
         const store=await storemodel.findOne({storeowner:userid})
-
+       
         if(store==null)return res.send({exceptionmessage:'store not found'})
+        if (req.files==null) return res.send({exceptionmessage:'please attach image products'})
+        // console.log('files to upload',req.files)
+   
+
+      //  return
         const new_product= await productmodel.create({
         productname,
         productprice,
@@ -15,7 +21,11 @@ exports.createproduct=async(req,res)=>{
         store:store._id,
         productimages:['/default/store.png'] })
 
-        res.send({message:'product created',new_product})
+        const productimages= Array.isArray(req.files.product)? req.files.product:[req.files.product]
+        console.log('product images:',productimages.length);
+
+        createproductfolder(productimages,new_product._id,res)
+
         
     } catch (error) {
         console.log('create product error',error.message)

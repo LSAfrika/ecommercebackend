@@ -1,12 +1,12 @@
 const fs = require("fs");
+const{productmodel}=require('../models/products.model')
 
-
-exports.createstoreimagefolder =  (_storepic,uid) => {
+exports.createstorefolder =  (_storepic,uid) => {
     try {
       const mongooseid =  uid;
             const STOREIMAGEUPLOADPATH='public/storeimage/'
             let storepic = _storepic;
-            // console.log('pic to save: ',storepic);
+            console.log('pic to save: ',storepic);
             fs.mkdirSync(`${STOREIMAGEUPLOADPATH}${mongooseid}`, (err) => {if (err)console.log(err.message);});
             console.log('folder created');
          
@@ -38,7 +38,72 @@ exports.createstoreimagefolder =  (_storepic,uid) => {
     }
   };
 
+  exports.createproductfolder = async (productimagesarray,productid,res) => {
+    try {
 
+      let productsviewpath=[]
+      const mongooseid =  productid;
+            const PRODUCTIMAGESUPLOADPATH='public/products/'
+            let productimages = productimagesarray;
+            // console.log('pic to save: ',storepic);
+            fs.mkdirSync(`${PRODUCTIMAGESUPLOADPATH}${mongooseid}`, 
+            (err) => {if (err)console.log(err.message);  console.log('folder created');});
+          
+         
+
+
+
+            productimages.forEach((image) => {
+
+              path = `products/${mongooseid}/`;
+               extension = image.mimetype.split("/")[1];
+               let originalfilename=image.name.split('.')[0]
+
+              let filename = Date.now() +mongooseid+originalfilename + "." + extension;
+            //  console.log(filename);
+              let uploadPath = `${PRODUCTIMAGESUPLOADPATH}${mongooseid}/` + filename;
+              let viewpath = `${path}${filename}`;
+     
+    
+    
+    
+                  image.mv(uploadPath,async function  (err) {
+              if (err)   throw new Error(err.message);
+              
+      
+              productsviewpath.push(viewpath)
+              //  console.log("product image array: ", productsviewpath);
+
+              
+               if(productsviewpath.length>=productimages.length) {
+
+                const updateproduct=await productmodel.findById(productid)
+                updateproduct.productimages=productsviewpath
+
+                await updateproduct.save()
+
+                res.send({message:'product created ',updateproduct})
+                //  console.log('final productas array:',productsviewpath);
+               }
+            });
+            
+            
+            
+            
+          });
+          
+
+
+        
+
+
+  
+    } catch (error) {
+  console.log('error in product upload logic: ',error.message);
+
+  res.send({errormessage:'error while uploading product images',error})
+    }
+  };
 
   
   exports.updatestoreimage =  (_storepic,uid) => {
@@ -47,7 +112,7 @@ exports.createstoreimagefolder =  (_storepic,uid) => {
       const folderid =  uid;
       const STOREIMAGEUPLOADPATH='public/storeimage/'
       let storepic = _storepic;
-      console.log('update function called');
+      console.log('update function called',storepic);
       if(fs.existsSync(`${STOREIMAGEUPLOADPATH}${folderid}`)){
               console.log('folder exists');
               

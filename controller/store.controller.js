@@ -23,7 +23,7 @@ exports.createstore=async(req,res)=>{
 
     if(req.files){
     console.log('store image provided');
-    const storeimagepath=  createstoreimagefolder(req.files.storepic,newstore._id) 
+    const storeimagepath=  createstorefolder(req.files.storepic,newstore._id) 
 
     const updatestore= await storemodel.findById(newstore._id)
 
