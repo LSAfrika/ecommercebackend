@@ -1,4 +1,4 @@
-const{cartmodel}=require('../models/cart.model')
+const{cartmodel, carthistory, carthistorymodel}=require('../models/cart.model')
 const{productmodel}=require('../models/products.model')
 
 
@@ -30,7 +30,7 @@ exports.addtocart=async(req,res)=>{
 
    cartproducts.forEach(async(_product) => {
 
-            // console.log('foreach loop working',_product)
+             console.log('foreach loop working',_product)
             const fetchedproduct= await productmodel.findById(_product.product.id)
             if(fetchedproduct !=null){
                 // console.log('fetched product',fetchedproduct);
@@ -63,7 +63,7 @@ exports.addtocart=async(req,res)=>{
                     return res.send({message:'cart created successfully',usercart});
                      
                     }
-                    if(usercart.products.length==0){
+                
 
                         usercart.products=[...localcartproducts]
                         usercart.totalprice=totalproductsprice
@@ -71,7 +71,7 @@ exports.addtocart=async(req,res)=>{
 
 
                         return res.send({message:'cart updated successfully',usercart});
-                    }
+                  
 
                 
                 }
@@ -103,10 +103,17 @@ exports.updatecart=async(req,res)=>{
         
     }   
 }
-exports.deletecart=async(req,res)=>{
+exports.resetcart=async(req,res)=>{
     try {
         const{userid}=req.body
-        
+
+        const cart= await cartmodel.findById(userid)
+        if(cart==null) return res.status(404).send({exceptionmessage:'no cart found'})
+
+        cart.products=[]
+        cart.totalprice=0
+        await cart.save()
+        res.send({message:'cart has been reset',cart})
     } catch (error) {
         console.log('delete cart error',error.message)
         res.send({errormessage:error.message,error})
@@ -115,7 +122,37 @@ exports.deletecart=async(req,res)=>{
 }
 exports.checkoutcart=async(req,res)=>{
     try {
+      
+
         const{userid}=req.body
+
+        const cart= await cartmodel.findById(userid)
+        let carthistory= await carthistorymodel.findOne({cartowner:userid})
+        if(cart==null) return res.status(404).send({exceptionmessage:'no cart found'})
+        if(cart.products.length==0) return res.status(409).send({exceptionmessage:'cart is empty'})
+        
+        if(carthistory!==null){
+
+          
+            carthistory.completedcarts=[...carthistory.completedcarts,{products:cart.products,totalprice:cart.totalprice}]
+
+            await carthistory.save()
+        
+        }
+
+        if(carthistory==null){
+            carthistory = await carthistorymodel.create({
+                    cartowner:userid,
+                    completedcarts:[{products:cart.products,totalprice:cart.totalprice}]
+                    
+                })
+            }
+
+      
+        cart.products=[]
+        cart.totalprice=0
+        await cart.save()
+        res.send({message:'cart has been checked out',cart,carthistory})
         
     } catch (error) {
         console.log('check out cart error',error.message)

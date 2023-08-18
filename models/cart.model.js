@@ -13,14 +13,22 @@ exports.cartmodel = mongoose.model('cart',mongoose.Schema({
         }
             ],
     totalprice:{type:Number,required:true,default:0},
-    cartcheckedout:{type:Boolean,required:true,default:false}
+   
 
 },{timestamps:true}
 
 ))
-
-function totalproductprice(productprice,quantity){
-
-    return productprice * quantity
-
-}
+exports.carthistorymodel=mongoose.model('completedcarts',mongoose.Schema({
+    cartowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
+    completedcarts:[{
+        products:[
+            {product:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'product'},
+            quantity:{ type:Number,required:true,default:1 },
+            sumtotal:{type:Number,required:true,default:0}
+            }
+                ],
+        totalprice:{type:Number,required:true,default:0},
+        
+        
+    }]
+}))
