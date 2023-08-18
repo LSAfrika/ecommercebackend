@@ -82,19 +82,8 @@ exports.addtocart=async(req,res)=>{
 
      
 
-        return
-        let usercart= await cartmodel.findById(userid)
-        if(usercart==null){
-
-            usercart=await cartmodel.create({
-                cartowner:userid,
-
-            })
-        }
-
-        if(usercart!==null){
-
-        }
+      
+        
 
         
     } catch (error) {
