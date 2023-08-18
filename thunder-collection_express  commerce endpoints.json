@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "express  commerce endpoints",
-    "dateExported": "2023-08-17T13:17:39.333Z",
+    "dateExported": "2023-08-18T09:04:09.930Z",
     "version": "1.1",
     "folders": [
         {
@@ -213,6 +213,25 @@
             "tests": []
         },
         {
+            "_id": "86c75eb3-98a9-4a5e-b760-8f86a684f470",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
+            "name": "completed orders",
+            "url": "http://localhost:3000/cart/completedorders",
+            "method": "GET",
+            "sortNum": 12500,
+            "created": "2023-08-18T08:16:10.013Z",
+            "modified": "2023-08-18T08:24:47.123Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
             "_id": "76d93ec4-7c00-4f21-8d0d-46413931998f",
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
@@ -262,6 +281,25 @@
             "tests": []
         },
         {
+            "_id": "d1d29e83-139c-4db2-a060-a76a78edef4e",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
+            "name": "check out cart",
+            "url": "http://localhost:3000/cart/checkoutcart",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2023-08-18T07:05:23.437Z",
+            "modified": "2023-08-18T07:44:10.551Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
             "_id": "f84aaccb-dedd-451f-a38f-5a4ca44b8f41",
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
@@ -308,7 +346,7 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-08-17T09:34:40.579Z",
-            "modified": "2023-08-17T09:41:22.295Z",
+            "modified": "2023-08-18T08:08:17.038Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -317,26 +355,9 @@
             ],
             "params": [],
             "body": {
-                "type": "formdata",
-                "raw": "",
-                "form": [
-                    {
-                        "name": "product",
-                        "value": "64ddead8b361e1f44037a338"
-                    },
-                    {
-                        "name": "product",
-                        "value": "64ddeac7b361e1f44037a333"
-                    },
-                    {
-                        "name": "product",
-                        "value": "64ddeac7b361e1f44037a333"
-                    },
-                    {
-                        "name": "product",
-                        "value": "64ddeab6b361e1f44037a32d"
-                    }
-                ]
+                "type": "json",
+                "raw": "{\n  \"cartproducts\": [\n    \n        {\n      \"product\": {\n        \"id\": \"64ddeac7b361e1f44037a333\",\n        \"quantity\": 3\n      }\n    },\n    {\n      \"product\": {\n        \"id\": \"64ddead8b361e1f44037a338\",\n        \"quantity\": 7\n      }\n    }\n  ]\n}",
+                "form": []
             },
             "tests": []
         },
@@ -404,6 +425,30 @@
                 }
             ],
             "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d3da2ae5-73d4-40aa-9f90-ca7df9b06895",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
+            "name": "reset cart",
+            "url": "http://localhost:3000/cart/resetcart",
+            "method": "PATCH",
+            "sortNum": 30000,
+            "created": "2023-08-18T06:48:27.212Z",
+            "modified": "2023-08-18T06:51:00.683Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"cartproducts\": [\n    {\n      \"product\": {\n        \"id\": \"64ddeac7b361e1f44037a333\",\n        \"quantity\": 2\n      }\n    },\n    {\n      \"product\": {\n        \"id\": \"64ddead8b361e1f44037a338\",\n        \"quantity\": 4\n      }\n    },\n    {\n      \"product\": {\n        \"id\": \"64ddeab6b361e1f44037a32d\",\n        \"quantity\": 1\n      }\n    }\n  ]\n}",
+                "form": []
+            },
             "tests": []
         },
         {

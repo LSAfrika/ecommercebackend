@@ -1,4 +1,5 @@
-const{cartmodel, carthistory, carthistorymodel}=require('../models/cart.model')
+const { populate } = require('dotenv');
+const{cartmodel, carthistorymodel}=require('../models/cart.model')
 const{productmodel}=require('../models/products.model')
 
 
@@ -159,6 +160,23 @@ exports.checkoutcart=async(req,res)=>{
         res.send({errormessage:error.message,error})
         
     }   
+}
+
+exports.completedorders=async(req,res)=>{
+    try {
+        const{userid}=req.body
+
+        const completedorders=await carthistorymodel.findOne({cartowner:userid})
+        .populate({path:'completedcarts',
+                   populate:{path:'products',populate:{path:'product',select:'productname productprice category createAt'}}})
+        //.populate({path:'products'})
+        if(completedorders==null)return res.status(404).send({exceptionmessage:'no ompleted orders found'})
+
+        res.send({completedorders})
+        
+    } catch (error) {
+        
+    }
 }
 
 function sumofArray(sum, num) {
