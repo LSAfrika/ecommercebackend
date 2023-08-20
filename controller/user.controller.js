@@ -277,6 +277,7 @@ exports.updatebio = async (req, res) => {
   }
 };
 
+// *==========================================FAVORITE STORES ========================================
 exports.getuserfovoritedstores = async (req, res) => {
   try {
     const { userid } = req.body;
@@ -285,7 +286,7 @@ exports.getuserfovoritedstores = async (req, res) => {
     let counter = 0;
     const userprofile = await usermodel
       .findById(userid)
-      .select("email username fovoritecontacts");
+      .select("email username fovoritestores");
     // const allusers=await usermodel.find()
 
     if (userprofile == null)
@@ -322,7 +323,7 @@ exports.adduserfovoritedstores = async (req, res) => {
     const { userid, favoriteuserid } = req.body;
     const userprofile = await usermodel
       .findById(userid)
-      .select("email username fovoritecontacts");
+      .select("email username fovoritestores");
     // const allusers=await usermodel.find()
 
     if (userprofile == null)
@@ -396,6 +397,115 @@ exports.adduserfovoritedstores = async (req, res) => {
     });
   }
 };
+exports.removeuserfovoritedstores = async (req, res) => {
+  try {
+    const { userid, favoriteuserid } = req.body;
+    const userprofile = await usermodel
+      .findById(userid)
+      .select("email username fovoritestores");
+    // const allusers=await usermodel.find()
+
+    if (userprofile == null)
+      return res.status(404).send({ message: "no user found" });
+
+    const indexoffavoriteuser =
+      userprofile.fovoritecontacts.indexOf(favoriteuserid);
+
+    if (indexoffavoriteuser != -1) {
+      let favcontacts = [];
+
+      userprofile.fovoritecontacts.splice(indexoffavoriteuser, 1);
+      const userfavoritecontacts = await userprofile.save();
+      if (userfavoritecontacts.fovoritecontacts.length == 0)
+        res.send({ message: "no personal contacts to remove", favcontacts });
+
+      userfavoritecontacts.fovoritecontacts.forEach(async (userobjectid) => {
+        const favoriteuserdetails = await usermodel
+          .findById(userobjectid)
+          .select("lastseen online profileimg status username");
+        // console.log('populated fav user',favoriteuserdetails);
+
+        if (favoriteuserdetails != null) {
+          favoriteuserdetails;
+          favcontacts.push(favoriteuserdetails);
+
+          if (
+            favcontacts.length >= userfavoritecontacts.fovoritecontacts.length
+          )
+            res.send({
+              message: "removed user to personal contact list",
+              favcontacts,
+            });
+        }
+      });
+
+      // return res.send({message:'removed user to personal contact list',userprofile})
+    }
+
+    if (indexoffavoriteuser == -1) {
+      let favcontacts = [];
+
+      userprofile.fovoritecontacts.push(favoriteuserid);
+      const userfavoritecontacts = await userprofile.save();
+
+      userfavoritecontacts.fovoritecontacts.forEach(async (userobjectid) => {
+        const favoriteuserdetails = await usermodel
+          .findById(userobjectid)
+          .select("lastseen online profileimg status username");
+        // console.log('populated fav user',favoriteuserdetails);
+
+        if (favoriteuserdetails != null) {
+          favoriteuserdetails;
+          favcontacts.push(favoriteuserdetails);
+
+          if (
+            favcontacts.length >= userfavoritecontacts.fovoritecontacts.length
+          )
+            res.send({
+              message: "added user to personal contact list",
+              favcontacts,
+            });
+        }
+      });
+    }
+    // res.send({userprofile,favid:favoriteuserid})
+  } catch (error) {
+    res.send({
+      message: "error while getting personal contacts",
+      errmessage: error.message,
+    });
+  }
+};
+
+// *==========================================FAVORITE PRODUCTS ========================================
+
+exports.getfovoriteproduct=async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+exports.addfovoriteproduct=async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+
+exports.removefovoriteproduct=async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+
+
 
 const ValidateEmail = (email) => {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {

@@ -1,0 +1,4 @@
+ISSUE TRACKER
+
+1.refactor logic of user/favorite store
+2.add logic for user/favorite product
