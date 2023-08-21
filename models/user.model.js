@@ -11,8 +11,8 @@ exports.usermodel = mongoose.model('user',mongoose.Schema({
     firebaseuniqueid:{type:String},
     profileimg:{type:String,required:true,default:'/default/profile.png' },
     mystores:{type:mongoose.Schema.Types.ObjectId,ref:'store'},
-    fovoritestores:[{type:mongoose.Schema.Types.ObjectId,ref:'store'}],
-    fovoriteproducts:[{type:mongoose.Schema.Types.ObjectId,ref:'product' }]
+    favoritestores:[{type:mongoose.Schema.Types.ObjectId,ref:'store'}],
+    favoriteproducts:[{product:{type:mongoose.Schema.Types.ObjectId,ref:'product'},store:{type:mongoose.Schema.Types.ObjectId,ref:'store'} }]
 
 },{timestamps:true}
 

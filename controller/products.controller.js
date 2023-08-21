@@ -1,5 +1,6 @@
 const{productmodel}=require('../models/products.model')
-const{storemodel}=require('../models/store.model')
+const{storemodel}=require('../models/store.model');
+const { usermodel } = require('../models/user.model');
 const{createproductfolder,updateproductfolder}=require('../uitility/folder.utilities')
 const fs = require("fs");
 
@@ -235,4 +236,95 @@ exports.getallproductscategory=async(req,res)=>{
         res.send({errormessage:error.message,error})
     }
 }
+
+exports.addremovefavoriteproduct=async(req,res)=>{
+    try {
+
+        const{userid}=req.body
+        const{productid}=req.params
+
+        const user=await usermodel.findById(userid).select('favoriteproducts')
+        const product=await productmodel.findById(productid)
+        if(user==null) return res.send({exceptionmessage:'user not found'})
+        if(product==null) return res.send({exceptionmessage:'product not found'})
+
+console.log('fetched user',user);
+
+        // if(user.favoriteproducts.length==0){
+        //     user.favoriteproducts.push(productid)
+        //     await user.save()
+        //     return res.send({message:'initial favorite product add ',user})
+
+        // }
+        indexofproduct=user.favoriteproducts.map(id=>id.product.toString()).indexOf(productid)
+
+        if(indexofproduct !=-1){
+            user.favoriteproducts.splice(indexofproduct,1)
+            await user.save()
+            return res.send({message:'favorite product removed ',user})
+        }
+        if(indexofproduct ==-1){
+
+            const producttosave={
+                product:productid,
+                store:product.store
+            }
+            user.favoriteproducts.push(producttosave)
+            await user.save()
+            return res.send({message:'favorite product added ',user})
+        }
+     
+
+
+        
+    } catch (error) {
+
+        res.send({errormessage:'error in post method for adding/removing product',error:error.message})
+        
+    }
+}
+
+exports.getfavoriteproducts=async(req,res)=>{
+    try {
+
+        const{userid}=req.body
+       
+
+        const userfavoriteproducts=await usermodel.findById(userid)
+        .select('favoriteproducts')
+        // .populate({path:'favoriteproducts',select:'productname productprice category store' })
+        .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice category productimages'}})
+        .populate({path:'favoriteproducts',  populate:{path:'store',select:'storename storeimage'}})
+  
+  
+
+        // .populate({path:'favoriteproducts',select})
+      
+        if(userfavoriteproducts==null) return res.send({exceptionmessage:'user not found'})
+
+        // const singleproductimage=userfavoriteproducts.productimages[0]
+        // const favoriteproductsresponse={
+        //     ...userfavoriteproducts,
+        //     productimages:singleproductimage
+        // }
+
+
+        userfavoriteproducts.favoriteproducts.forEach(favproduct => {
+            singleproductimage=favproduct.product.productimages[0]
+            favproduct.product.productimages=[singleproductimage]
+          
+            
+        });
+        res.send({userfavoriteproducts})
+
+
+        
+    } catch (error) {
+        
+        res.send({errormessage:'error in get method favorite products',error:error.message})
+
+    }
+}
+
+ 
 
