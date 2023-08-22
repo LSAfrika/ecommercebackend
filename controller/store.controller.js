@@ -81,7 +81,7 @@ exports.getstores=async(req,res)=>{
     const {pagination}=req.query
     const returnsize=1
     const skip=pagination*returnsize
-    const getstores =await storemodel.find().skip(skip)
+    const getstores =await storemodel.find({storedeactivated:false}).skip(skip)
     //.limit(returnsize)
 
     res.send({allstores:getstores})
