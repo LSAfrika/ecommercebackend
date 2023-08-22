@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "express  commerce endpoints",
-    "dateExported": "2023-08-18T09:04:09.930Z",
+    "dateExported": "2023-08-22T12:05:48.977Z",
     "version": "1.1",
     "folders": [
         {
@@ -128,6 +128,46 @@
                 "type": "json",
                 "raw": "{\n  \"email\":\"test@gmail.com\",\n  \"username\":\"test\",\n  \"password\":\"123456\",\n  \"reenterpassword\":\"123456\"\n  \n}",
                 "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "af1fe80f-a559-4162-a93d-3543f9540e35",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "fav store add/remove",
+            "url": "http://localhost:3000/stores/addremovefavoritestore/64dc79f245fd9690ea559d43",
+            "method": "POST",
+            "sortNum": 11250,
+            "created": "2023-08-22T11:20:37.437Z",
+            "modified": "2023-08-22T11:23:24.438Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTYzNzY0LCJleHAiOjE2OTI3Njg1NjQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.dg9TgJ_K9Yf7diCFCscVDfA1I-bUIpPKX3FHx6cMu-U"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "storename",
+                        "value": "view electronics"
+                    },
+                    {
+                        "name": "storepic",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "storepic",
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Penguins.jpg"
+                    }
+                ]
             },
             "tests": []
         },
@@ -300,6 +340,25 @@
             "tests": []
         },
         {
+            "_id": "af6226a8-325d-4d78-a369-bd98fb10df3e",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
+            "name": "favorited stores",
+            "url": "http://localhost:3000/stores/getuserfavoritedstores",
+            "method": "GET",
+            "sortNum": 16250,
+            "created": "2023-08-22T11:52:24.701Z",
+            "modified": "2023-08-22T11:54:58.638Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTYzNzY0LCJleHAiOjE2OTI3Njg1NjQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.dg9TgJ_K9Yf7diCFCscVDfA1I-bUIpPKX3FHx6cMu-U"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
             "_id": "f84aaccb-dedd-451f-a38f-5a4ca44b8f41",
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
@@ -449,6 +508,25 @@
                 "raw": "{\n  \"cartproducts\": [\n    {\n      \"product\": {\n        \"id\": \"64ddeac7b361e1f44037a333\",\n        \"quantity\": 2\n      }\n    },\n    {\n      \"product\": {\n        \"id\": \"64ddead8b361e1f44037a338\",\n        \"quantity\": 4\n      }\n    },\n    {\n      \"product\": {\n        \"id\": \"64ddeab6b361e1f44037a32d\",\n        \"quantity\": 1\n      }\n    }\n  ]\n}",
                 "form": []
             },
+            "tests": []
+        },
+        {
+            "_id": "7b98c1a2-dac9-4f7f-892a-168e87b332be",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "add/remove fav product",
+            "url": "http://localhost:3000/products/favoriteproduct/64ddead8b361e1f44037a338",
+            "method": "POST",
+            "sortNum": 31250,
+            "created": "2023-08-22T12:02:20.770Z",
+            "modified": "2023-08-22T12:03:48.115Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [],
             "tests": []
         },
         {
@@ -687,15 +765,55 @@
             "tests": []
         },
         {
+            "_id": "f3b2d6c0-c99e-4788-b795-18eae6fbdead",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "get favorite products",
+            "url": "http://localhost:3000/products/favoriteproducts",
+            "method": "GET",
+            "sortNum": 48750,
+            "created": "2023-08-22T12:00:59.738Z",
+            "modified": "2023-08-22T12:02:06.915Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "samsung s 10",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "20000",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
             "_id": "262d46a2-0843-4754-9b9b-7691014e7589",
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "get product",
-            "url": "http://localhost:3000/products/getsingleproduct/64dc97fcbf66c343efd3ff53",
+            "url": "http://localhost:3000/products/getsingleproduct/64ddead8b361e1f44037a338",
             "method": "GET",
             "sortNum": 50000,
             "created": "2023-08-16T09:34:41.823Z",
-            "modified": "2023-08-16T09:50:09.660Z",
+            "modified": "2023-08-22T07:33:23.922Z",
             "headers": [
                 {
                     "name": "Authorization",
