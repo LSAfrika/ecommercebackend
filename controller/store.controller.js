@@ -198,10 +198,31 @@ console.log('fetched user',user);
       
   } catch (error) {
 
-      res.send({errormessage:'error in post method for adding/removing product',error:error.message})
+      res.send({errormessage:'error in post method for adding/removing store',error:error.message})
       
   }
 }
 
 
+exports.getuserfavoritedstores=async(req,res)=>{
+  try {
+    const{userid}=req.body
+   
+
+    const userfavoritesdstores=await usermodel.findById(userid).select('favoritestores -_id')
+    .populate({path:'favoritestores',select:'storename storeimage membersince'})
+
+
   
+
+    if(userfavoritesdstores==null) return res.send({exceptionmessage:'user favorite stores not found'})
+   
+
+// console.log('fetched user',userfavoritesdstores);
+res.send(userfavoritesdstores)
+    
+  } catch (error) {
+    res.send({errormessage:'error in get method for getting store',error:error.message})
+    
+  }
+}
