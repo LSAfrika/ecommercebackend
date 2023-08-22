@@ -159,5 +159,49 @@ exports.deactivatestore=async(req,res)=>{
 }
 
 
+exports.addremovefavoritestore=async(req,res)=>{
+  try {
+
+      const{userid}=req.body
+      const{storeid}=req.params
+
+      const user=await usermodel.findById(userid).select('favoritestores')
+      const store=await storemodel.findById(storeid)
+      if(user==null) return res.send({exceptionmessage:'user not found'})
+      if(store==null) return res.send({exceptionmessage:'store not found'})
+
+console.log('fetched user',user);
+
+      // if(user.favoriteproducts.length==0){
+      //     user.favoriteproducts.push(productid)
+      //     await user.save()
+      //     return res.send({message:'initial favorite product add ',user})
+
+      // }
+      indexofstore=user.favoritestores.map(id=>id.toString()).indexOf(storeid)
+
+      if(indexofstore !=-1){
+          user.favoritestores.splice(indexofstore,1)
+          await user.save()
+          return res.send({message:'favorite store removed ',user})
+      }
+      if(indexofstore ==-1){
+
+      
+          user.favoritestores.push(storeid)
+          await user.save()
+          return res.send({message:'favorite store added ',user})
+      }
+   
+
+
+      
+  } catch (error) {
+
+      res.send({errormessage:'error in post method for adding/removing product',error:error.message})
+      
+  }
+}
+
 
   
