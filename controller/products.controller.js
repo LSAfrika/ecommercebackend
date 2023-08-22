@@ -170,7 +170,7 @@ exports.getallproducts=async(req,res)=>{
         const{pagination}=req.query
         returnsize=2
         skip=returnsize*pagination
-        const products=await productmodel.find().sort({createdAt:-1})
+        const products=await productmodel.find({productdeactivated:false}).sort({createdAt:-1})
         //.skip(skip)
         .populate({path:'store',select:'storename storeimage',model:'store'})
         //.limit(returnsize)
@@ -190,7 +190,8 @@ exports.getsingleproduct=async(req,res)=>{
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
         if(product==null)return res.send({exceptionmessage:'product not found'})
-        res.send(product)
+     if(product.productdeactivated==false) return  res.send(product)
+     if(product.productdeactivated==true) return  res.status(404).send({message:'product not found'})
         
     } catch (error) {
         console.log('get single product error',error.message)
@@ -207,7 +208,7 @@ exports.getallproductssinglestore=async(req,res)=>{
         returnsize=3
         skip=pagination*returnsize
         const {storeid}=req.params
-        const storeproducts= await productmodel.find({store:storeid}).sort({createdAt:-1})
+        const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
         res.send({storeproducts})
@@ -225,7 +226,7 @@ exports.getallproductscategory=async(req,res)=>{
         const {categoryid,pagination}=req.query
         returnsize=1
         skip=pagination*returnsize
-        const categoryproducts= await productmodel.find({category:categoryid}).sort({createdAt:-1}).skip(skip).limit(returnsize)
+        const categoryproducts= await productmodel.find({$and:[{category:categoryid},{productdeactivated:false}]}).sort({createdAt:-1}).skip(skip).limit(returnsize)
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
         res.send({categoryproducts})
@@ -292,7 +293,7 @@ exports.getfavoriteproducts=async(req,res)=>{
         const userfavoriteproducts=await usermodel.findById(userid)
         .select('favoriteproducts')
         // .populate({path:'favoriteproducts',select:'productname productprice category store' })
-        .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice category productimages'}})
+        .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice productdeactivated category productimages'}})
         .populate({path:'favoriteproducts',  populate:{path:'store',select:'storename storeimage'}})
   
   

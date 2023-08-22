@@ -1,3 +1,4 @@
+const { productmodel } = require('../models/products.model')
 const{storemodel}=require('../models/store.model')
 const{usermodel}=require('../models/user.model')
 const{createstoreimagefolder,updatestoreimage}=require('../uitility/folder.utilities')
@@ -122,12 +123,31 @@ exports.deactivatestore=async(req,res)=>{
     if(store.storedeactivated==true){
       store.storedeactivated=false
       await store.save()
-      return res.send({message:'store reactivated',store})
+
+      const storeproducts= await productmodel.find({store:store._id})
+      storeproducts.forEach(async(product) => {
+
+        product.productdeactivated=false
+        await product.save()
+        
+      });
+
+
+      return await res.send({message:'store reactivated',store,storeproducts})
     }
     if(store.storedeactivated==false){
       store.storedeactivated=true
       await store.save()
-      return res.send({message:'store deactivated',store})
+
+      
+      const storeproducts= await productmodel.find({store:store._id})
+      storeproducts.forEach(async(product) => {
+
+        product.productdeactivated=true
+        await product.save()
+        
+      });
+      return await res.send({message:'store deactivated',store,storeproducts})
     }
 
 
