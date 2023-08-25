@@ -190,8 +190,14 @@ exports.getsingleproduct=async(req,res)=>{
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
         if(product==null)return res.send({exceptionmessage:'product not found'})
-     if(product.productdeactivated==false) return  res.send(product)
-     if(product.productdeactivated==true) return  res.status(404).send({message:'product not found'})
+        if(product.productdeactivated==true) return  res.status(404).send({message:'product not found'})
+        if(product.productdeactivated==false) {
+
+            product.viewcount=product.viewcount+1
+
+            await product.save()
+            res.send(product)
+        }  
         
     } catch (error) {
         console.log('get single product error',error.message)

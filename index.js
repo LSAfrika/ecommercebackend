@@ -4,7 +4,7 @@ const cors=require('cors')
 const mongoose = require('mongoose')
 const expressuploader=require('express-fileupload')
 
-const LocalDBconnection =`mongodb://localhost:27017/ngcommerce`
+const LocalDBconnection =`mongodb://127.0.0.1:27017/ngcommerce`
 const PORT=process.env.PORT || 3000
 
 app.use(cors('*'))
@@ -18,10 +18,10 @@ app.get('/',async(req,res)=>{
     res.send({message:'root route working'})
 })
 
- app.use('api/v1/user',require('./routes/users.routes'))
- app.use('api/v1/products',require('./routes/products.routes'))
- app.use('api/v1/cart',require('./routes/cart.routes'))
- app.use('api/v1/stores',require('./routes/stores.routes'))
+ app.use('/api/v1/user',require('./routes/users.routes'))
+ app.use('/api/v1/products',require('./routes/products.routes'))
+ app.use('/api/v1/cart',require('./routes/cart.routes'))
+ app.use('/api/v1/stores',require('./routes/stores.routes'))
 
 
 
@@ -37,6 +37,7 @@ const entry=async()=>{
 
   } catch (error) {
     console.log(error.message);
+    console.log(error);
   }
 
 }
