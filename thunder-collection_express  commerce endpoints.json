@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "express  commerce endpoints",
-    "dateExported": "2023-08-22T12:05:48.977Z",
+    "dateExported": "2023-08-25T04:43:43.860Z",
     "version": "1.1",
     "folders": [
         {
@@ -39,11 +39,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
             "name": "register user",
-            "url": "http://localhost:3000/user/register",
+            "url": "http://localhost:3000/api/v1/user/register",
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-08-15T08:01:11.248Z",
-            "modified": "2023-08-15T08:19:24.538Z",
+            "modified": "2023-08-25T04:25:26.015Z",
             "headers": [],
             "params": [],
             "body": {
@@ -58,11 +58,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
             "name": "create store",
-            "url": "http://localhost:3000/stores/createstore",
+            "url": "http://localhost:3000/api/v1/stores/createstore",
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-08-16T05:02:37.284Z",
-            "modified": "2023-08-16T07:25:38.849Z",
+            "modified": "2023-08-25T04:40:32.369Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -98,11 +98,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
             "name": "get cart",
-            "url": "http://localhost:3000/cart/getcart",
+            "url": "http://localhost:3000/api/v1/cart/getcart",
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-08-17T09:24:06.903Z",
-            "modified": "2023-08-17T09:25:28.985Z",
+            "modified": "2023-08-25T04:42:45.099Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -117,11 +117,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
             "name": "change password user",
-            "url": "http://localhost:3000/user/register",
+            "url": "http://localhost:3000/api/v1/user/register",
             "method": "POST",
             "sortNum": 11250,
             "created": "2023-08-15T08:30:22.382Z",
-            "modified": "2023-08-15T08:30:22.382Z",
+            "modified": "2023-08-25T04:29:50.079Z",
             "headers": [],
             "params": [],
             "body": {
@@ -136,11 +136,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
             "name": "fav store add/remove",
-            "url": "http://localhost:3000/stores/addremovefavoritestore/64dc79f245fd9690ea559d43",
+            "url": "http://localhost:3000/api/v1/stores/addremovefavoritestore/64dc79f245fd9690ea559d43",
             "method": "POST",
             "sortNum": 11250,
             "created": "2023-08-22T11:20:37.437Z",
-            "modified": "2023-08-22T11:23:24.438Z",
+            "modified": "2023-08-25T04:40:38.494Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -176,11 +176,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
             "name": "update user",
-            "url": "http://localhost:3000/user/updatebio",
+            "url": "http://localhost:3000/api/v1/user/updatebio",
             "method": "PATCH",
             "sortNum": 12500,
             "created": "2023-08-15T08:29:31.814Z",
-            "modified": "2023-08-16T04:53:17.285Z",
+            "modified": "2023-08-25T04:29:57.723Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -217,11 +217,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
             "name": "update store",
-            "url": "http://localhost:3000/stores/updatestore",
+            "url": "http://localhost:3000/api/v1/stores/updatestore",
             "method": "PATCH",
             "sortNum": 12500,
             "created": "2023-08-16T07:57:45.937Z",
-            "modified": "2023-08-17T04:26:08.670Z",
+            "modified": "2023-08-25T04:41:50.766Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -257,11 +257,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
             "name": "completed orders",
-            "url": "http://localhost:3000/cart/completedorders",
+            "url": "http://localhost:3000/api/v1/cart/completedorders",
             "method": "GET",
             "sortNum": 12500,
             "created": "2023-08-18T08:16:10.013Z",
-            "modified": "2023-08-18T08:24:47.123Z",
+            "modified": "2023-08-25T04:43:01.957Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -276,11 +276,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
             "name": "fetch bio",
-            "url": "http://localhost:3000/user/bio",
+            "url": "http://localhost:3000/api/v1/user/bio",
             "method": "GET",
             "sortNum": 15000,
             "created": "2023-08-15T08:22:06.010Z",
-            "modified": "2023-08-15T08:28:03.818Z",
+            "modified": "2023-08-25T04:30:06.143Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -300,11 +300,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
             "name": "get stores",
-            "url": "http://localhost:3000/stores/allstores?pagination=0",
+            "url": "http://localhost:3000/api/v1/stores/allstores?pagination=0",
             "method": "GET",
             "sortNum": 15000,
             "created": "2023-08-16T05:04:08.534Z",
-            "modified": "2023-08-16T09:06:02.544Z",
+            "modified": "2023-08-25T04:42:01.359Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -325,11 +325,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
             "name": "check out cart",
-            "url": "http://localhost:3000/cart/checkoutcart",
+            "url": "http://localhost:3000/api/v1/cart/checkoutcart",
             "method": "GET",
             "sortNum": 15000,
             "created": "2023-08-18T07:05:23.437Z",
-            "modified": "2023-08-18T07:44:10.551Z",
+            "modified": "2023-08-25T04:43:11.813Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -344,11 +344,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
             "name": "favorited stores",
-            "url": "http://localhost:3000/stores/getuserfavoritedstores",
+            "url": "http://localhost:3000/api/v1/stores/getuserfavoritedstores",
             "method": "GET",
             "sortNum": 16250,
             "created": "2023-08-22T11:52:24.701Z",
-            "modified": "2023-08-22T11:54:58.638Z",
+            "modified": "2023-08-25T04:42:08.044Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -363,11 +363,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
             "name": "get store",
-            "url": "http://localhost:3000/stores/store/64dc79f245fd9690ea559d43",
+            "url": "http://localhost:3000/stores/api/v1/store/64dc79f245fd9690ea559d43",
             "method": "GET",
             "sortNum": 17500,
             "created": "2023-08-16T09:07:58.250Z",
-            "modified": "2023-08-16T09:09:36.762Z",
+            "modified": "2023-08-25T04:42:16.916Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -382,11 +382,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "1adb5a42-a717-4677-bfb6-2d6102b3ec6e",
             "name": "login user ",
-            "url": "http://localhost:3000/user/login",
+            "url": "http://localhost:3000/api/v1/user/login",
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-08-15T08:19:39.635Z",
-            "modified": "2023-08-16T05:29:24.186Z",
+            "modified": "2023-08-25T04:30:36.913Z",
             "headers": [],
             "params": [],
             "body": {
@@ -401,11 +401,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
             "name": "post cart",
-            "url": "http://localhost:3000/cart/addtocart",
+            "url": "http://localhost:3000/api/v1/cart/addtocart",
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-08-17T09:34:40.579Z",
-            "modified": "2023-08-18T08:08:17.038Z",
+            "modified": "2023-08-25T04:43:21.075Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -425,11 +425,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "create product",
-            "url": "http://localhost:3000/products/createproduct",
+            "url": "http://localhost:3000/api/v1/products/createproduct",
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-08-16T04:58:05.809Z",
-            "modified": "2023-08-17T09:39:36.795Z",
+            "modified": "2023-08-25T04:31:15.238Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -472,11 +472,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "e3cfe84a-d1d0-497e-abff-107621a042a0",
             "name": "set store status",
-            "url": "http://localhost:3000/stores/storeststus",
+            "url": "http://localhost:3000/api/v1/stores/storeststus",
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-08-16T05:03:16.062Z",
-            "modified": "2023-08-16T08:47:57.596Z",
+            "modified": "2023-08-25T04:42:22.473Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -491,11 +491,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "0c264578-3a7e-41a7-8395-f6f6d388ed53",
             "name": "reset cart",
-            "url": "http://localhost:3000/cart/resetcart",
+            "url": "http://localhost:3000/api/v1/cart/resetcart",
             "method": "PATCH",
             "sortNum": 30000,
             "created": "2023-08-18T06:48:27.212Z",
-            "modified": "2023-08-18T06:51:00.683Z",
+            "modified": "2023-08-25T04:43:30.490Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -515,11 +515,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "add/remove fav product",
-            "url": "http://localhost:3000/products/favoriteproduct/64ddead8b361e1f44037a338",
+            "url": "http://localhost:3000/api/v1/products/favoriteproduct/64ddead8b361e1f44037a338",
             "method": "POST",
             "sortNum": 31250,
             "created": "2023-08-22T12:02:20.770Z",
-            "modified": "2023-08-22T12:03:48.115Z",
+            "modified": "2023-08-25T04:31:21.435Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -534,11 +534,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "delete product",
-            "url": "http://localhost:3000/products/deleteproduct/64ddb540d2ed2d4dd6debfdc",
+            "url": "http://localhost:3000/api/v1/products/deleteproduct/64ddb540d2ed2d4dd6debfdc",
             "method": "DELETE",
             "sortNum": 32500,
             "created": "2023-08-17T07:47:50.560Z",
-            "modified": "2023-08-17T08:08:04.250Z",
+            "modified": "2023-08-25T04:31:28.382Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -553,11 +553,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "delete product image",
-            "url": "http://localhost:3000/products/deleteproductimage/64ddb75f9066edd30923d31d",
+            "url": "http://localhost:3000/products/api/v1/deleteproductimage/64ddb75f9066edd30923d31d",
             "method": "DELETE",
             "sortNum": 33750,
             "created": "2023-08-17T08:13:32.150Z",
-            "modified": "2023-08-17T09:17:39.369Z",
+            "modified": "2023-08-25T04:31:35.916Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -579,11 +579,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "update product",
-            "url": "http://localhost:3000/products/updateproduct/64ddb75f9066edd30923d31d",
+            "url": "http://localhost:3000/api/v1/products/updateproduct/64ddb75f9066edd30923d31d",
             "method": "PATCH",
             "sortNum": 35000,
             "created": "2023-08-17T06:08:40.298Z",
-            "modified": "2023-08-17T06:53:23.607Z",
+            "modified": "2023-08-25T04:31:42.423Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -626,11 +626,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "get products",
-            "url": "http://localhost:3000/products/getallproducts?pagination=0",
+            "url": "http://localhost:3000/api/v1/products/getallproducts?pagination=0",
             "method": "GET",
             "sortNum": 40000,
             "created": "2023-08-16T09:34:12.624Z",
-            "modified": "2023-08-16T09:58:03.816Z",
+            "modified": "2023-08-25T04:31:50.357Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -672,11 +672,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "get products categories",
-            "url": "http://localhost:3000/products/getallproductscategory?categoryid=Phones&pagination=0",
+            "url": "http://localhost:3000/api/v1/products/getallproductscategory?categoryid=Phones&pagination=0",
             "method": "GET",
             "sortNum": 45000,
             "created": "2023-08-16T09:59:27.628Z",
-            "modified": "2023-08-16T10:04:56.589Z",
+            "modified": "2023-08-25T04:31:56.437Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -723,11 +723,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "get products store",
-            "url": "http://localhost:3000/products/getallproductsstore/64dc79f245fd9690ea559d43?pagination=0",
+            "url": "http://localhost:3000/api/v1/products/getallproductsstore/64dc79f245fd9690ea559d43?pagination=0",
             "method": "GET",
             "sortNum": 47500,
             "created": "2023-08-16T10:06:51.480Z",
-            "modified": "2023-08-16T10:09:43.730Z",
+            "modified": "2023-08-25T04:32:03.156Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -769,11 +769,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "get favorite products",
-            "url": "http://localhost:3000/products/favoriteproducts",
+            "url": "http://localhost:3000/api/v1/products/favoriteproducts",
             "method": "GET",
             "sortNum": 48750,
             "created": "2023-08-22T12:00:59.738Z",
-            "modified": "2023-08-22T12:02:06.915Z",
+            "modified": "2023-08-25T04:32:08.505Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -809,11 +809,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "get product",
-            "url": "http://localhost:3000/products/getsingleproduct/64ddead8b361e1f44037a338",
+            "url": "http://localhost:3000/api/v1/products/getsingleproduct/64ddead8b361e1f44037a338",
             "method": "GET",
             "sortNum": 50000,
             "created": "2023-08-16T09:34:41.823Z",
-            "modified": "2023-08-22T07:33:23.922Z",
+            "modified": "2023-08-25T04:32:14.578Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -823,5 +823,10 @@
             "params": [],
             "tests": []
         }
-    ]
+    ],
+    "settings": {
+        "headers": [],
+        "tests": [],
+        "docs": "mjj"
+    }
 }

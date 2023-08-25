@@ -1,4 +1,7 @@
 ISSUE TRACKER
 
-1.refactor logic of user/favorite store
-2.add logic for user/favorite product
+1.refactor logic of user/favorite store -->DONE
+2.add logic for user/favorite product -->DONE
+
+3.add viewed counter logic to product 
+4.in ui addfavorited item view

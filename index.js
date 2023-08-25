@@ -18,10 +18,10 @@ app.get('/',async(req,res)=>{
     res.send({message:'root route working'})
 })
 
- app.use('/user',require('./routes/users.routes'))
- app.use('/products',require('./routes/products.routes'))
- app.use('/cart',require('./routes/cart.routes'))
- app.use('/stores',require('./routes/stores.routes'))
+ app.use('api/v1/user',require('./routes/users.routes'))
+ app.use('api/v1/products',require('./routes/products.routes'))
+ app.use('api/v1/cart',require('./routes/cart.routes'))
+ app.use('api/v1/stores',require('./routes/stores.routes'))
 
 
 
