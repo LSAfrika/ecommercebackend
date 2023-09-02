@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "express  commerce endpoints",
-    "dateExported": "2023-08-25T04:43:43.860Z",
+    "dateExported": "2023-09-02T06:52:15.264Z",
     "version": "1.1",
     "folders": [
         {
@@ -43,12 +43,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-08-15T08:01:11.248Z",
-            "modified": "2023-08-25T04:25:26.015Z",
+            "modified": "2023-09-02T05:36:31.831Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\":\"test@gmail.com\",\n  \"username\":\"test\",\n  \"password\":\"123456\",\n  \"reenterpassword\":\"123456\"\n  \n}",
+                "raw": "{\n  \"email\":\"test2@gmail.com\",\n  \"username\":\"test2\",\n  \"password\":\"123456\",\n  \"reenterpassword\":\"123456\"\n  \n}",
                 "form": []
             },
             "tests": []
@@ -62,11 +62,11 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-08-16T05:02:37.284Z",
-            "modified": "2023-08-25T04:40:32.369Z",
+            "modified": "2023-09-02T05:39:54.535Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTYzNzY0LCJleHAiOjE2OTI3Njg1NjQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.dg9TgJ_K9Yf7diCFCscVDfA1I-bUIpPKX3FHx6cMu-U"
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGYyYzlkZmQzZTE2ODNhZTc0MzI2YjgiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsInByb2ZpbGVpbWciOiIvZGVmYXVsdC9wcm9maWxlLnBuZyIsInVzZXJuYW1lIjoidGVzdDIiLCJpYXQiOjE2OTM2MzI5OTEsImV4cCI6MTY5NDIzNzc5MSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIn0.ieRgmfIYeHAx8eUQJkoilXpUWimd5D_yJs5fZgFrC7M"
                 }
             ],
             "params": [],
@@ -76,7 +76,7 @@
                 "form": [
                     {
                         "name": "storename",
-                        "value": "view electronics"
+                        "value": "one touch elevtronicss"
                     },
                     {
                         "name": "storepic",
@@ -87,7 +87,8 @@
                 "files": [
                     {
                         "name": "storepic",
-                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Penguins.jpg"
+                        "value": "c:\\Users\\Public\\Pictures\\Sample Pictures\\Penguins.jpg",
+                        "isDisabled": true
                     }
                 ]
             },
@@ -102,11 +103,11 @@
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-08-17T09:24:06.903Z",
-            "modified": "2023-08-25T04:42:45.099Z",
+            "modified": "2023-09-02T05:38:57.529Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGYyYzlkZmQzZTE2ODNhZTc0MzI2YjgiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsInByb2ZpbGVpbWciOiIvZGVmYXVsdC9wcm9maWxlLnBuZyIsInVzZXJuYW1lIjoidGVzdDIiLCJpYXQiOjE2OTM2MzI5OTEsImV4cCI6MTY5NDIzNzc5MSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIn0.ieRgmfIYeHAx8eUQJkoilXpUWimd5D_yJs5fZgFrC7M"
                 }
             ],
             "params": [],
@@ -261,11 +262,11 @@
             "method": "GET",
             "sortNum": 12500,
             "created": "2023-08-18T08:16:10.013Z",
-            "modified": "2023-08-25T04:43:01.957Z",
+            "modified": "2023-08-25T04:47:50.825Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyOTM4ODM1LCJleHAiOjE2OTM1NDM2MzUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.FD7Skdseo5mT_bBpT7OsG-k58bOoEi1K1HmMX8tmG54"
                 }
             ],
             "params": [],
@@ -329,11 +330,11 @@
             "method": "GET",
             "sortNum": 15000,
             "created": "2023-08-18T07:05:23.437Z",
-            "modified": "2023-08-25T04:43:11.813Z",
+            "modified": "2023-08-25T04:48:23.553Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyOTM4ODM1LCJleHAiOjE2OTM1NDM2MzUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.FD7Skdseo5mT_bBpT7OsG-k58bOoEi1K1HmMX8tmG54"
                 }
             ],
             "params": [],
@@ -405,11 +406,11 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-08-17T09:34:40.579Z",
-            "modified": "2023-08-25T04:43:21.075Z",
+            "modified": "2023-08-25T04:48:40.993Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyOTM4ODM1LCJleHAiOjE2OTM1NDM2MzUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.FD7Skdseo5mT_bBpT7OsG-k58bOoEi1K1HmMX8tmG54"
                 }
             ],
             "params": [],
@@ -429,11 +430,11 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-08-16T04:58:05.809Z",
-            "modified": "2023-08-25T04:31:15.238Z",
+            "modified": "2023-09-02T06:21:25.807Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkzNjM1MzM2LCJleHAiOjE2OTQyNDAxMzYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.lr9Ia-vey7oWJvsaPbKxP8UTDK0J8rjPb71AvocGBM4"
                 }
             ],
             "params": [],
@@ -443,15 +444,19 @@
                 "form": [
                     {
                         "name": "productname",
-                        "value": "xperia 10"
+                        "value": "sony shake 70D"
                     },
                     {
                         "name": "productprice",
-                        "value": "42000"
+                        "value": "75000"
                     },
                     {
                         "name": "category",
-                        "value": "Phones"
+                        "value": "Home theatres"
+                    },
+                    {
+                        "name": "brand",
+                        "value": "Sony"
                     }
                 ],
                 "files": [
@@ -495,11 +500,11 @@
             "method": "PATCH",
             "sortNum": 30000,
             "created": "2023-08-18T06:48:27.212Z",
-            "modified": "2023-08-25T04:43:30.490Z",
+            "modified": "2023-08-25T04:49:08.916Z",
             "headers": [
                 {
                     "name": "Authorization",
-                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc1NjYxLCJleHAiOjE2OTI3ODA0NjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.MPHm4BqJucHXthUiYkw7xrIy0QECdjXMlu6zpXPQc8A"
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyOTM4ODM1LCJleHAiOjE2OTM1NDM2MzUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.FD7Skdseo5mT_bBpT7OsG-k58bOoEi1K1HmMX8tmG54"
                 }
             ],
             "params": [],
@@ -672,11 +677,11 @@
             "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
             "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
             "name": "get products categories",
-            "url": "http://localhost:3000/api/v1/products/getallproductscategory?categoryid=Phones&pagination=0",
+            "url": "http://localhost:3000/api/v1/products/getallproductscategory?categoryid=Tvs&pagination=0",
             "method": "GET",
             "sortNum": 45000,
             "created": "2023-08-16T09:59:27.628Z",
-            "modified": "2023-08-25T04:31:56.437Z",
+            "modified": "2023-09-02T06:26:24.278Z",
             "headers": [
                 {
                     "name": "Authorization",
@@ -686,12 +691,119 @@
             "params": [
                 {
                     "name": "categoryid",
-                    "value": "Phones",
+                    "value": "Tvs",
                     "isPath": false
                 },
                 {
                     "name": "pagination",
                     "value": "0",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "samsung s 10",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "20000",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "d428871e-884c-4159-b217-5cff541a41b3",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "get products brands",
+            "url": "http://localhost:3000/api/v1/products/getallproductsbrand?brandid=Sony&pagination=1",
+            "method": "GET",
+            "sortNum": 46250,
+            "created": "2023-09-02T06:33:52.024Z",
+            "modified": "2023-09-02T06:35:49.642Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [
+                {
+                    "name": "brandid",
+                    "value": "Sony",
+                    "isPath": false
+                },
+                {
+                    "name": "pagination",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "productname",
+                        "value": "samsung s 10",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "productprice",
+                        "value": "20000",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "category",
+                        "value": "Phones",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "4f14377f-4bca-4cc3-8b49-9c34e2d42569",
+            "colId": "7d284932-e582-43bb-a0ad-f54f8c5c88d1",
+            "containerId": "c1c8cf43-dc51-4a6f-b0b0-5ae17b6ab9ea",
+            "name": "get products category and  brand",
+            "url": "http://localhost:3000/api/v1/products/getallproductscategorybrand?brandid=Sony&pagination=0&categoryid=Home theatres",
+            "method": "GET",
+            "sortNum": 46875,
+            "created": "2023-09-02T06:42:59.142Z",
+            "modified": "2023-09-02T06:48:22.368Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGRjNTViYzc2OTcyOTQ5MWUzNjEzZDkiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0dXBkYXRlZCIsInByb2ZpbGVpbWciOiJ1c2VyLzY0ZGM1NWJjNzY5NzI5NDkxZTM2MTNkOS5qcGVnIiwiaWF0IjoxNjkyMTc4MzgyLCJleHAiOjE2OTI3ODMxODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.YrRbA2PYdwhYVNn0pS-dvx8wI5Am3b54C2Xo__lhngg"
+                }
+            ],
+            "params": [
+                {
+                    "name": "brandid",
+                    "value": "Sony",
+                    "isPath": false
+                },
+                {
+                    "name": "pagination",
+                    "value": "0",
+                    "isPath": false
+                },
+                {
+                    "name": "categoryid",
+                    "value": "Home theatres",
                     "isPath": false
                 }
             ],
