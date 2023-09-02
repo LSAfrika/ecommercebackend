@@ -7,7 +7,7 @@ const fs = require("fs");
 exports.createproduct=async(req,res)=>{
 
     try {
-        const {userid,productname,productprice,category}=req.body
+        const {userid,productname,productprice,category,brand}=req.body
         const store=await storemodel.findOne({storeowner:userid})
        
         if(store==null)return res.send({exceptionmessage:'store not found'})
@@ -20,6 +20,7 @@ exports.createproduct=async(req,res)=>{
         productname,
         productprice,
         category,
+        brand,
         store:store._id,
         productimages:['/default/store.png'] })
 

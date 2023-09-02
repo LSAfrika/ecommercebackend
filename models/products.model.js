@@ -12,7 +12,9 @@ exports.productmodel = mongoose.model('product',mongoose.Schema({
     productimages:[{type:String,required:true }],
     viewcount:{type:Number,required:true,default:0},
     category:{type:String,required:true,
-        enum:['Phones','Men\'s clothes','Men\'s shoes','Tvs','Audio','Women\'s clothes','Women\'s shoes','Baby wear',]}
+      enum:['Phones','Laptops','Desktops','Tvs','Home theatre','monitors','Head sets']},
+    brand:{type:String,required:true,
+      enum:['Samsung','Sony','Apple','Xiaomi','Tecno','Infinix','Hotpoint','Oppo','Huawei','Awei','Oraimo','Lg','Hisense','Synix','Nokia']}
 
 },{timestamps:true}
 
