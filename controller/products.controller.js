@@ -231,12 +231,52 @@ exports.getallproductscategory=async(req,res)=>{
     try {
         
         const {categoryid,pagination}=req.query
-        returnsize=1
+        returnsize=5
         skip=pagination*returnsize
         const categoryproducts= await productmodel.find({$and:[{category:categoryid},{productdeactivated:false}]}).sort({createdAt:-1}).skip(skip).limit(returnsize)
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
         res.send({categoryproducts})
+
+    } catch (error) {
+        console.log('get all products category error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+
+exports.getallproductsbrand=async(req,res)=>{
+    
+    try {
+        
+        const {brandid,pagination}=req.query
+        returnsize=5
+        skip=pagination*returnsize
+        const brandproducts= await productmodel.find({$and:[{brand:brandid},{productdeactivated:false}]}).sort({createdAt:-1}).skip(skip).limit(returnsize)
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+
+        res.send({brandproducts})
+
+    } catch (error) {
+        console.log('get all products category error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+exports.getallproductscategorybrand=async(req,res)=>{
+    
+    try {
+        
+        const {categoryid,brandid,pagination}=req.query
+        returnsize=5
+        skip=pagination*returnsize
+        const categorybrandproducts= await productmodel.
+        find({$and:[{category:categoryid},{brand:brandid},{productdeactivated:false}]}).
+        // select('productname category brand  ').
+        sort({createdAt:-1}).skip(skip).limit(returnsize)
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+
+        res.send({categorybrandproducts})
 
     } catch (error) {
         console.log('get all products category error',error.message)
