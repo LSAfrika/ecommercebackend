@@ -8,8 +8,11 @@ exports.productmodel = mongoose.model('product',mongoose.Schema({
     productname:{type:String,required:true},
     productprice:{type:Number,required:true},
     store:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'store'},
- productdeactivated:{type:Boolean,required:true,default:false},
+    productdeactivated:{type:Boolean,required:true,default:false},
     productimages:[{type:String,required:true }],
+    productdescription:{type:String,required:true ,default:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, debitis.'},
+    productspecification:[{type:String,required:true }],
+    
     viewcount:{type:Number,required:true,default:0},
     category:{type:String,required:true,
       enum:['Phones','Laptops','Desktops','Tvs','Home theatres','monitors','Head sets']},
