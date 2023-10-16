@@ -53,6 +53,7 @@ exports.register = async (req, res) => {
 
     return res.send({
       message: `welcome ${userresponse.username}`,
+      userdata:userresponse,
       token,
       refreshtoken,
     });
@@ -114,6 +115,7 @@ exports.login = async (req, res) => {
 
     return res.send({
       message: `welcome back ${payload.username}`,
+      userdata:payload,
       token,
       refreshtoken,
     });
