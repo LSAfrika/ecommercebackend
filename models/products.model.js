@@ -8,10 +8,13 @@ exports.productmodel = mongoose.model('product',mongoose.Schema({
     productname:{type:String,required:true},
     productprice:{type:Number,required:true},
     store:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'store'},
- 
+ productdeactivated:{type:Boolean,required:true,default:false},
     productimages:[{type:String,required:true }],
+    viewcount:{type:Number,required:true,default:0},
     category:{type:String,required:true,
-        enum:['Phones','Men\'s clothes','Men\'s shoes','Tvs','Audio','Women\'s clothes','Women\'s shoes','Baby wear',]}
+      enum:['Phones','Laptops','Desktops','Tvs','Home theatres','monitors','Head sets']},
+    brand:{type:String,required:true,
+      enum:['Samsung','Hp','Dell','Lenovo','Acer','Sony','Apple','Xiaomi','Tecno','Infinix','Hotpoint','Oppo','Huawei','Awei','Oraimo','Lg','Hisense','Synix','Nokia']}
 
 },{timestamps:true}
 

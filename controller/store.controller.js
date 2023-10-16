@@ -1,3 +1,4 @@
+const { productmodel } = require('../models/products.model')
 const{storemodel}=require('../models/store.model')
 const{usermodel}=require('../models/user.model')
 const{createstoreimagefolder,updatestoreimage}=require('../uitility/folder.utilities')
@@ -81,7 +82,7 @@ exports.getstores=async(req,res)=>{
     const {pagination}=req.query
     const returnsize=1
     const skip=pagination*returnsize
-    const getstores =await storemodel.find().skip(skip)
+    const getstores =await storemodel.find({storedeactivated:false}).skip(skip)
     //.limit(returnsize)
 
     res.send({allstores:getstores})
@@ -122,12 +123,31 @@ exports.deactivatestore=async(req,res)=>{
     if(store.storedeactivated==true){
       store.storedeactivated=false
       await store.save()
-      return res.send({message:'store reactivated',store})
+
+      const storeproducts= await productmodel.find({store:store._id})
+      storeproducts.forEach(async(product) => {
+
+        product.productdeactivated=false
+        await product.save()
+        
+      });
+
+
+      return await res.send({message:'store reactivated',store,storeproducts})
     }
     if(store.storedeactivated==false){
       store.storedeactivated=true
       await store.save()
-      return res.send({message:'store deactivated',store})
+
+      
+      const storeproducts= await productmodel.find({store:store._id})
+      storeproducts.forEach(async(product) => {
+
+        product.productdeactivated=true
+        await product.save()
+        
+      });
+      return await res.send({message:'store deactivated',store,storeproducts})
     }
 
 
@@ -139,5 +159,70 @@ exports.deactivatestore=async(req,res)=>{
 }
 
 
+exports.addremovefavoritestore=async(req,res)=>{
+  try {
+
+      const{userid}=req.body
+      const{storeid}=req.params
+
+      const user=await usermodel.findById(userid).select('favoritestores')
+      const store=await storemodel.findById(storeid)
+      if(user==null) return res.send({exceptionmessage:'user not found'})
+      if(store==null) return res.send({exceptionmessage:'store not found'})
+
+console.log('fetched user',user);
+
+      // if(user.favoriteproducts.length==0){
+      //     user.favoriteproducts.push(productid)
+      //     await user.save()
+      //     return res.send({message:'initial favorite product add ',user})
+
+      // }
+      indexofstore=user.favoritestores.map(id=>id.toString()).indexOf(storeid)
+
+      if(indexofstore !=-1){
+          user.favoritestores.splice(indexofstore,1)
+          await user.save()
+          return res.send({message:'favorite store removed ',user})
+      }
+      if(indexofstore ==-1){
+
+      
+          user.favoritestores.push(storeid)
+          await user.save()
+          return res.send({message:'favorite store added ',user})
+      }
+   
+
+
+      
+  } catch (error) {
+
+      res.send({errormessage:'error in post method for adding/removing store',error:error.message})
+      
+  }
+}
+
+
+exports.getuserfavoritedstores=async(req,res)=>{
+  try {
+    const{userid}=req.body
+   
+
+    const userfavoritesdstores=await usermodel.findById(userid).select('favoritestores -_id')
+    .populate({path:'favoritestores',select:'storename storeimage membersince'})
+
 
   
+
+    if(userfavoritesdstores==null) return res.send({exceptionmessage:'user favorite stores not found'})
+   
+
+// console.log('fetched user',userfavoritesdstores);
+res.send(userfavoritesdstores)
+    
+  } catch (error) {
+    res.send({errormessage:'error in get method for getting store',error:error.message})
+    
+  }
+}

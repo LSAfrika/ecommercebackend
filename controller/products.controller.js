@@ -7,7 +7,7 @@ const fs = require("fs");
 exports.createproduct=async(req,res)=>{
 
     try {
-        const {userid,productname,productprice,category}=req.body
+        const {userid,productname,productprice,category,brand}=req.body
         const store=await storemodel.findOne({storeowner:userid})
        
         if(store==null)return res.send({exceptionmessage:'store not found'})
@@ -20,6 +20,7 @@ exports.createproduct=async(req,res)=>{
         productname,
         productprice,
         category,
+        brand,
         store:store._id,
         productimages:['/default/store.png'] })
 
@@ -103,12 +104,11 @@ exports.deleteproduct=async(req,res)=>{
 }
 
 exports.deleteproductimage=async(req,res)=>{
-    
-    try {
+ try {
         const {productid}=req.params
         const {index}=req.query
         const {userid}=req.body
-console.log(index);
+             console.log(index);
         if(index==-1||index==undefined)return res.send({exceptionmessage:'index to delete not provided'})
         const store=await storemodel.findOne({storeowner:userid})
        
@@ -171,7 +171,7 @@ exports.getallproducts=async(req,res)=>{
         const{pagination}=req.query
         returnsize=2
         skip=returnsize*pagination
-        const products=await productmodel.find().sort({createdAt:-1})
+        const products=await productmodel.find({productdeactivated:false}).sort({createdAt:-1})
         //.skip(skip)
         .populate({path:'store',select:'storename storeimage',model:'store'})
         //.limit(returnsize)
@@ -191,7 +191,14 @@ exports.getsingleproduct=async(req,res)=>{
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
         if(product==null)return res.send({exceptionmessage:'product not found'})
-        res.send(product)
+        if(product.productdeactivated==true) return  res.status(404).send({message:'product not found'})
+        if(product.productdeactivated==false) {
+
+            product.viewcount=product.viewcount+1
+
+            await product.save()
+            res.send(product)
+        }  
         
     } catch (error) {
         console.log('get single product error',error.message)
@@ -208,7 +215,7 @@ exports.getallproductssinglestore=async(req,res)=>{
         returnsize=3
         skip=pagination*returnsize
         const {storeid}=req.params
-        const storeproducts= await productmodel.find({store:storeid}).sort({createdAt:-1})
+        const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
         res.send({storeproducts})
@@ -224,12 +231,52 @@ exports.getallproductscategory=async(req,res)=>{
     try {
         
         const {categoryid,pagination}=req.query
-        returnsize=1
+        returnsize=5
         skip=pagination*returnsize
-        const categoryproducts= await productmodel.find({category:categoryid}).sort({createdAt:-1}).skip(skip).limit(returnsize)
+        const categoryproducts= await productmodel.find({$and:[{category:categoryid},{productdeactivated:false}]}).sort({createdAt:-1}).skip(skip).limit(returnsize)
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
         res.send({categoryproducts})
+
+    } catch (error) {
+        console.log('get all products category error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+
+exports.getallproductsbrand=async(req,res)=>{
+    
+    try {
+        
+        const {brandid,pagination}=req.query
+        returnsize=5
+        skip=pagination*returnsize
+        const brandproducts= await productmodel.find({$and:[{brand:brandid},{productdeactivated:false}]}).sort({createdAt:-1}).skip(skip).limit(returnsize)
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+
+        res.send({brandproducts})
+
+    } catch (error) {
+        console.log('get all products category error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+exports.getallproductscategorybrand=async(req,res)=>{
+    
+    try {
+        
+        const {categoryid,brandid,pagination}=req.query
+        returnsize=5
+        skip=pagination*returnsize
+        const categorybrandproducts= await productmodel.
+        find({$and:[{category:categoryid},{brand:brandid},{productdeactivated:false}]}).
+        // select('productname category brand  ').
+        sort({createdAt:-1}).skip(skip).limit(returnsize)
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+
+        res.send({categorybrandproducts})
 
     } catch (error) {
         console.log('get all products category error',error.message)
@@ -293,7 +340,7 @@ exports.getfavoriteproducts=async(req,res)=>{
         const userfavoriteproducts=await usermodel.findById(userid)
         .select('favoriteproducts')
         // .populate({path:'favoriteproducts',select:'productname productprice category store' })
-        .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice category productimages'}})
+        .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice productdeactivated category productimages'}})
         .populate({path:'favoriteproducts',  populate:{path:'store',select:'storename storeimage'}})
   
   
