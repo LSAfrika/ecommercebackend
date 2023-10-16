@@ -151,11 +151,11 @@ exports.updatebio = async (req, res) => {
     if (updateuser == null)return res.status(404).send({ errormessage: "no user found" });
 
    
-    if(oldpassword) passwordcomparison= await bcrypt.compare(oldpassword,updateuser.password)
+    if(oldpassword) {passwordcomparison= await bcrypt.compare(oldpassword,updateuser.password)
     if(passwordcomparison==false) return res.status(409).send({errormessage:'old password missmatch'})
     if(newpassword &&newpassword.length<6)return res.send({errormessage:'new password must be atleast 6 digits'})
     if(newpassword &&reenternewpassword && newpassword!=reenternewpassword)return res.send({errormessage:'new password missmatch'})
-
+    }
     console.log("user id", userid);
     console.log("username", username);
  
