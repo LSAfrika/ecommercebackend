@@ -1,11 +1,12 @@
 const { usermodel } = require("../models/user.model");
+const { storemodel } = require("../models/store.model");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 require("dotenv").config();
 
 exports.register = async (req, res) => {
   try {
-    const { email, username, password, reenterpassword } = req.body;
+    const { email, username, password, reenterpassword,storename } = req.body;
 
     if (ValidateEmail(email) == false)
       return res.send({ errormessage: "invalid email format" });
@@ -22,14 +23,39 @@ exports.register = async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
 
     console.log("hash password: ", hash);
-    const newuser = new usermodel({
-      email: email.toLowerCase(),
-      username,
-      password: hash,
-      fovoritestores: [],
-    });
+let newuser
+    if(storename){
+       newuser = new usermodel({
+        email: email.toLowerCase(),
+        username,
+        password: hash,
+        fovoritestores: [],
+        vendor:true
+      });
+
+    }else{
+
+       newuser = new usermodel({
+        email: email.toLowerCase(),
+        username,
+        password: hash,
+        fovoritestores: [],
+      });
+    }
+
+
 
     const newuserresult = await newuser.save();
+
+    if(storename){
+      const userstore = await storemodel.create({
+        storename,
+        storeowner:newuserresult._id
+
+      })
+
+      console.log('new user store',userstore);
+    }
 
     const userresponse = {
       _id: newuserresult._id,
@@ -54,7 +80,7 @@ exports.register = async (req, res) => {
 
     return res.send({
       message: `welcome ${userresponse.username}`,
-      userdata:userresponse,
+      user:userresponse,
       token,
       refreshtoken,
     });
