@@ -1,11 +1,12 @@
 const { usermodel } = require("../models/user.model");
+const { storemodel } = require("../models/store.model");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 require("dotenv").config();
 
 exports.register = async (req, res) => {
   try {
-    const { email, username, password, reenterpassword } = req.body;
+    const { email, username, password, reenterpassword,storename } = req.body;
 
     if (ValidateEmail(email) == false)
       return res.send({ errormessage: "invalid email format" });
@@ -13,26 +14,52 @@ exports.register = async (req, res) => {
     const finduser = await usermodel.findOne({ email: email.toLowerCase() });
 
     if (finduser) {
-      return res.status(409).send({ message: "email already exists" });
+      return res.status(409).send({ errormessage: "email already exists" });
     }
     if (password !== reenterpassword) {
-      return res.status(500).send("password missmatch");
+      return res.status(500).send({errormessage: "password missmatch"});
     }
 
     const hash = await bcrypt.hash(password, 10);
 
     console.log("hash password: ", hash);
-    const newuser = new usermodel({
-      email: email.toLowerCase(),
-      username,
-      password: hash,
-      fovoritestores: [],
-    });
+let newuser
+    if(storename){
+       newuser = new usermodel({
+        email: email.toLowerCase(),
+        username,
+        password: hash,
+        fovoritestores: [],
+        vendor:true
+      });
+
+    }else{
+
+       newuser = new usermodel({
+        email: email.toLowerCase(),
+        username,
+        password: hash,
+        fovoritestores: [],
+      });
+    }
+
+
 
     const newuserresult = await newuser.save();
 
+    if(storename){
+      const userstore = await storemodel.create({
+        storename,
+        storeowner:newuserresult._id
+
+      })
+
+      console.log('new user store',userstore);
+    }
+
     const userresponse = {
       _id: newuserresult._id,
+      vendor:newuserresult.vendor,
       email: newuserresult.email,
       profileimg: newuserresult.profileimg,
       username: newuserresult.username,
@@ -53,6 +80,7 @@ exports.register = async (req, res) => {
 
     return res.send({
       message: `welcome ${userresponse.username}`,
+      user:userresponse,
       token,
       refreshtoken,
     });
@@ -79,19 +107,20 @@ exports.login = async (req, res) => {
     if (!finduser) {
       return res
         .status(404)
-        .send({ message: "please check email and password" });
+        .send({ errormessage: "please check email and password" });
     }
     const passwordcompare = await bcrypt.compare(password, finduser.password);
 
     if (passwordcompare !== true) {
       return res
         .status(500)
-        .send({ message: "please check email and password" });
+        .send({ errormessage: "please check email and password" });
     }
 
     const payload = {
       _id: finduser._id,
       email: finduser.email,
+      vendor:finduser.vendor,
       username: finduser.username,
       profileimg: finduser.profileimg,
     };
@@ -114,6 +143,7 @@ exports.login = async (req, res) => {
 
     return res.send({
       message: `welcome back ${payload.username}`,
+      userdata:payload,
       token,
       refreshtoken,
     });
@@ -129,26 +159,32 @@ exports.getmybio = async (req, res) => {
     if (user == null)
       return res.status(404).send({ errormessage: "user not found" });
 
-    res.send(user);
+    res.send({user});
   } catch (error) {
     console.log("get my bio error: ", error.message);
-    res.send(error.message);
+    res.send({errormessage:error.message});
   }
 };
 
 exports.updatebio = async (req, res) => {
   try {
-    const { userid, username, oldpassword, newpassword, reenternewpassword } = req.body;
     let passwordnotifier=''
-    if(newpassword &&newpassword.length<6)return res.send({errormessage:'new password must be atleast 6 digits'})
-    if(newpassword &&reenternewpassword && newpassword!=reenternewpassword)return res.send({errormessage:'new password missmatch'})
-
-    console.log("user id", userid);
-    console.log("username", username);
+    let passwordcomparison
+    const { userid, username, oldpassword, newpassword, reenternewpassword } = req.body;
     const updateuser = await usermodel.findById(userid);
     console.log("user to update", updateuser);
 
-    if (updateuser == null)return res.status(404).send({ message: "no user found" });
+    if (updateuser == null)return res.status(404).send({ errormessage: "no user found" });
+
+   
+    if(oldpassword) {passwordcomparison= await bcrypt.compare(oldpassword,updateuser.password)
+    if(passwordcomparison==false) return res.status(409).send({errormessage:'old password missmatch'})
+    if(newpassword &&newpassword.length<6)return res.send({errormessage:'new password must be atleast 6 digits'})
+    if(newpassword &&reenternewpassword && newpassword!=reenternewpassword)return res.send({errormessage:'new password missmatch'})
+    }
+    console.log("user id", userid);
+    console.log("username", username);
+ 
 
     if(req.files){
       if (username != undefined && username != "")
@@ -290,7 +326,7 @@ exports.getuserfovoritedstores = async (req, res) => {
     // const allusers=await usermodel.find()
 
     if (userprofile == null)
-      return res.status(404).send({ message: "no user found" });
+      return res.status(404).send({ errormessage: "no user found" });
     if (userprofile.fovoritecontacts.length == 0) return res.send(favusers);
 
     userprofile.fovoritecontacts.forEach(async (user) => {
@@ -313,7 +349,7 @@ exports.getuserfovoritedstores = async (req, res) => {
   } catch (error) {
     res.send({
       message: "error while getting personal contacts",
-      errmessage: error.message,
+      errormessage: error.message,
     });
   }
 };
@@ -327,7 +363,7 @@ exports.adduserfovoritedstores = async (req, res) => {
     // const allusers=await usermodel.find()
 
     if (userprofile == null)
-      return res.status(404).send({ message: "no user found" });
+      return res.status(404).send({ errormessage: "no user found" });
 
     const indexoffavoriteuser =
       userprofile.fovoritecontacts.indexOf(favoriteuserid);
@@ -354,7 +390,7 @@ exports.adduserfovoritedstores = async (req, res) => {
             favcontacts.length >= userfavoritecontacts.fovoritecontacts.length
           )
             res.send({
-              message: "removed user to personal contact list",
+              message: "removed user from personal contact list",
               favcontacts,
             });
         }
@@ -393,7 +429,7 @@ exports.adduserfovoritedstores = async (req, res) => {
   } catch (error) {
     res.send({
       message: "error while getting personal contacts",
-      errmessage: error.message,
+      errormessage: error.message,
     });
   }
 };
@@ -406,7 +442,7 @@ exports.removeuserfovoritedstores = async (req, res) => {
     // const allusers=await usermodel.find()
 
     if (userprofile == null)
-      return res.status(404).send({ message: "no user found" });
+      return res.status(404).send({ errormessage: "no user found" });
 
     const indexoffavoriteuser =
       userprofile.fovoritecontacts.indexOf(favoriteuserid);
@@ -472,7 +508,7 @@ exports.removeuserfovoritedstores = async (req, res) => {
   } catch (error) {
     res.send({
       message: "error while getting personal contacts",
-      errmessage: error.message,
+      errormessage: error.message,
     });
   }
 };
