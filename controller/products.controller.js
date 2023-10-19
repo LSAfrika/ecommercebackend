@@ -169,11 +169,17 @@ exports.getallproducts=async(req,res)=>{
     
     try {
         const{pagination}=req.query
-        returnsize=2
+        returnsize=5
         skip=returnsize*pagination
-        const products=await productmodel.find({productdeactivated:false}).sort({createdAt:-1})
+        const products=await productmodel.find({productdeactivated:false})
+        .select('-productdeactivated -createdAt -updatedAt -_v')
+        .sort({createdAt:-1})
         //.skip(skip)
         .populate({path:'store',select:'storename storeimage',model:'store'})
+
+        products.forEach(product=>{
+            product.productimages.splice(1)
+        })
         //.limit(returnsize)
         res.send(products)
         

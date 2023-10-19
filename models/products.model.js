@@ -12,7 +12,7 @@ exports.productmodel = mongoose.model('product',mongoose.Schema({
     productimages:[{type:String,required:true }],
     productdescription:{type:String,required:true ,default:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, debitis.'},
     productspecification:[{type:String,required:true }],
-    
+    productquantity:{type:Number,required:true,default:1},
     viewcount:{type:Number,required:true,default:0},
     category:{type:String,required:true,
       enum:['Phones','Laptops','Desktops','Tvs','Home theatres','monitors','Head sets']},
