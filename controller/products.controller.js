@@ -172,15 +172,16 @@ exports.getallproducts=async(req,res)=>{
         returnsize=5
         skip=returnsize*pagination
         const products=await productmodel.find({productdeactivated:false})
-        .select('-productdeactivated -createdAt -updatedAt -_v')
+        .select('name  category productname productimages productprice  ')
         .sort({createdAt:-1})
-        //.skip(skip)
-        .populate({path:'store',select:'storename storeimage',model:'store'})
+        .skip(skip)
+         .populate({path:'store',select:'_id',model:'store'})
+        .limit(returnsize)
+
 
         products.forEach(product=>{
             product.productimages.splice(1)
         })
-        //.limit(returnsize)
         res.send(products)
         
     } catch (error) {
@@ -218,13 +219,19 @@ exports.getallproductssinglestore=async(req,res)=>{
     try {
 
         const {pagination}=req.query
-        returnsize=3
+        returnsize=5
         skip=pagination*returnsize
         const {storeid}=req.params
-        const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
-        .populate({path:'store',select:'storename storeimage',model:'store'})
+        const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]})
+        .select('_id productname productimages')
+        .sort({createdAt:-1})
+       .populate({path:'store',select:'_id ',model:'store'})
         .skip(skip).limit(returnsize)
-        res.send({storeproducts})
+
+        storeproducts.forEach(product=>{
+            product.productimages.splice(1)
+        })
+        res.send(storeproducts)
         
     } catch (error) {
         console.log('get all products error',error.message)
