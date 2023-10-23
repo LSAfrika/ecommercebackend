@@ -213,14 +213,14 @@ exports.getallproductssinglestore=async(req,res)=>{
 
         const {pagination}=req.query
 
-        returnsize=1
+        returnsize=5
         skip=pagination*returnsize
         const {storeid}=req.params
 
       const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
-        res.send({storeproducts})
+        res.send(storeproducts)
         
     } catch (error) {
         console.log('get all products error',error.message)
@@ -234,7 +234,7 @@ exports.getallproductssinglestoreadmin=async(req,res)=>{
 
         const {pagination}=req.query
 
-        returnsize=1
+        returnsize=5
         skip=pagination*returnsize
         const {userid}=req.body
         console.log(userid);

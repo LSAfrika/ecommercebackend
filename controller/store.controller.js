@@ -99,10 +99,10 @@ exports.getstores=async(req,res)=>{
     try {
 
       const {storeid}=req.params
-      const getstore =await storemodel.findById(storeid)
+      const getstore =await storemodel.findById(storeid).select('storename storeimage membersince')
       //.limit(returnsize)
   
-      res.send({getstore})
+      res.send(getstore)
       
     }catch (error) {
       

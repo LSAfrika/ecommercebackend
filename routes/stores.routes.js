@@ -10,7 +10,7 @@ router.get('/getuserfavoritedstores',authentication,getuserfavoritedstores)
 
 router.post('/createstore',authentication,createstore)
 router.post('/addremovefavoritestore/:storeid',authentication,addremovefavoritestore)
-router.post('/storeststus',authentication,deactivatestore)
+router.post('/storestatus',authentication,deactivatestore)
 router.patch('/updatestore/',authentication,updatetore)
 
 
