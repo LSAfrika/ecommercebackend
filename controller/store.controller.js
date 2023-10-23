@@ -100,9 +100,10 @@ exports.getstores=async(req,res)=>{
 
       const {storeid}=req.params
       const getstore =await storemodel.findById(storeid).select('storename storeimage membersince')
-      //.limit(returnsize)
-  
-      res.send(getstore)
+      const getstoreproductcount =await productmodel.find({$and:[{productdeactivated:false},{store:storeid}]}).count()
+                                                  //  ({$and:[{store:storeid},{productdeactivated:false}]})
+  // console.log(getstoreproductcount);
+      res.send({...getstore._doc,productcount:getstoreproductcount})
       
     }catch (error) {
       
