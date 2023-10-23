@@ -169,12 +169,19 @@ exports.getallproducts=async(req,res)=>{
     
     try {
         const{pagination}=req.query
-        returnsize=2
+        returnsize=5
         skip=returnsize*pagination
-        const products=await productmodel.find({productdeactivated:false}).sort({createdAt:-1})
-        //.skip(skip)
-        .populate({path:'store',select:'storename storeimage',model:'store'})
-        //.limit(returnsize)
+        const products=await productmodel.find({productdeactivated:false})
+        .select('name  category productname productimages productprice  ')
+        .sort({createdAt:-1})
+        .skip(skip)
+         .populate({path:'store',select:'_id',model:'store'})
+        .limit(returnsize)
+
+
+        products.forEach(product=>{
+            product.productimages.splice(1)
+        })
         res.send(products)
         
     } catch (error) {
@@ -212,6 +219,7 @@ exports.getallproductssinglestore=async(req,res)=>{
     try {
 
         const {pagination}=req.query
+<<<<<<< HEAD
 
         returnsize=5
         skip=pagination*returnsize
@@ -245,8 +253,21 @@ exports.getallproductssinglestoreadmin=async(req,res)=>{
         //  if(vendoraccount.vendor==false) return res.send({errormssage:'user is not a vendor'})
         const storeproducts= await productmodel.find({$and:[{store:vendoraccount._id},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
+=======
+        returnsize=5
+        skip=pagination*returnsize
+        const {storeid}=req.params
+        const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]})
+        .select('_id productname productimages')
+        .sort({createdAt:-1})
+       .populate({path:'store',select:'_id ',model:'store'})
+>>>>>>> d3fbf6560c8d687e15f8211bf2a07944c4e1bb8d
         .skip(skip).limit(returnsize)
-        res.send({storeproducts})
+
+        storeproducts.forEach(product=>{
+            product.productimages.splice(1)
+        })
+        res.send(storeproducts)
         
     } catch (error) {
         console.log('get all products error',error.message)

@@ -8,6 +8,7 @@ exports.storemodel = mongoose.model('store',mongoose.Schema({
     storename:{type:String,required:true},
     storeowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
     storedeactivated:{type:Boolean,required:true,default:false},
+    storeproductcount:{type:Number,required:true,default:0},
     storeimage:{type:String,required:true ,default:'/default/store.png' },
     membersince:{type:Number,reuired:true,default:Date.now()},
   
