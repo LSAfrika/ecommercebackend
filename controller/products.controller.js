@@ -212,10 +212,38 @@ exports.getallproductssinglestore=async(req,res)=>{
     try {
 
         const {pagination}=req.query
-        returnsize=3
+
+        returnsize=1
         skip=pagination*returnsize
         const {storeid}=req.params
-        const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
+
+      const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+        .skip(skip).limit(returnsize)
+        res.send({storeproducts})
+        
+    } catch (error) {
+        console.log('get all products error',error.message)
+        res.send({errormessage:error.message,error})
+    }
+}
+
+exports.getallproductssinglestoreadmin=async(req,res)=>{
+    
+    try {
+
+        const {pagination}=req.query
+
+        returnsize=1
+        skip=pagination*returnsize
+        const {userid}=req.body
+        console.log(userid);
+
+         const vendoraccount= await storemodel.findOne({storeowner:userid})
+         console.log(vendoraccount);
+        //  if(vendoraccount==null) return res.send({errormssage:'no user found'})
+        //  if(vendoraccount.vendor==false) return res.send({errormssage:'user is not a vendor'})
+        const storeproducts= await productmodel.find({$and:[{store:vendoraccount._id},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
         res.send({storeproducts})
