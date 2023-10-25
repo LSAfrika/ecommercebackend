@@ -18,7 +18,7 @@ exports.refreshtoken=async(req,res)=>{
        if(refreshdetails._id!==tokendetails._id)  return res.status(401).send({message:'tokenmismatch'})
         
 
-       if(refreshdetails.exp*1000<Date.now()) return res.status(401).send({message:'refreshexpired'})
+       if(refreshdetails.exp*1000<Date.now()) return res.status(401).send({message:'refreshtokenexpired'})
        if(tokendetails.exp*1000<Date.now()){
 
           if(refreshdetails._id===tokendetails._id){
@@ -38,7 +38,7 @@ exports.refreshtoken=async(req,res)=>{
 
               }
               const token=await jwt.sign(refreshpayload,process.env.HASHKEY,{
-                  expiresIn:'7d'
+                  expiresIn:300
               })
 
             return  res.send({message:"new token",token})

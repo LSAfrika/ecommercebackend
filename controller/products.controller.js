@@ -219,13 +219,13 @@ exports.getallproductssinglestore=async(req,res)=>{
     try {
 
         const {pagination}=req.query
-<<<<<<< HEAD
+
 
         returnsize=5
         skip=pagination*returnsize
         const {storeid}=req.params
 
-      const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
+      const storeproducts= await productmo-del.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
         res.send(storeproducts)
@@ -248,25 +248,19 @@ exports.getallproductssinglestoreadmin=async(req,res)=>{
         console.log(userid);
 
          const vendoraccount= await storemodel.findOne({storeowner:userid})
-         console.log(vendoraccount);
-        //  if(vendoraccount==null) return res.send({errormssage:'no user found'})
-        //  if(vendoraccount.vendor==false) return res.send({errormssage:'user is not a vendor'})
-        const storeproducts= await productmodel.find({$and:[{store:vendoraccount._id},{productdeactivated:false}]}).sort({createdAt:-1})
-        .populate({path:'store',select:'storename storeimage',model:'store'})
-=======
-        returnsize=5
-        skip=pagination*returnsize
-        const {storeid}=req.params
-        const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]})
-        .select('_id productname productimages')
-        .sort({createdAt:-1})
-       .populate({path:'store',select:'_id ',model:'store'})
->>>>>>> d3fbf6560c8d687e15f8211bf2a07944c4e1bb8d
+      
+         const storeproducts= await productmodel.find({$and:[{store:vendoraccount._id},{productdeactivated:false}]}).sort({createdAt:-1})
+         .populate({path:'store',select:'storename storeimage',model:'store'})
+
+       
         .skip(skip).limit(returnsize)
 
         storeproducts.forEach(product=>{
             product.productimages.splice(1)
         })
+
+        console.log('admin products',storeproducts);
+
         res.send(storeproducts)
         
     } catch (error) {

@@ -126,7 +126,7 @@ exports.login = async (req, res) => {
     };
 
     const token = await JWT.sign(payload, process.env.HASHKEY, {
-      expiresIn: "1w",
+      expiresIn: "15s",
       issuer: "http://localhost:3000",
     });
 
@@ -134,7 +134,7 @@ exports.login = async (req, res) => {
       { _id: payload._id },
       process.env.REFRESHTOKEN,
       {
-        expiresIn: "30d",
+        expiresIn: "30days",
         issuer: "http://localhost:3000",
       }
     );
