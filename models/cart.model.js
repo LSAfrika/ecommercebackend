@@ -9,6 +9,8 @@ exports.cartmodel = mongoose.model('cart',mongoose.Schema({
     products:[
         {product:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'product'},
         quantity:{ type:Number,required:true,default:1 },
+        productprice:{ type:Number,required:true,default:1 },
+
         sumtotal:{type:Number,required:true,default:0}
         }
             ],

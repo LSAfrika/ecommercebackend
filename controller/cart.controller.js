@@ -22,6 +22,9 @@ exports.addtocart=async(req,res)=>{
         const{userid,cartproducts}=req.body
 
         let localcartproducts=[]
+
+
+        console.log('cart:',cartproducts)
         // let cart = await cartmodel.findById(userid)
         // if(cart==null)usercart=await cartmodel.create({_id:userid,products:[]})
 
@@ -29,31 +32,35 @@ exports.addtocart=async(req,res)=>{
         // console.log(cartproducts);
 
 
-   cartproducts.forEach(async(_product) => {
-
-             console.log('foreach loop working',_product)
+        for (_product of cartproducts) {
+           
+            // console.log('foreach loop working',_product)
             const fetchedproduct= await productmodel.findById(_product.product.id)
-            if(fetchedproduct !=null){
+            //res.status(500).send({message:'product missing in db'})
+            if(fetchedproduct ==null) {res.status(500).send({message:'product missing in db'}); break}
+        //    if(fetchedproduct !=null){
                 // console.log('fetched product',fetchedproduct);
                 producttosave={
                     product:fetchedproduct.id,
+                    productprice:fetchedproduct.productprice,
                     quantity:_product.product.quantity,
                     sumtotal:fetchedproduct.productprice *_product.product.quantity
                 }
                 localcartproducts.push(producttosave)
 
+                console.log('cart',localcartproducts);
 
                 
 
                 if(cartproducts.length==localcartproducts.length){
                     
                     const totalproductsprice= localcartproducts.map(p=>p.sumtotal).reduce(sumofArray)
-                    console.log(totalproductsprice);
+                    //console.log(totalproductsprice);
 
 
                     let usercart= await cartmodel.findById(userid)
                     if(usercart==null){
-            
+            // console.log('cart to create: ',usercart);
                         usercart=await cartmodel.create({
                             _id:userid,
                             products:localcartproducts,
@@ -66,20 +73,22 @@ exports.addtocart=async(req,res)=>{
                     }
                 
 
-                        usercart.products=[...localcartproducts]
-                        usercart.totalprice=totalproductsprice
-                        await usercart.save()
+                        // usercart.products=[...localcartproducts]
+                        // usercart.totalprice=totalproductsprice
+                        // await usercart.save()
 
 
-                        return res.send({message:'cart updated successfully',usercart});
+                        return res.send({message:'cart already in DB'});
                   
 
                 
                 }
-            }
 
+                
+ 
             
-        });
+        }
+
 
      
 
@@ -184,3 +193,12 @@ exports.completedorders=async(req,res)=>{
 function sumofArray(sum, num) {
     return sum + num;
 }
+
+// async function  addproducttocart(product){
+
+//     const fetchedproduct= await productmodel.findById(product.product.id)
+
+//     if(fetchedproduct==null) break;
+
+
+// }

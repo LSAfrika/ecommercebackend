@@ -225,9 +225,13 @@ exports.getallproductssinglestore=async(req,res)=>{
         skip=pagination*returnsize
         const {storeid}=req.params
 
-      const storeproducts= await productmo-del.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
+      const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
+
+        storeproducts.forEach(product=>{
+            product.productimages.splice(1)
+        })
         res.send(storeproducts)
         
     } catch (error) {
