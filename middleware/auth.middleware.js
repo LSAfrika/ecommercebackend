@@ -8,9 +8,9 @@ exports.refreshtoken=async(req,res)=>{
 
 
   try {
-      refreshtoken = req.headers.refreshtoken.split(' ')[1]
+      refreshtoken = req.cookies.access;
       expiredtoken = req.headers.authorization.split(' ')[1]
-  
+    //  const refreshtoken = 
 
        refreshdetails=await jwt.decode(refreshtoken)
        tokendetails= await jwt.decode(expiredtoken)
@@ -26,7 +26,7 @@ exports.refreshtoken=async(req,res)=>{
               const finduserinndb=await usermodel.findById(refreshdetails._id).select("email profileimg username _id  ")
 
               // console.log(tokendetails._id ,'\n',refreshdetails._id);
-              if(finduserinndb==null)return res.send({message:'no user found'})
+              if(finduserinndb==null)return res.status(404).send({message:'no user found'})
 
 
               const refreshpayload={
@@ -38,7 +38,7 @@ exports.refreshtoken=async(req,res)=>{
 
               }
               const token=await jwt.sign(refreshpayload,process.env.HASHKEY,{
-                  expiresIn:300
+                  expiresIn:600
               })
 
             return  res.send({message:"new token",token})
@@ -89,6 +89,17 @@ return res.status(401).send({message:'unathorized',errormsg:error})
   }
 }
 
+
+exports.logout = async (req, res) => {
+  try {
+    // console.log("cookies from log out route: ", req.cookies);
+    res.clearCookie("access");
+    res.send({ message: "log out successful" });
+  } catch (error) {
+    console.log("log out failed: ", error.message);
+    res.status(500).send({ errormessage: "error while loging out" });
+  }
+};
 
 const testemail=(email)=> {
   var re = /\S+@\S+\.\S+/;

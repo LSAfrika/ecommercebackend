@@ -7,7 +7,8 @@ require("dotenv").config();
 exports.register = async (req, res) => {
   try {
     const { email, username, password, reenterpassword,storename } = req.body;
-
+    const twoweeksinmillseconds = 6048008*2;
+    const expiresin = Math.floor(Date.now() / 1000) + twoweeksinmillseconds;
     if (ValidateEmail(email) == false)
       return res.send({ errormessage: "invalid email format" });
 
@@ -66,7 +67,7 @@ let newuser
     };
 
     const token = await JWT.sign(userresponse, process.env.HASHKEY, {
-      expiresIn: "1w",
+      expiresIn: 600,
       issuer: "http://localhost:3000",
     });
 
@@ -78,11 +79,18 @@ let newuser
       }
     );
 
+
+    res.cookie("access", refreshtoken, {
+      maxAge: expiresin,
+
+      httpOnly: true,
+    });
+
     return res.send({
       message: `welcome ${userresponse.username}`,
       user:userresponse,
       token,
-      refreshtoken,
+     // refreshtoken,
     });
 
     //res.status(200).send({message:'user created successfully',...userresponse})
@@ -99,6 +107,8 @@ let newuser
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const twoweeksinmillseconds = 6048008*2;
+    const expiresin = Math.floor(Date.now() / 1000) + twoweeksinmillseconds;
     console.log(email, password);
     if (ValidateEmail(email) == false)
       return res.send({ errormessage: "invalid email format" });
@@ -126,7 +136,7 @@ exports.login = async (req, res) => {
     };
 
     const token = await JWT.sign(payload, process.env.HASHKEY, {
-      expiresIn: "15s",
+      expiresIn: 600,
       issuer: "http://localhost:3000",
     });
 
@@ -141,11 +151,19 @@ exports.login = async (req, res) => {
 
     console.log(`${payload.username} has successfully loged in`);
 
+
+    res.cookie("access", refreshtoken, {
+      maxAge: expiresin,
+
+      httpOnly: true,
+    });
+
+    // console.log('login token \n: ',token)
     return res.send({
       message: `welcome back ${payload.username}`,
       userdata:payload,
       token,
-      refreshtoken,
+    //`  refreshtoken,
     });
   } catch (error) {
     res.send(error.message);
