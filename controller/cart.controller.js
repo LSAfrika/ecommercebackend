@@ -7,9 +7,10 @@ exports.getcart=async(req,res)=>{
     try {
         const{userid}=req.body
         console.log('user id',userid);
-        let usercart= await cartmodel.findById(userid)
+        let usercart= await cartmodel.findById(userid).select('-createdAt -updatedAt -__v')
+        .populate({path:'products',populate:{path:'product',select:'productname'}})
         if(usercart==null)  usercart=await cartmodel.create({_id:userid,products:[]})
-        res.send({cart:usercart})
+        res.send(usercart)
         
     } catch (error) {
         console.log('get cart error',error.message)
@@ -58,7 +59,7 @@ exports.addtocart=async(req,res)=>{
                     //console.log(totalproductsprice);
 
 
-                    let usercart= await cartmodel.findById(userid)
+                    let usercart= await cartmodel.findById(userid).select('-createdAt -updatedAt -__v')
                     if(usercart==null){
             // console.log('cart to create: ',usercart);
                         usercart=await cartmodel.create({
