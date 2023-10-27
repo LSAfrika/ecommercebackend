@@ -5,3 +5,5 @@ ISSUE TRACKER
 
 3.add viewed counter logic to product  -->DONE
 4.in ui addfavorited item view
+
+5. sum total of cart logic remaining

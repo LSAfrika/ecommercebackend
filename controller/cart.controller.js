@@ -26,11 +26,7 @@ exports.addtocart=async(req,res)=>{
 
 
         console.log('cart:',cartproducts)
-        // let cart = await cartmodel.findById(userid)
-        // if(cart==null)usercart=await cartmodel.create({_id:userid,products:[]})
-
-
-        // console.log(cartproducts);
+     
 
 
         for (_product of cartproducts) {
@@ -105,7 +101,111 @@ exports.addtocart=async(req,res)=>{
 }
 exports.updatecart=async(req,res)=>{
     try {
-        const{userid}=req.body
+        const{userid,cartproducts}=req.body
+
+        let usercart=await cartmodel.findById(userid).select('-createdAt -updatedAt -__v')
+        .populate({path:'products',populate:{path:'product',select:'productname'}})
+        if(usercart==null) {
+            let localcartproducts=[]
+            for (_product of cartproducts) {
+           
+                // console.log('foreach loop working',_product)
+                const fetchedproduct= await productmodel.findById(_product.product.id)
+                //res.status(500).send({message:'product missing in db'})
+                if(fetchedproduct ==null) {res.status(500).send({message:'product missing in db'}); break}
+            //    if(fetchedproduct !=null){
+                    // console.log('fetched product',fetchedproduct);
+                  let  producttosave={
+                        product:fetchedproduct.id,
+                        productprice:fetchedproduct.productprice,
+                        quantity:_product.product.quantity,
+                        sumtotal:fetchedproduct.productprice *_product.product.quantity
+                    }
+                    localcartproducts.push(producttosave)
+    
+                    // console.log('cart',localcartproducts);
+    
+                    
+    
+                    if(cartproducts.length==localcartproducts.length){
+                        
+                        const totalproductsprice= localcartproducts.map(p=>p.sumtotal).reduce(sumofArray)
+                   
+                            usercart=await cartmodel.create({
+                                _id:userid,
+                                products:localcartproducts,
+                                totalprice:totalproductsprice
+                
+                            })
+    
+                        return res.send({message:'cart created successfully',usercart});
+                         
+                        //}
+                    
+    
+                       
+                      
+    
+                    
+                    }
+    
+                    
+     
+                
+            }
+
+
+
+
+             usercart=await cartmodel.create({_id:userid,products:cartproducts})
+            return res.send(usercart)
+            }
+
+            cartproducts.forEach(async(cartproduct) => {
+
+                // console.log(usercart.products);
+
+                const indexofproduct= usercart.products.map(prod=>prod.product._id.toString()).indexOf(cartproduct.product._id) 
+                if(indexofproduct==-1){
+
+                    console.log('product not in cart');
+                    const producttoadd=await productmodel.findById(cartproduct.product._id)
+
+                    if(producttoadd !=null){
+
+                        let  producttosave={
+                            product:producttoadd.id,
+                            productprice:producttoadd.productprice,
+                            quantity:cartproduct.product.quantity,
+                            sumtotal:producttoadd.productprice *cartproduct.product.quantity
+                        }
+    
+                        usercart.products.push(producttosave)
+
+                    }
+                }
+                if(indexofproduct!=-1){
+
+                  const prod=  usercart.products[indexofproduct]
+                //  console.log('pre update',prod);
+                  prod.quantity=cartproduct.product.quantity
+                  prod.sumtotal=cartproduct.product.quantity*prod.productprice
+                 // console.log('post update',prod);
+                 // console.log(cartproduct.product._id);
+
+                }
+                
+                // console.log('product',indexofproduct);
+                
+            });
+
+            const totalproductsprice= localcartproducts.map(p=>p.sumtotal).reduce(sumofArray)
+
+            await usercart.save()
+            console.log(usercart.products);
+            
+
+            res.send(usercart)
 
         
     } catch (error) {
