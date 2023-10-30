@@ -94,7 +94,7 @@ exports.getstores=async(req,res)=>{
   }
   
   }
-  exports.getstore=async(req,res)=>{
+exports.getstore=async(req,res)=>{
     
     try {
 

@@ -45,7 +45,7 @@ exports.addtocart=async(req,res)=>{
                 }
                 localcartproducts.push(producttosave)
 
-                console.log('cart',localcartproducts);
+                // console.log('cart',localcartproducts);
 
                 
 
@@ -164,56 +164,62 @@ exports.updatecart=async(req,res)=>{
              return res.send(usercart)
             }
 
-            cartproducts.forEach(async(cartproduct) => {
+            for(cartproduct of cartproducts){
+               
 
-                //  console.log('current counter',counter);
-
-                const indexofproduct= usercart.products.map(prod=>prod.product._id.toString()).indexOf(cartproduct.product._id) 
-                if(indexofproduct==-1){
-
-                    const producttoadd=await productmodel.findById(cartproduct.product._id)
-             
-                    if(producttoadd !=null){
-
-                        let  producttosave={
-                            product:producttoadd._id,
-                            productprice:producttoadd.productprice,
-                            quantity:cartproduct.product.quantity,
-                            sumtotal:producttoadd.productprice *cartproduct.product.quantity
-                        }
+                    //  console.log('current counter',counter);
     
-                        usercart.products.push(producttosave)
-
-
+                    const indexofproduct= usercart.products.map(prod=>prod.product._id.toString()).indexOf(cartproduct.product._id) 
+                    if(indexofproduct==-1){
+    
+                        const producttoadd=await productmodel.findById(cartproduct.product._id)
+                 
+                        if(producttoadd !=null){
+    
+                            let  producttosave={
+                                product:producttoadd._id,
+                                productprice:producttoadd.productprice,
+                                quantity:cartproduct.product.quantity,
+                                sumtotal:producttoadd.productprice *cartproduct.product.quantity
+                            }
+        
+                            usercart.products.push(producttosave)
+    
+    
+                        }
+                        if(producttoadd == null){
+                            break
+                        }
                     }
-                }
-                if(indexofproduct!=-1){
-
-                  const prod=  usercart.products[indexofproduct]
-                
-                  prod.quantity=cartproduct.product.quantity
-                  prod.sumtotal=cartproduct.product.quantity*prod.productprice
-             
-
-                }
-                
-                counter++
-
-                if(counter==cartproducts.length){
-
-                     console.log('  cart', cartproducts.length);
-                     console.log('  counter', counter);
-                    const totalproductsprice= usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
-                    usercart.totalprice=totalproductsprice
-                    await usercart.save()
-                    // console.log(usercart.products);
+                    if(indexofproduct!=-1){
+    
+                      const prod=  usercart.products[indexofproduct]
                     
-                    counter=0
-                 return   res.send(usercart)
-                }
-
+                      prod.quantity=cartproduct.product.quantity
+                      prod.sumtotal=cartproduct.product.quantity*prod.productprice
+                 
+    
+                    }
+                    
+                    counter++
+    
+                    if(counter==cartproducts.length){
+    
+                        //  console.log('  cart', cartproducts.length);
+                        //  console.log('  counter', counter);
+                        const totalproductsprice= usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
+                        usercart.totalprice=totalproductsprice
+                        await usercart.save()
+                        // console.log(usercart.products);
+                        
+                        counter=0
+                     return   res.send(usercart)
+                    }
+    
+                    
                 
-            });
+            }
+            // cartproducts.forEach();
 
            
 
@@ -222,7 +228,7 @@ exports.updatecart=async(req,res)=>{
         
     } catch (error) {
         console.log('update cart error',error.message)
-        res.send({errormessage:error.message,error})
+        res.send({errormessage:error.message})
         
     }   
 }
@@ -294,7 +300,7 @@ exports.completedorders=async(req,res)=>{
                    populate:{path:'product',select:'productname productprice category createAt'}
                 })
         
-        if(completedorders==null)return res.status(404).send({exceptionmessage:'no ompleted orders found'})
+        if(completedorders==null)return res.status(404).send({exceptionmessage:'no completed orders found'})
 
         res.send({completedorders})
         

@@ -81,6 +81,7 @@ exports.createstorefolder =  (_storepic,uid) => {
                 updateproduct.productimages=productsviewpath
 
                 await updateproduct.save()
+                
 
                 res.send({message:'product created ',updateproduct})
                 //  console.log('final productas array:',productsviewpath);

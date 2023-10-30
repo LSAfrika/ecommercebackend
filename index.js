@@ -42,7 +42,7 @@ const entry=async()=>{
 
   } catch (error) {
     console.log(error.message);
-    console.log(error);
+    // console.log(error);
   }
 
 }
