@@ -1,4 +1,4 @@
-const { populate } = require('dotenv');
+
 const{cartmodel, carthistorymodel}=require('../models/cart.model')
 const{productmodel}=require('../models/products.model')
 
@@ -140,6 +140,7 @@ exports.updatecart=async(req,res)=>{
                 
                             })
     
+                            await usercart.populate({path:'products',populate:{path:'product',select:'productname'}})
                         return res.send({message:'cart created successfully',usercart});
                          
                         //}
@@ -160,7 +161,7 @@ exports.updatecart=async(req,res)=>{
 
 
              usercart=await cartmodel.create({_id:userid,products:cartproducts})
-            return res.send(usercart)
+             return res.send(usercart)
             }
 
             cartproducts.forEach(async(cartproduct) => {
@@ -205,7 +206,7 @@ exports.updatecart=async(req,res)=>{
                     const totalproductsprice= usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
                     usercart.totalprice=totalproductsprice
                     await usercart.save()
-                    console.log(usercart.products);
+                    // console.log(usercart.products);
                     
                     counter=0
                     res.send(usercart)
@@ -292,7 +293,7 @@ exports.completedorders=async(req,res)=>{
                    populate:{path:'products',select:'productname productprice productimages category'},
                    populate:{path:'product',select:'productname productprice category createAt'}
                 })
-        //.populate({path:'products'})
+        
         if(completedorders==null)return res.status(404).send({exceptionmessage:'no ompleted orders found'})
 
         res.send({completedorders})
