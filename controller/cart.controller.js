@@ -102,7 +102,7 @@ exports.addtocart=async(req,res)=>{
 exports.updatecart=async(req,res)=>{
     try {
         const{userid,cartproducts}=req.body
-
+        let counter=0
         let usercart=await cartmodel.findById(userid).select('-createdAt -updatedAt -__v')
         .populate({path:'products',populate:{path:'product',select:'productname'}})
         if(usercart==null) {
@@ -163,24 +163,25 @@ exports.updatecart=async(req,res)=>{
 
             cartproducts.forEach(async(cartproduct) => {
 
+                counter++
                 // console.log(usercart.products);
 
                 const indexofproduct= usercart.products.map(prod=>prod.product._id.toString()).indexOf(cartproduct.product._id) 
                 if(indexofproduct==-1){
 
-                    console.log('product not in cart');
                     const producttoadd=await productmodel.findById(cartproduct.product._id)
-
+                    console.log('product to add',producttoadd);
                     if(producttoadd !=null){
 
                         let  producttosave={
-                            product:producttoadd.id,
+                            product:producttoadd._id,
                             productprice:producttoadd.productprice,
                             quantity:cartproduct.product.quantity,
                             sumtotal:producttoadd.productprice *cartproduct.product.quantity
                         }
     
                         usercart.products.push(producttosave)
+
 
                     }
                 }
@@ -195,17 +196,25 @@ exports.updatecart=async(req,res)=>{
 
                 }
                 
-                // console.log('product',indexofproduct);
+
+                if(counter>=cartproducts.length){
+
+                    console.log(' product to save  in cart', usercart.products);
+                    const totalproductsprice= usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
+                    usercart.totalprice=totalproductsprice
+                    await usercart.save()
+                    console.log(usercart.products);
+                    
+                    counter=0
+                    res.send(usercart)
+                }
+
                 
             });
 
-            const totalproductsprice= localcartproducts.map(p=>p.sumtotal).reduce(sumofArray)
+           
 
-            await usercart.save()
-            console.log(usercart.products);
-            
-
-            res.send(usercart)
+    
 
         
     } catch (error) {

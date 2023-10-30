@@ -3,7 +3,8 @@ const mongoose= require('mongoose')
 
 // const userschema = new 
 
-exports.cartmodel = mongoose.model('cart',mongoose.Schema({
+
+const cartshema= mongoose.Schema({
 
     // cartowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
     products:[
@@ -19,7 +20,16 @@ exports.cartmodel = mongoose.model('cart',mongoose.Schema({
 
 },{timestamps:true}
 
-))
+)
+exports.cartmodel = mongoose.model('cart',cartshema)
+
+// cartshema.pre('save', function(next){
+//     const totalproductsprice= usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
+//     this.totalprice=totalproductsprice
+
+//     next()
+
+// })
 exports.carthistorymodel=mongoose.model('completedcarts',mongoose.Schema({
     cartowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
     completedcarts:[{
@@ -34,3 +44,8 @@ exports.carthistorymodel=mongoose.model('completedcarts',mongoose.Schema({
         
     }]
 }))
+
+
+function sumofArray(sum, num) {
+    return sum + num;
+}
