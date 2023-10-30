@@ -14,4 +14,5 @@ router.post('/storestatus',authentication,deactivatestore)
 router.patch('/updatestore/',authentication,updatetore)
 
 
+
 module.exports=router

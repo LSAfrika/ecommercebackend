@@ -166,14 +166,13 @@ exports.updatecart=async(req,res)=>{
 
             cartproducts.forEach(async(cartproduct) => {
 
-                counter++
-                // console.log(usercart.products);
+                //  console.log('current counter',counter);
 
                 const indexofproduct= usercart.products.map(prod=>prod.product._id.toString()).indexOf(cartproduct.product._id) 
                 if(indexofproduct==-1){
 
                     const producttoadd=await productmodel.findById(cartproduct.product._id)
-                    console.log('product to add',producttoadd);
+             
                     if(producttoadd !=null){
 
                         let  producttosave={
@@ -191,25 +190,26 @@ exports.updatecart=async(req,res)=>{
                 if(indexofproduct!=-1){
 
                   const prod=  usercart.products[indexofproduct]
-                //  console.log('pre update',prod);
+                
                   prod.quantity=cartproduct.product.quantity
                   prod.sumtotal=cartproduct.product.quantity*prod.productprice
-                 // console.log('post update',prod);
-                 // console.log(cartproduct.product._id);
+             
 
                 }
                 
+                counter++
 
-                if(counter>=cartproducts.length){
+                if(counter==cartproducts.length){
 
-                    // console.log(' product to save  in cart', usercart.products);
+                     console.log('  cart', cartproducts.length);
+                     console.log('  counter', counter);
                     const totalproductsprice= usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
                     usercart.totalprice=totalproductsprice
                     await usercart.save()
                     // console.log(usercart.products);
                     
                     counter=0
-                    res.send(usercart)
+                 return   res.send(usercart)
                 }
 
                 
@@ -300,6 +300,30 @@ exports.completedorders=async(req,res)=>{
         
     } catch (error) {
         
+    }
+}
+
+exports.deleteproductcart=async(req,res)=>{
+    try {
+        const {userid,productid}=req.body
+        const usercart=await cartmodel.findById(userid)
+        if(usercart==null) return res.status(404).send({message:'cart not found'})
+
+        const productindex=usercart.products.map(p=>p.product.toString()).indexOf(productid)
+        if(productindex ==-1)return res.status(404).send({message:'product not in cart'})
+        usercart.products.splice(productindex,1)
+                    
+        let newtotalprice
+        if( usercart.products.length==0)   newtotalprice   = 0
+        if( usercart.products.length>0)    newtotalprice   = usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
+         usercart.totalprice=newtotalprice
+         await usercart.save()
+         res.send(usercart)
+        
+    } catch (error) {
+        console.log('error while deleting product from cart:');
+        console.log('product from cart:',error.message);
+        res.status(500).send({errormessage:error.message})
     }
 }
 
