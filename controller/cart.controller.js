@@ -110,13 +110,15 @@ exports.updatecart=async(req,res)=>{
             for (_product of cartproducts) {
            
                 // console.log('foreach loop working',_product)
-                const fetchedproduct= await productmodel.findById(_product.product.id)
+                const fetchedproduct= await productmodel.findById(_product.product._id)
                 //res.status(500).send({message:'product missing in db'})
                 if(fetchedproduct ==null) {res.status(500).send({message:'product missing in db'}); break}
+
+                console.log('prod in db:',fetchedproduct);
             //    if(fetchedproduct !=null){
                     // console.log('fetched product',fetchedproduct);
                   let  producttosave={
-                        product:fetchedproduct.id,
+                        product:fetchedproduct._id,
                         productprice:fetchedproduct.productprice,
                         quantity:_product.product.quantity,
                         sumtotal:fetchedproduct.productprice *_product.product.quantity
@@ -199,7 +201,7 @@ exports.updatecart=async(req,res)=>{
 
                 if(counter>=cartproducts.length){
 
-                    console.log(' product to save  in cart', usercart.products);
+                    // console.log(' product to save  in cart', usercart.products);
                     const totalproductsprice= usercart.products.map(p=>p.sumtotal).reduce(sumofArray)
                     usercart.totalprice=totalproductsprice
                     await usercart.save()
