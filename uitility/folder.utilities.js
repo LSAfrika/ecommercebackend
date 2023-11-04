@@ -45,7 +45,7 @@ exports.createstorefolder =  (_storepic,uid) => {
       const mongooseid =  productid;
             const PRODUCTIMAGESUPLOADPATH='public/products/'
             let productimages = productimagesarray;
-            // console.log('pic to save: ',storepic);
+            // console.log('pic to save: ',productimages);
             fs.mkdirSync(`${PRODUCTIMAGESUPLOADPATH}${mongooseid}`, 
             (err) => {if (err)console.log(err.message);  console.log('folder created');});
           

@@ -7,9 +7,16 @@ const fs = require("fs");
 exports.createproduct=async(req,res)=>{
 
     try {
-        const {userid,productname,productprice,category,brand,productquantity}=req.body
+      //  const {userid,productname,productprice,category,brand,productquantity}=req.body
+const productdatastring=req.body.productdata
 
-        console.log(productquantity)
+const {userid}=req.body
+
+const productdata=JSON.parse(productdatastring)
+
+      const {productname,productprice,category,brand,productquantity,productspecifications,productdescription}=productdata
+
+        console.log('req body: ',userid,productname,productprice,category,brand,productquantity,productspecifications,productdescription)
      //   return
         const store=await storemodel.findOne({storeowner:userid})
        
@@ -24,6 +31,8 @@ exports.createproduct=async(req,res)=>{
         productprice,
         category,
         productquantity:productquantity!=undefined?productquantity:1,
+        productspecification:productspecifications,
+        productdescription,
         brand,
         store:store._id,
         productimages:['/default/store.png'] })
