@@ -13,6 +13,6 @@ router.get('/checkoutcart',authentication,checkoutcart)
 router.patch('/updatecart',authentication,updatecart)
 router.patch('/resetcart',authentication,resetcart)
 
-router.delete('/deleteproduct/',authentication,deleteproductcart)
+router.patch('/deleteproduct/',authentication,deleteproductcart)
 
 module.exports=router

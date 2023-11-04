@@ -172,12 +172,23 @@ if(producttodeleteimage.productimages.length-1<index)return res.send({exceptionm
 exports.getallproducts=async(req,res)=>{
     
     try {
-        const{pagination}=req.query
-        returnsize=5
+        let sort
+        const{pagination,search,created,price}=req.query
+        console.log(created,price);
+
+        if(created!=undefined) sort={createdAt:parseInt(created)}
+        if(price!==undefined) sort={productprice:parseInt(price)}
+        if(created==undefined&&price==undefined) sort={createdAt:-1}
+        const searchlogic=search ? {$or:[
+            {productname:{$regex:search,$options:'i'}}
+            
+      
+          ]}:{}
+        returnsize=10
         skip=returnsize*pagination
-        const products=await productmodel.find({productdeactivated:false})
-        .select('name  category productname productimages productprice  ')
-        .sort({createdAt:-1})
+        const products=await productmodel.find(searchlogic).find({productdeactivated:false})
+        .select('name  category productname productimages productprice createdAt ')
+        .sort(sort)
         .skip(skip)
          .populate({path:'store',select:'_id',model:'store'})
         .limit(returnsize)
@@ -287,7 +298,7 @@ exports.getallproductscategory=async(req,res)=>{
         const categoryproducts= await productmodel.find({$and:[{category:categoryid},{productdeactivated:false}]}).sort({createdAt:-1}).skip(skip).limit(returnsize)
         .populate({path:'store',select:'storename storeimage',model:'store'})
 
-        res.send({categoryproducts})
+        res.send(categoryproducts)
 
     } catch (error) {
         console.log('get all products category error',error.message)
