@@ -245,7 +245,7 @@ exports.getallproductssinglestore=async(req,res)=>{
         const {pagination}=req.query
 
 
-        returnsize=5
+        returnsize=10
         skip=pagination*returnsize
         const {storeid}=req.params
 
@@ -270,7 +270,7 @@ exports.getallproductssinglestoreadmin=async(req,res)=>{
 
         const {pagination}=req.query
 
-        returnsize=5
+        returnsize=10
         skip=pagination*returnsize
         const {userid}=req.body
         console.log(userid);
@@ -302,7 +302,7 @@ exports.getallproductscategory=async(req,res)=>{
     try {
         
         const {categoryid,pagination}=req.query
-        returnsize=5
+        returnsize=10
         skip=pagination*returnsize
         const categoryproducts= await productmodel.find({$and:[{category:categoryid},{productdeactivated:false}]}).sort({createdAt:-1}).skip(skip).limit(returnsize)
         .populate({path:'store',select:'storename storeimage',model:'store'})
