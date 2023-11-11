@@ -55,11 +55,15 @@ exports.updateproduct=async(req,res)=>{
     try {
         const {productid}=req.params
         const productdatastring=req.body.productdata
+
+      //  console.log(productdatastring)
+
+     //   return
     //    return res.send(req.body)
         const {userid}=req.body
-      //  const productdata=JSON.parse(productdatastring)
-    //  const {productname,productprice,category,brand,productquantity,productspecifications,productdescription}=productdata
-      const {productprice,productname,category,brand,productquantity,productspecifications,productdescription}=productdatastring
+        const productdata=JSON.parse(productdatastring)
+     const {productname,productprice,category,brand,productquantity,productspecifications,productdescription}=productdata
+      //const {productprice,productname,category,brand,productquantity,productspecifications,productdescription}=productdatastring
 
    
 
