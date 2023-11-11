@@ -283,11 +283,11 @@ exports.getallproductssinglestoreadmin=async(req,res)=>{
        
         .skip(skip).limit(returnsize)
 
-        storeproducts.forEach(product=>{
-            product.productimages.splice(1)
-        })
+        // storeproducts.forEach(product=>{
+        //     product.productimages.splice(1)
+        // })
 
-        console.log('admin products',storeproducts);
+       // console.log('admin products',storeproducts);
 
         res.send(storeproducts)
         
