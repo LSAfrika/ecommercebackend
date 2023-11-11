@@ -54,24 +54,38 @@ exports.updateproduct=async(req,res)=>{
     
     try {
         const {productid}=req.params
-        const {productprice,productname}=req.body
+        const productdatastring=req.body.productdata
+    //    return res.send(req.body)
+        const {userid}=req.body
+      //  const productdata=JSON.parse(productdatastring)
+    //  const {productname,productprice,category,brand,productquantity,productspecifications,productdescription}=productdata
+      const {productprice,productname,category,brand,productquantity,productspecifications,productdescription}=productdatastring
 
-        console.log('price:',productprice,'\n productname:',productname);
+   
+
+        //return res.send({productname,productprice,category,brand,productquantity,productspecifications,productdescription})
         const producttoupdate= await productmodel.findById(productid)
         if(producttoupdate==null) return res.send({exceptionmessage:'product to update not found'})
 
         if(productprice)producttoupdate.productprice=productprice
         if(productname)producttoupdate.productname=productname
+        if(category)producttoupdate.category=category
+        if(brand)producttoupdate.brand=brand
+        if(productquantity)producttoupdate.productquantity=productquantity
+        if(productspecifications)producttoupdate.productspecification=productspecifications
+        if(productdescription)producttoupdate.productdescription=productdescription
 
         await producttoupdate.save()
         
+
+        res.send({message:'updated successfully',producttoupdate})
         
-        if(req.files==null) return res.send({message:'product updated',prodcut:producttoupdate})
+        // if(req.files==null) return res.send({message:'product updated',prodcut:producttoupdate})
 
-        if(producttoupdate.productimages.length>=6) return res.send({message:'product updated',exceptionmessage:'a product can\'t have more than 6 images'})
-        const productimages= Array.isArray(req.files.product)? req.files.product:[req.files.product]
+        // if(producttoupdate.productimages.length>=6) return res.send({message:'product updated',exceptionmessage:'a product can\'t have more than 6 images'})
+        // const productimages= Array.isArray(req.files.product)? req.files.product:[req.files.product]
 
-        updateproductfolder(productimages,producttoupdate._id,res)
+        // updateproductfolder(productimages,producttoupdate._id,res)
 
 
 
