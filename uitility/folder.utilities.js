@@ -159,7 +159,7 @@ exports.createstorefolder =  (_storepic,uid) => {
             
       const producttoupdate=await productmodel.findById(productid)
 
-if(producttoupdate.productimages.length>=maxproductphotossize) return {message:'max product photo upload reached'}
+if(producttoupdate.productimages.length>=maxproductphotossize) return {exceptionmessage:'max product photo upload reached'}
 
 if(productimagesarray.length>=maxproductphotossize-producttoupdate.productimages.length){
 
@@ -213,7 +213,7 @@ if(productimagesarray.length>=maxproductphotossize-producttoupdate.productimages
             producttoupdate.productimages=[...producttoupdate.productimages,...productsviewpath]
             const savedproduct=await producttoupdate.save()
             if(savedproduct){
-              return {meesage:'images update uploaded successfully ',savedproduct};
+              return {message:'images update successfully',savedproduct};
             }
                 
         }

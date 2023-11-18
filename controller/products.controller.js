@@ -214,7 +214,7 @@ exports.getallproducts=async(req,res)=>{
         returnsize=10
         skip=returnsize*pagination
         const products=await productmodel.find(searchlogic).find({productdeactivated:false})
-        .select('name  category productname productimages productprice createdAt ')
+        .select('name  category productname productimages productprice createdAt viewcount ')
         .sort(sort)
         .skip(skip)
          .populate({path:'store',select:'_id',model:'store'})

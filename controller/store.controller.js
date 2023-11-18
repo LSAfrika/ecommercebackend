@@ -1,6 +1,7 @@
 const { productmodel } = require('../models/products.model')
 const{storemodel}=require('../models/store.model')
 const{usermodel}=require('../models/user.model')
+const{productsmodel}=require('../models/products.model')
 const{createstoreimagefolder,updatestoreimage}=require('../uitility/folder.utilities')
 
 
@@ -225,5 +226,40 @@ res.send(userfavoritesdstores)
   } catch (error) {
     res.send({errormessage:'error in get method for getting store',error:error.message})
     
+  }
+}
+
+exports.dashboard=async(req,res)=>{
+  try {
+
+    let totalviews=0
+    let totalsales=0
+    let soldproducts=0
+    let stockbalance=0
+  
+    const{userid}=req.body
+    const store= await storemodel.findOne({storeowner:userid})
+
+    if(store==null)return res.send({exceptionmessage:'store not found'})
+const products=await productmodel.find({store:store._id})
+.select('name productimages viewcount productprice productdeactivated productquantity category totalsold')
+
+products
+
+products.forEach(product=>{
+  totalviews=totalviews+product.viewcount
+  soldproducts=soldproducts+product.totalsold
+  totalsales=totalsales+(product.productprice*product.totalsold)
+  stockbalance=stockbalance+product.productquantity
+
+})
+
+
+    res.send({productcount:products.length,totalviews,totalsales,soldproducts,stockbalance,products})
+
+  } catch (error) {
+    
+    console.log('error in admin stats cnotroller: ',error);
+    res.send({errormessage:'error in dashboard controller',error})
   }
 }

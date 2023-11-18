@@ -18,7 +18,7 @@ const{authentication}=require('../middleware/auth.middleware')
 
 router.post('/createproduct',authentication,createproduct)
 router.patch('/updateproduct/:productid',authentication,updateproduct)
-router.patch('/updateproductphotos/:productid',authentication,uploadupdatephotos)
+router.post('/updateproductphotos/:productid',authentication,uploadupdatephotos)
 router.delete('/deleteproduct/:productid',authentication,deleteproduct)
 router.delete('/deleteproductimage/:productid',authentication,deleteproductimage)
 

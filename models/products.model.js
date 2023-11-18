@@ -14,6 +14,7 @@ exports.productmodel = mongoose.model('product',mongoose.Schema({
     productspecification:[{type:String,required:true }],
     productquantity:{type:Number,required:true,default:1},
     viewcount:{type:Number,required:true,default:0},
+    totalsold:{type:Number,required:true,default:0},
     category:{type:String,required:true,
       enum:['Phones','Laptops','Desktops','Tvs','Home theatres','monitors','Head sets','game console']},
     brand:{type:String,required:true,
