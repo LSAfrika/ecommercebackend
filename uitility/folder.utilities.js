@@ -149,62 +149,86 @@ exports.createstorefolder =  (_storepic,uid) => {
     }
   };
 
-  exports.updateproductfolder =  (productimagesarray,productid,res) => {
+  exports.updateproductfolder = async (productimagesarray,productid,res) => {
     try {
-   
+   maxproductphotossize=6
       let productsviewpath=[]
       const folderid =  productid;
+      completedprocessingimages=false
+
+            
+      const producttoupdate=await productmodel.findById(productid)
+
+if(producttoupdate.productimages.length>=maxproductphotossize) return {message:'max product photo upload reached'}
+
+if(productimagesarray.length>=maxproductphotossize-producttoupdate.productimages.length){
+
+  productimagesarray.splice(maxproductphotossize-producttoupdate.productimages.length)
+}
+
             const PRODUCTIMAGESUPLOADPATH='public/products/'
             let productimages = productimagesarray;
       // console.log('update function called',storepic);
       if(fs.existsSync(`${PRODUCTIMAGESUPLOADPATH}${folderid}`)){
-              console.log('folder exists');
+              // console.log('folder exists');
+
+           
+   
 
 
-        productimages.forEach(image=>{
+        
+      
 
-
-
-          path = `products/${folderid}/`;
-          extension = image.mimetype.split("/")[1];
-          originalname=image.name.split('.')[0]
-         let filename = Date.now()+folderid+originalname + "." + extension;
-         console.log(filename);
-         let uploadPath = `${PRODUCTIMAGESUPLOADPATH}${folderid}/${filename}` 
-         let viewpath = `${path}${filename}`;
+          productimages.forEach(
+          
+            (image)=>{
   
   
   
+            path = `products/${folderid}/`;
+            extension = image.mimetype.split("/")[1];
+            originalname=image.name.split('.')[0]
+           let filename = Date.now()+folderid+originalname + "." + extension;
+           console.log(filename);
+           let uploadPath = `${PRODUCTIMAGESUPLOADPATH}${folderid}/${filename}` 
+           let viewpath = `${path}${filename}`;
+    
+    
+    
+    
+               image.mv(uploadPath,function (err) {
+           if (err) { 
+             throw new Error(err.message);
+          
+            }});
+        productsviewpath.push(viewpath)
   
-             image.mv(uploadPath,async function (err) {
-         if (err)   throw new Error(err.message);
-         
-  
-         console.log("updated product images: ", viewpath);
-         productsviewpath.push(viewpath)
-
-         if(productsviewpath.length>=productimages.length){
-
-          const producttoupdate=await productmodel.findById(productid)
-          producttoupdate.productimages=[...producttoupdate.productimages,...productsviewpath]
-          await producttoupdate.save()
-
-          res.send({message:'product updated (photos):',product:producttoupdate})
-
-         }
-         
-        });
-        })
-
-
-
-              
-
+   
      
+  
+      
+          });
 
-            }else{
+          if(productsviewpath.length>=productimages.length){
+            producttoupdate.productimages=[...producttoupdate.productimages,...productsviewpath]
+            const savedproduct=await producttoupdate.save()
+            if(savedproduct){
+              return {meesage:'images update uploaded successfully ',savedproduct};
+            }
+                
+        }
+       
+          // completedprocessingimages=false
+
+        
+
+
+        console.log('loop complete');
+      }
+              
+           else{
               console.log('no folder exists',`${PRODUCTIMAGESUPLOADPATH}${folderid}`);
-              res.status(500).send({exceptionmessage:'folder not found'})
+              return { exceptionmessage:'folder not found'}
             }
 
 
@@ -212,7 +236,7 @@ exports.createstorefolder =  (_storepic,uid) => {
   
     } catch (error) {
   console.log('error in store upload logic: ',error.message);
-  res.status(500).send({exceptionmessage:'error while updating product images',error})
+  return {exceptionmessage:'error while updating product images',error}
 
     }
   };

@@ -139,7 +139,7 @@ exports.deleteproductimage=async(req,res)=>{
         const {productid}=req.params
         const {index}=req.query
         const {userid}=req.body
-             console.log(index);
+          
         if(index==-1||index==undefined)return res.send({exceptionmessage:'index to delete not provided'})
         const store=await storemodel.findOne({storeowner:userid})
        
@@ -187,7 +187,7 @@ if(producttodeleteimage.productimages.length-1<index)return res.send({exceptionm
 
           await producttodeleteimage.save()
 
-        res.send({message:`product image at index ${index} has been deleted`,product:producttodeleteimage})
+        res.send({message:`product image  has been deleted successfully`,product:producttodeleteimage})
         
     } catch (error) {
         console.log('delete product image error',error.message)
@@ -459,6 +459,31 @@ exports.getfavoriteproducts=async(req,res)=>{
         
         res.send({errormessage:'error in get method favorite products',error:error.message})
 
+    }
+}
+
+exports.uploadupdatephotos=async(req,res)=>{
+    try {
+const productid=req.params.productid
+        // console.log(req.body.userid)
+
+if(req.files==undefined) return res.send({exceptionmessage:'please attach files to upload'})
+// console.log(req.files.product)
+
+        const photouploads= Array.isArray(req.files.product) ? req.files.product:[req.files.product]
+
+        // console.log('convert files to array: ',photouploads);
+
+
+      const photoupdate= await  updateproductfolder(photouploads,productid,res)
+
+
+         res.send(photoupdate)
+        
+    } catch (error) {
+        console.log('files',req.files)
+
+        res.send({errormessage:'error in update photos controller',err:error.message})
     }
 }
 
