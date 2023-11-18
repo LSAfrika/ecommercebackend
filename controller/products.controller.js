@@ -260,22 +260,31 @@ exports.getallproductssinglestore=async(req,res)=>{
     
     try {
 
-        const {pagination}=req.query
+        const {pagination,category}=req.query
 
-
+console.log('chosen category',category);
         returnsize=10
         skip=pagination*returnsize
         const {storeid}=req.params
 
-      const storeproducts= await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
+      const storeproducts= category ? await productmodel.find({$and:[{store:storeid},{category:category},{productdeactivated:false}]}).sort({createdAt:-1})
+        .populate({path:'store',select:'storename storeimage',model:'store'})
+        .skip(skip).limit(returnsize) 
+
+        :
+
+         await productmodel.find({$and:[{store:storeid},{productdeactivated:false}]}).sort({createdAt:-1})
         .populate({path:'store',select:'storename storeimage',model:'store'})
         .skip(skip).limit(returnsize)
+
 
         storeproducts.forEach(product=>{
             product.productimages.splice(1)
         })
         res.send(storeproducts)
         
+   
+   
     } catch (error) {
         console.log('get all products error',error.message)
         res.send({errormessage:error.message,error})
