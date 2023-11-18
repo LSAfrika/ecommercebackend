@@ -242,7 +242,7 @@ exports.dashboard=async(req,res)=>{
 
     if(store==null)return res.send({exceptionmessage:'store not found'})
 const products=await productmodel.find({store:store._id})
-.select('name productimages viewcount productprice productdeactivated productquantity category totalsold')
+.select('name productimages productname viewcount productprice productdeactivated productquantity category totalsold')
 
 products
 
