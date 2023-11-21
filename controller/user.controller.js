@@ -126,14 +126,30 @@ exports.login = async (req, res) => {
         .status(500)
         .send({ errormessage: "please check email and password" });
     }
+let payload
+    if(finduser.vendor){
+      const store =await storemodel.findOne({storeowner:finduser._id})
 
-    const payload = {
-      _id: finduser._id,
-      email: finduser.email,
-      vendor:finduser.vendor,
-      username: finduser.username,
-      profileimg: finduser.profileimg,
-    };
+      payload = {
+        _id: finduser._id,
+        email: finduser.email,
+        vendor:finduser.vendor,
+        username: finduser.username,
+        profileimg: finduser.profileimg,
+        storedeactivated:store.storedeactivated
+      };
+
+    }else{
+      payload = {
+        _id: finduser._id,
+        email: finduser.email,
+        vendor:finduser.vendor,
+        username: finduser.username,
+        profileimg: finduser.profileimg,
+      };
+    }
+
+ 
 
     const token = await JWT.sign(payload, process.env.HASHKEY, {
       expiresIn: 600,
@@ -173,18 +189,22 @@ exports.login = async (req, res) => {
 exports.getmybio = async (req, res) => {
   try {
     const { userid } = req.body;
+    let store
     const user = await usermodel.findById(userid).select("-password");
-    if (user == null)
-      return res.status(404).send({ errormessage: "user not found" });
+    if (user == null)   return res.status(404).send({ errormessage: "user not found" });
 
-    res.send({user});
+    if(user.vendor==true) {store=await storemodel.findOne({storeowner:user._id})
+    return res.send({user:{...user._doc,storedeactivated:store.storedeactivated}});
+  }
+  return res.send({user});
+
   } catch (error) {
     console.log("get my bio error: ", error.message);
     res.send({errormessage:error.message});
   }
 };
 
-exports.updatebio = async (req, res) => {
+exports.updatepassword = async (req, res) => {
   try {
     let passwordnotifier=''
     let passwordcomparison
@@ -323,6 +343,160 @@ exports.updatebio = async (req, res) => {
         refreshtoken,
         message: "user updated successfully",
         passwordnotifier
+      });
+    }
+  } catch (error) {
+    // console.log(error);
+    res.send({ errormessage: error.message });
+  }
+};
+
+exports.updatebio = async (req, res) => {
+  try {
+
+    const { userid, username, storedeactivated  } = req.body;
+    let store
+    let payload
+
+    const updateuser = await usermodel.findById(userid);
+    console.log("user to update", updateuser);
+
+    if (updateuser == null)return res.status(404).send({ errormessage: "no user found" });
+    store=await storemodel.findOne({storeowner:updateuser._id})
+   if(store !=null){
+    if(storedeactivated!=undefined&&storedeactivated=='false') store.storedeactivated=false
+    if(storedeactivated!=undefined&&storedeactivated=='true')store.storedeactivated=true
+    await store.save()
+   }
+  
+    console.log("user id", userid);
+    console.log("username", username);
+ 
+
+    if(req.files){
+
+      if (username != undefined && username != "") updateuser.username = username;
+
+      let picfile = req.files.profileimage;
+      
+      extension = req.files.profileimage.mimetype.split("/")[1];
+      // if(picfile.length === undefined) {
+      // let trimmedfilename=picfile.name.replace(/ /g,'')
+      let filename = userid + "." + extension;
+
+      console.log(filename);
+      let uploadPath = `public/user/` + filename;
+      let viewpath = `user/${filename}`;
+      
+
+      picfile.mv(uploadPath, function (err) {
+        if (err) {
+          return res.status(500).send(err);
+        }
+
+        console.log("updated profile path: ", viewpath);
+      });
+
+      updateuser.profileimg = viewpath;
+      console.log("user to save", updateuser);
+
+    
+      await updateuser.save();
+      console.log("updated profile", updateuser);
+      if(updateuser.vendor==true){
+
+        payload = {
+         _id: updateuser._id,
+         email: updateuser.email,
+         profileimg: updateuser.profileimg,
+         username: updateuser.username,
+         vendor:updateuser.vendor,
+         storedeactivated:store.storedeactivated
+       };
+      }
+      if(updateuser.vendor==false){
+        
+        payload = {
+          _id: updateuser._id,
+          email: updateuser.email,
+          profileimg: updateuser.profileimg,
+          username: updateuser.username,
+          vendor:updateuser.vendor,
+          
+        };
+      }
+
+      const token = JWT.sign(payload, process.env.HASHKEY, {
+        expiresIn: "1w",
+      });
+      const refreshtoken = JWT.sign(
+        { _id: payload._id },
+        process.env.REFRESHTOKEN,
+        {
+          expiresIn: "30d",
+        }
+      );
+
+      return res.send({
+        updateuser,
+        token,
+        refreshtoken,
+        message: "user updated successfully",
+        
+      });
+    } else {
+      if (username != undefined && username != "") updateuser.username = username;
+      console.log(updateuser.username);
+
+     
+
+      await updateuser.save();
+
+
+      if(updateuser.vendor==true){
+
+        payload = {
+         _id: updateuser._id,
+         email: updateuser.email,
+         profileimg: updateuser.profileimg,
+         username: updateuser.username,
+         vendor:updateuser.vendor,
+         storedeactivated:store.storedeactivated
+       };
+      }
+      if(updateuser.vendor==false){
+        
+        payload = {
+          _id: updateuser._id,
+          email: updateuser.email,
+          profileimg: updateuser.profileimg,
+          username: updateuser.username,
+          vendor:updateuser.vendor,
+          
+        };
+      }
+
+   
+
+      const token = JWT.sign(payload, process.env.HASHKEY, {
+        expiresIn: "1w",
+      });
+      // console.log('REFRESH: ',process.env.REFRESH_TOKEN);
+
+      const refreshtoken = JWT.sign(
+        { _id: payload._id },
+        process.env.REFRESHTOKEN,
+        {
+          expiresIn: "30d",
+        }
+      );
+
+      res.send({
+        updateuser,
+        token,
+        refreshtoken,
+        message: "user updated successfully",
+     
       });
     }
   } catch (error) {
