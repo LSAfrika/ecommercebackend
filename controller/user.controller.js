@@ -209,6 +209,9 @@ exports.updatepassword = async (req, res) => {
     let passwordnotifier=''
     let passwordcomparison
     const { userid, username, oldpassword, newpassword, reenternewpassword } = req.body;
+
+    const fourweeksinmillseconds = 6048008*2;
+    const expiresin = Math.floor(Date.now() / 1000) + fourweeksinmillseconds;
     const updateuser = await usermodel.findById(userid);
     console.log("user to update", updateuser);
 
@@ -358,6 +361,9 @@ exports.updatebio = async (req, res) => {
     let store
     let payload
 
+    const fourweeksinmillseconds = 6048008*2;
+    const expiresin = Math.floor(Date.now() / 1000) + fourweeksinmillseconds;
+
     const updateuser = await usermodel.findById(userid);
     console.log("user to update", updateuser);
 
@@ -432,15 +438,19 @@ exports.updatebio = async (req, res) => {
       const refreshtoken = JWT.sign(
         { _id: payload._id },
         process.env.REFRESHTOKEN,
-        {
-          expiresIn: "30d",
-        }
+       
       );
+
+      res.cookie("access", refreshtoken, {
+        maxAge: expiresin,
+  
+        httpOnly: true,
+      });
 
       return res.send({
         updateuser,
         token,
-        refreshtoken,
+      
         message: "user updated successfully",
         
       });
@@ -486,15 +496,19 @@ exports.updatebio = async (req, res) => {
       const refreshtoken = JWT.sign(
         { _id: payload._id },
         process.env.REFRESHTOKEN,
-        {
-          expiresIn: "30d",
-        }
+       
       );
+
+      res.cookie("access", refreshtoken, {
+        maxAge: expiresin,
+  
+        httpOnly: true,
+      });
 
       res.send({
         updateuser,
         token,
-        refreshtoken,
+   
         message: "user updated successfully",
      
       });
