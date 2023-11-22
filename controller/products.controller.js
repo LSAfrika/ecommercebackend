@@ -436,10 +436,10 @@ exports.getfavoriteproducts=async(req,res)=>{
        
 
         const userfavoriteproducts=await usermodel.findById(userid)
-        .select('favoriteproducts')
+        .select('favoriteproducts -_id')
         // .populate({path:'favoriteproducts',select:'productname productprice category store' })
-        .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice productdeactivated category productimages'}})
-        .populate({path:'favoriteproducts',  populate:{path:'store',select:'storename storeimage'}})
+         .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice productdeactivated category productimages store'}})
+         .populate({path:'favoriteproducts',  populate:{path:'product',populate:{path:'store',select:'storename storeimage'}}})
   
   
 
@@ -452,15 +452,19 @@ exports.getfavoriteproducts=async(req,res)=>{
         //     ...userfavoriteproducts,
         //     productimages:singleproductimage
         // }
-
-
+ //return res.send(userfavoriteproducts)
+let resparray=[]
         userfavoriteproducts.favoriteproducts.forEach(favproduct => {
             singleproductimage=favproduct.product.productimages[0]
             favproduct.product.productimages=[singleproductimage]
-          
+            // console.log(favproduct.product);
+          resparray.push(favproduct.product)
             
         });
-        res.send({userfavoriteproducts})
+
+        // const responsearray=[...userfavoriteproducts.favoriteproducts]
+      //  console.log(responsearray);
+        res.send(resparray)
 
 
         
@@ -493,6 +497,26 @@ if(req.files==undefined) return res.send({exceptionmessage:'please attach files 
         console.log('files',req.files)
 
         res.send({errormessage:'error in update photos controller',err:error.message})
+    }
+}
+
+exports.checkfavorited=async(req,res)=>{
+    try {
+
+        const {userid}=req.body
+    const {productid}=req.params
+    
+    const user= await usermodel.findById(userid).select('favoriteproducts -_id')
+    if(user==null)return res.status(404).send({exceptionmessage:'user not found'})
+const indexofproduct=user.favoriteproducts.map(product=>product.product.toString()).indexOf(productid)
+
+//return res.send(user.favoriteproducts)
+if(indexofproduct!=-1) return res.send({favorited:true})
+if(indexofproduct==-1) return res.send({favorited:false})
+
+    } catch (error) {
+        console.log('error from check favoritye controller: \n',error.message);
+        res.status(500).send({errormessage:error.message})
     }
 }
 

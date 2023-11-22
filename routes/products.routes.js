@@ -12,7 +12,7 @@ const{createproduct,
     getallproductsbrand,
     getallproductscategorybrand,
     getallproductssinglestoreadmin,
-    uploadupdatephotos
+    uploadupdatephotos,checkfavorited
 }=require('../controller/products.controller')
 const{authentication}=require('../middleware/auth.middleware')
 
@@ -23,6 +23,7 @@ router.delete('/deleteproduct/:productid',authentication,deleteproduct)
 router.delete('/deleteproductimage/:productid',authentication,deleteproductimage)
 
 router.get('/getallproducts',getallproducts)
+router.get('/checkproductfavorited/:productid',authentication,checkfavorited)
 router.get('/getallproductscategory',getallproductscategory)
 router.get('/getallproductsbrand',getallproductsbrand)
 router.get('/getallproductscategorybrand',getallproductscategorybrand)
