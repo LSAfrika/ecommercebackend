@@ -263,3 +263,24 @@ products.forEach(product=>{
     res.send({errormessage:'error in dashboard controller',error})
   }
 }
+
+exports.checkfavorited=async(req,res)=>{
+  try {
+
+      const {userid}=req.body
+  const {storeid}=req.params
+  
+  const user= await usermodel.findById(userid).select('favoritestores -_id')
+  if(user==null)return res.status(404).send({exceptionmessage:'user not found'})
+  //return res.send(user)
+const indexofstore=user.favoritestores.map(store=>store.toString()).indexOf(storeid)
+
+//return res.send(user.favoriteproducts)
+if(indexofstore!=-1) return res.send({favorited:true})
+if(indexofstore==-1) return res.send({favorited:false})
+
+  } catch (error) {
+      console.log('error from check favoritye controller: \n',error.message);
+      res.status(500).send({errormessage:error.message})
+  }
+}

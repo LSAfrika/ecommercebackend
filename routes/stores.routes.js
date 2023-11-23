@@ -1,11 +1,12 @@
 const express=require('express')
 const router= express.Router()
 const{authentication}=require('../middleware/auth.middleware')
-const{createstore,getstore,getstores,dashboard,updatetore,deactivatestore,addremovefavoritestore,getuserfavoritedstores}=require('../controller/store.controller')
+const{createstore,getstore,getstores,dashboard,updatetore,deactivatestore,addremovefavoritestore,getuserfavoritedstores,checkfavorited}=require('../controller/store.controller')
 
 
 router.get('/allstores',getstores)
 router.get('/store/:storeid',getstore)
+router.get('/storefavoritecheck/:storeid',authentication,checkfavorited)
 router.get('/dashboard',authentication,dashboard)
 router.get('/getuserfavoritedstores',authentication,getuserfavoritedstores)
 
