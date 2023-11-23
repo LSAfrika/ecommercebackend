@@ -264,6 +264,58 @@ products.forEach(product=>{
   }
 }
 
+exports.getfavoritestores=async(req,res)=>{
+  try {
+
+      const{userid}=req.body
+     
+
+      const userfavoritestores=await usermodel.findById(userid)
+      .select(' favoritestores -_id')
+      // .populate({path:'favoriteproducts',select:'productname productprice category store' })
+      .populate({path:'favoritestores',
+      select:`storename storeimage `
+       //,populate:{path:'store',select:'storename'}
+      })
+     //  .populate({path:'favoriteproducts',  populate:{path:'product',populate:{path:'store',select:'storename storeimage'}}})
+
+  
+return res.send(userfavoritestores.favoritestores)
+
+
+      // .populate({path:'favoriteproducts',select})
+    
+      if(userfavoriteproducts==null) return res.send({exceptionmessage:'user not found'})
+
+      // const singleproductimage=userfavoriteproducts.productimages[0]
+      // const favoriteproductsresponse={
+      //     ...userfavoriteproducts,
+      //     productimages:singleproductimage
+      // }
+//return res.send(userfavoriteproducts)
+let resparray=[]
+      userfavoriteproducts.favoriteproducts.forEach(favproduct => {
+          singleproductimage=favproduct.product.productimages[0]
+          favproduct.product.productimages=[singleproductimage]
+          // console.log(favproduct.product);
+        resparray.push(favproduct.product)
+          
+      });
+
+      // const responsearray=[...userfavoriteproducts.favoriteproducts]
+    //  console.log(responsearray);
+      res.send(resparray)
+
+
+      
+  } catch (error) {
+      
+      res.send({errormessage:'error in get method favorite stores',error:error.message})
+
+  }
+}
+
+
 exports.checkfavorited=async(req,res)=>{
   try {
 
