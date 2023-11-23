@@ -436,10 +436,15 @@ exports.getfavoriteproducts=async(req,res)=>{
        
 
         const userfavoriteproducts=await usermodel.findById(userid)
-        .select('favoriteproducts -_id')
+        .select('favoriteproducts favoritestores -_id')
         // .populate({path:'favoriteproducts',select:'productname productprice category store' })
-         .populate({path:'favoriteproducts',populate:{path:'product',select:'productname productprice productdeactivated category productimages store'}})
-         .populate({path:'favoriteproducts',  populate:{path:'product',populate:{path:'store',select:'storename storeimage'}}})
+        .populate({path:'favoriteproducts',populate:{path:'product',
+        select:`-productdeactivated  -productprice
+         -productdescription -productspecification 
+         -productquantity -viewcount -brand -totalsold -__v`
+         //,populate:{path:'store',select:'storename'}
+        }})
+       //  .populate({path:'favoriteproducts',  populate:{path:'product',populate:{path:'store',select:'storename storeimage'}}})
   
   
 
