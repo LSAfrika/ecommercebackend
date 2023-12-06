@@ -296,8 +296,8 @@ exports.completedorders=async(req,res)=>{
 
         const completedorders=await carthistorymodel.findOne({cartowner:userid})
         .populate({path:'completedcarts',
-                   populate:{path:'products',select:'productname productprice productimages category'},
-                   populate:{path:'product',select:'productname productprice category createAt'}
+                   populate:{path:'products',populate:{path:'product',select:'productname productprice category '}},
+                 //  populate:{path:'product',select:'productname productprice category createAt'}
                 })
         
         if(completedorders==null)return res.status(404).send({exceptionmessage:'no completed orders found'})
