@@ -272,7 +272,7 @@ exports.checkoutcart=async(req,res)=>{
         if(carthistory==null){
             carthistory = await carthistorymodel.create({
                     cartowner:userid,
-                    completedcarts:[{products:cart.products,totalprice:cart.totalprice}]
+                    completedcarts:[{products:cart.products,totalprice:cart.totalprice,timestamp:Date.now()}]
                     
                 })
             }
