@@ -40,6 +40,7 @@ exports.carthistorymodel=mongoose.model('completedcarts',mongoose.Schema({
             }
                 ],
         totalprice:{type:Number,required:true,default:0},
+        timestamp:{type:Number,require:true,default:Date.now()}
         
         
     }]

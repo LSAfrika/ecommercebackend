@@ -263,7 +263,7 @@ exports.checkoutcart=async(req,res)=>{
         if(carthistory!==null){
 
           
-            carthistory.completedcarts=[...carthistory.completedcarts,{products:cart.products,totalprice:cart.totalprice}]
+            carthistory.completedcarts=[...carthistory.completedcarts,{products:cart.products,totalprice:cart.totalprice,timestamp:Date.now()}]
 
             await carthistory.save()
         
@@ -295,14 +295,14 @@ exports.completedorders=async(req,res)=>{
         const{userid}=req.body
 
         const completedorders=await carthistorymodel.findOne({cartowner:userid})
-        .populate({path:'completedcarts',
+        .populate({path:'completedcarts',select:'-__v',
                    populate:{path:'products',populate:{path:'product',select:'productname productprice category '}},
                  //  populate:{path:'product',select:'productname productprice category createAt'}
                 })
         
         if(completedorders==null)return res.status(404).send({exceptionmessage:'no completed orders found'})
 
-        res.send({completedorders})
+        res.send(completedorders)
         
     } catch (error) {
         
