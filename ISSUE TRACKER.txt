@@ -4,9 +4,23 @@ ISSUE TRACKER
 2.add logic for user/favorite product -->DONE
 
 3.add viewed counter logic to product  -->DONE
-4.in ui addfavorited item view
+4.in ui addfavorited item view-->DONE
 
-5. sum total of cart logic remaining
+5. sum total of cart logic remaining -->DONE
 
 
-6. create modle for admin dashboar to have quantity views stock balance  sold product
+6. create modle for admin dashboar to have quantity views stock balance  sold product -->DONE
+
+==========IN PROGRESS=========
+
+
+============FEATURE===========
+add nodemailer
+add stripe payments 
+creatre payments model
+
+
+
+
+
+
