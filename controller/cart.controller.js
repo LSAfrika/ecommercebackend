@@ -2,6 +2,7 @@
 const{cartmodel, carthistorymodel}=require('../models/cart.model')
 const{productmodel}=require('../models/products.model')
 const stripe = require('stripe')(process.env.SSK);
+const YOUR_DOMAIN = 'http://localhost:4200';
 
 
 exports.getcart=async(req,res)=>{
@@ -280,22 +281,19 @@ exports.checkoutcart=async(req,res)=>{
             quantity:item.quantity
         }))
 
-        return res.send(stripecart)
+      //  return res.send(stripecart)
 
 
 
         const session = await stripe.checkout.sessions.create({
-            line_items: cart.products.map((item)=>{
-                {
-
-                }
-            }),
+            line_items:[...stripecart],
             mode: 'payment',
-            success_url: `${YOUR_DOMAIN}/success.html`,
-            cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+            success_url: `${YOUR_DOMAIN}/checkout/success`,
+            cancel_url: `${YOUR_DOMAIN}/checkout/cancel`,
           });
         
-          res.redirect(303, session.url);
+          const checkouturl=session.url
+         return res.send( {checkouturl});
 
 
 
