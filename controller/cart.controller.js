@@ -1,5 +1,5 @@
 
-const{cartmodel, carthistorymodel}=require('../models/cart.model')
+const{cartmodel, carthistorymodel,createordernotificationmodel}=require('../models/cart.model')
 const{productmodel}=require('../models/products.model')
 
 
@@ -332,7 +332,45 @@ exports.deleteproductcart=async(req,res)=>{
         res.status(500).send({errormessage:error.message})
     }
 }
+exports.checkoutpaymentsucceed=async(req,res)=>{
+try {
 
+    const {userid}=req.body
+
+    const activecart=await cartmodel.findById(userid).populate({path:'products',
+    populate:{path:'product',select:'-_id',select:'productname store'}})
+    if(activecart==null) return res.send({exceptionmessage:'active cart not founnd'})
+
+    let products= activecart.products
+    let storesincart= products.map(product=>product.product.store.toString())
+    let uniquestores= [... new Set(storesincart)]
+    let storeproducts
+    let ordercreationcounter=0
+    uniquestores.forEach(async(storeid) => {
+         storeproducts= activecart.products.filter(item=>item.product.store.toString()==storeid)
+
+         await createordernotificationmodel.create({
+            orderowner:activecart._id,
+            storeid,
+            products:storeproducts
+         })
+        ordercreationcounter++
+
+        console.log(ordercreationcounter,uniquestores.length);
+
+        if(ordercreationcounter==uniquestores.length) return res.send({message:'order notficatrions created successfully'})
+        
+    });
+
+
+ //   res.send(storeproducts )
+    
+} catch (error) {
+ 
+        console.log('error checkout cart succeed:',error.message);
+        res.status(500).send({errormessage:error.message})
+}
+}
 function sumofArray(sum, num) {
     return sum + num;
 }

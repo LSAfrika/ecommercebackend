@@ -47,11 +47,18 @@ exports.carthistorymodel=mongoose.model('completedcarts',mongoose.Schema({
 }))
 
 
-exports.ordernotifer=mongoose.model('ordernotification',mongoose.Schema({
+exports.createordernotificationmodel=mongoose.model('createordernotification',mongoose.Schema({
 
     orderowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
     storeid:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'store'},
-    products:[{type:mongoose.Schema.Types.ObjectId,required:true,ref:'product'}],
+    products:[
+        {
+            product:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'product'},
+            quantity:{ type:Number,required:true,default:1 },
+            productprice:{type:Number},
+            sumtotal:{type:Number,required:true,default:0}
+        }
+            ],
     orderstatus:{type:String,required:true,default:'active',enum:['active','completed']}
 
 
