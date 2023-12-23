@@ -47,6 +47,13 @@ exports.carthistorymodel=mongoose.model('completedcarts',mongoose.Schema({
 }))
 
 
-function sumofArray(sum, num) {
-    return sum + num;
-}
+exports.ordernotifer=mongoose.model('ordernotification',mongoose.Schema({
+
+    orderowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
+    storeid:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'store'},
+    products:[{type:mongoose.Schema.Types.ObjectId,required:true,ref:'product'}],
+    orderstatus:{type:String,required:true,default:'active',enum:['active','completed']}
+
+
+
+},{timestamp:true}))
