@@ -1,6 +1,8 @@
 
 const{cartmodel, carthistorymodel,createordernotificationmodel}=require('../models/cart.model')
 const{productmodel}=require('../models/products.model')
+const stripe = require('stripe')(process.env.SSK);
+const YOUR_DOMAIN = 'http://localhost:4200';
 
 
 exports.getcart=async(req,res)=>{
@@ -249,15 +251,58 @@ exports.resetcart=async(req,res)=>{
         
     }   
 }
+
+exports.stripecheckout=async (req,res)=>{
+    try {
+        const{userid}=req.body
+
+        const cart= await cartmodel.findById(userid)
+    } catch (error) {
+        
+    }
+}
 exports.checkoutcart=async(req,res)=>{
     try {
       
 
         const{userid}=req.body
 
-        const cart= await cartmodel.findById(userid)
+        const cart= await cartmodel.findById(userid).populate({path:'products',populate:{path:'product',select:'productname productprice   '}})
         let carthistory= await carthistorymodel.findOne({cartowner:userid})
         if(cart==null) return res.status(404).send({exceptionmessage:'no cart found'})
+
+
+        const stripecart=cart.products.map((item)=>({
+            price_data:{
+                currency:'usd',
+                product_data:{name:item.product.productname},
+                unit_amount:Math.round((item.productprice/150)*100)
+            },
+            quantity:item.quantity
+        }))
+
+      //  return res.send(stripecart)
+
+
+
+        const session = await stripe.checkout.sessions.create({
+            line_items:[...stripecart],
+            mode: 'payment',
+            success_url: `${YOUR_DOMAIN}/checkout/success`,
+            cancel_url: `${YOUR_DOMAIN}/checkout/cancel`,
+          });
+        
+          const checkouturl=session.url
+         return res.send( {checkouturl});
+
+
+
+
+
+
+
+
+        
         if(cart.products.length==0) return res.status(409).send({exceptionmessage:'cart is empty'})
         
         if(carthistory!==null){

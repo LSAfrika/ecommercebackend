@@ -8,7 +8,8 @@ const LocalDBconnection =`mongodb://127.0.0.1:27017/ngcommerce`
 const PORT=process.env.PORT || 3000
 
 const corsOptions = {
-  origin: "http://localhost:4200",
+ // origin: "*",
+   origin: ["http://localhost:4200",``],
   optionsSuccessStatus: 200,
   credentials: true,
 };
