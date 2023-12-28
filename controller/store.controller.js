@@ -3,6 +3,7 @@ const{storemodel}=require('../models/store.model')
 const{usermodel}=require('../models/user.model')
 const{productsmodel}=require('../models/products.model')
 const{createstoreimagefolder,updatestoreimage}=require('../uitility/folder.utilities')
+const { createordermodel } = require('../models/cart.model')
 
 
 
@@ -241,11 +242,17 @@ exports.dashboard=async(req,res)=>{
     const store= await storemodel.findOne({storeowner:userid})
 
     if(store==null)return res.send({exceptionmessage:'store not found'})
-const products=await productmodel.find({store:store._id})
-.select('name productimages productname viewcount productprice productdeactivated productquantity category totalsold')
+   
+    const orders=await createordermodel.find({storeid:store._id}) 
+    .select('-storeid')
+    .populate({path:'orderowner',select:'username'})
+    .populate({path:'products',populate:{path:'product',select:'productname'}})
+    const products=await productmodel.find({store:store._id})
+    .select('name productimages productname viewcount productprice productdeactivated productquantity category totalsold')
 
-products
 
+
+//return res.send(orders)
 products.forEach(product=>{
   totalviews=totalviews+product.viewcount
   soldproducts=soldproducts+product.totalsold
@@ -255,7 +262,8 @@ products.forEach(product=>{
 })
 
 
-    res.send({productcount:products.length,totalviews,totalsales,soldproducts,stockbalance,products})
+    res.send({productcount:products.length,totalviews,
+      totalsales,soldproducts,stockbalance,orderscount:orders.length,products,orders})
 
   } catch (error) {
     
