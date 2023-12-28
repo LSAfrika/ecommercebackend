@@ -20,7 +20,7 @@ exports.storeorders=async(req,res)=>{
     }
 }
 
-exports.storeorder=async(req,res)=>{
+exports.completeorder=async(req,res)=>{
     try {
 
         const {userid}=req.body
@@ -40,17 +40,20 @@ exports.storeorder=async(req,res)=>{
 }
 
 
-exports.completeorder=async(req,res)=>{
+exports.storeorder =async(req,res)=>{
     try {
 
         const {userid}=req.body
-
+        const{orderid}=req.params
         const store= await storemodel.findOne({storeowner:userid})
 
         if(store==null) return res.status(404).send({exceptionmessage:'store not found'})
 
-        const storeorder= await createordermodel.findOne({storeid:store._id})
+        const storeorder= await createordermodel.findOne({storeid:store._id,_id:orderid})
 
+        if (storeorder==null) return res.status(404).send({exceptionmessage:'order not found'})
+            
+        
         res.send(storeorder)
         
     } catch (error) {
