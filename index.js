@@ -28,6 +28,7 @@ app.get('/',async(req,res)=>{
  app.use('/api/v1/products',require('./routes/products.routes'))
  app.use('/api/v1/cart',require('./routes/cart.routes'))
  app.use('/api/v1/stores',require('./routes/stores.routes'))
+ app.use('/api/v1/orders',require('./routes/orders.routes'))
 
 
 
