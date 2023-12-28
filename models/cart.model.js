@@ -59,7 +59,7 @@ exports.createordermodel=mongoose.model('createordernotification',mongoose.Schem
             sumtotal:{type:Number,required:true,default:0}
         }
             ],
-    orderstatus:{type:String,required:true,default:'active',enum:['active','completed']}
+    orderstatus:{type:String,required:true,default:'active',enum:['active','cancel','completed']}
 
 
 

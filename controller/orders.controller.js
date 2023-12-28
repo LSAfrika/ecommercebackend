@@ -60,6 +60,7 @@ exports.completeorder =async(req,res)=>{
         if (storeorder.orderstatus=='completed') return res.send({message:'order already proccessed'})    
         storeorder.orderstatus='completed'
         await storeorder.save()
+        // add send email functionality for completed or cancel and update data in DB 
         res.send(storeorder)
         
     } catch (error) {
