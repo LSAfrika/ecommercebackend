@@ -1,5 +1,5 @@
 
-const{cartmodel, carthistorymodel,createordernotificationmodel}=require('../models/cart.model')
+const{cartmodel, carthistorymodel,createordermodel}=require('../models/cart.model')
 const{productmodel}=require('../models/products.model')
 const stripe = require('stripe')(process.env.SSK);
 const YOUR_DOMAIN = 'http://localhost:4200';
@@ -394,7 +394,7 @@ try {
     uniquestores.forEach(async(storeid) => {
          storeproducts= activecart.products.filter(item=>item.product.store.toString()==storeid)
 
-         await createordernotificationmodel.create({
+         await createordermodel.create({
             orderowner:activecart._id,
             storeid,
             products:storeproducts

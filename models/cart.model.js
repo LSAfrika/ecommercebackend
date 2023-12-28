@@ -47,7 +47,7 @@ exports.carthistorymodel=mongoose.model('completedcarts',mongoose.Schema({
 }))
 
 
-exports.createordernotificationmodel=mongoose.model('createordernotification',mongoose.Schema({
+exports.createordermodel=mongoose.model('createordernotification',mongoose.Schema({
 
     orderowner:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'user'},
     storeid:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'store'},
