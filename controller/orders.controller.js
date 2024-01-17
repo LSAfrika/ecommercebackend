@@ -10,9 +10,27 @@ exports.storeorders=async(req,res)=>{
 
         if(store==null) return res.status(404).send({exceptionmessage:'store not found'})
 
-        const storeorder= await createordermodel.findOne({storeid:store._id})
+        const storeorders= await createordermodel.find({storeid:store._id})
+        .populate({path:"products",
+        populate:{path:'product',select:'productname'}})
 
-        res.send(storeorder)
+        if(storeorders.length>0)storeorders.forEach(order=>{
+
+            let total=0
+            order.products.forEach(proudct => {
+             
+                total=total+proudct.sumtotal
+              
+
+            });
+
+            
+         order._doc.ordertotal=total
+           
+
+        })
+       
+        res.send(storeorders)
         
     } catch (error) {
         console.log('error store order controller: ',error.message);
@@ -36,8 +54,14 @@ exports.storeorder =async(req,res)=>{
 
         if (storeorder==null) return res.status(404).send({exceptionmessage:'order not found'})
             
-        
-        res.send(storeorder)
+        let total=0
+        storeorder.products.forEach(proudct => {
+            
+            total=total+proudct.sumtotal
+        });
+        console.log('total price:',total);
+        let modifiedstoreorder={...storeorder._doc,ordertotal:total}
+        res.send(modifiedstoreorder)
         
     } catch (error) {
         console.log('error store order controller: ',error.message);
@@ -48,8 +72,9 @@ exports.storeorder =async(req,res)=>{
 exports.completeorder =async(req,res)=>{
     try {
 
-        const {userid}=req.body
+        const {userid,status}=req.body
         const{orderid}=req.params
+        console.log('status: ',status);
         const store= await storemodel.findOne({storeowner:userid})
 
         if(store==null) return res.status(404).send({exceptionmessage:'store not found'})
@@ -57,11 +82,11 @@ exports.completeorder =async(req,res)=>{
         const storeorder= await createordermodel.findOne({storeid:store._id,_id:orderid})
 
         if (storeorder==null) return res.status(404).send({exceptionmessage:'order not found'})
-        if (storeorder.orderstatus=='completed') return res.send({message:'order already proccessed'})    
-        storeorder.orderstatus='completed'
+        if (storeorder.orderstatus!=='active') return res.send({message:'order already proccessed'})    
+        storeorder.orderstatus=status
         await storeorder.save()
         // add send email functionality for completed or cancel and update data in DB 
-        res.send(storeorder)
+        res.send({message:`order status: ${status}`})
         
     } catch (error) {
         console.log('error store order controller: ',error.message);

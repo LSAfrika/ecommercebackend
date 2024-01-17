@@ -59,8 +59,9 @@ exports.createordermodel=mongoose.model('createordernotification',mongoose.Schem
             sumtotal:{type:Number,required:true,default:0}
         }
             ],
-    orderstatus:{type:String,required:true,default:'pending',enum:['pending','cancel','completed']},
-    created:{type:Number,required:true,default:Date.now()}
+    orderstatus:{type:String,required:true,default:'active',enum:['active','canceled','completed']},
+    created:{type:Number,required:true,default:Date.now()},
+    ordertotal: {type:Number,required:true,default:this.products?.reduce((total,acc)=>total+acc)||0}
 
 
 },{timestamps:true}))
