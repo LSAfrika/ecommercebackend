@@ -343,9 +343,11 @@ exports.completedorders=async(req,res)=>{
         .populate({path:'completedcarts',select:'-__v',
                    populate:{path:'products',populate:{path:'product',select:'productname productprice category '}},
                  //  populate:{path:'product',select:'productname productprice category createAt'}
-                })
+                }).sort({createdAt:1})
         
         if(completedorders==null)return res.status(404).send({exceptionmessage:'no completed orders found'})
+
+        completedorders.completedcarts.sort((a,b)=>b.timestamp-a.timestamp)
 
         res.send(completedorders)
         
