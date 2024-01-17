@@ -6,7 +6,7 @@ const{storeorders,storeorder,completeorder}=require('../controller/orders.contro
 
 router.get('/getorders',authentication,storeorders)
 router.get('/getorder/:orderid',authentication,storeorder)
-router.post('/completeorder/:orderid',authentication,completeorder)
+router.post('/processorder/:orderid',authentication,completeorder)
 
 
 
