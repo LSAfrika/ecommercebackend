@@ -272,28 +272,28 @@ exports.checkoutcart=async(req,res)=>{
         if(cart==null) return res.status(404).send({exceptionmessage:'no cart found'})
 
 
-        const stripecart=cart.products.map((item)=>({
-            price_data:{
-                currency:'usd',
-                product_data:{name:item.product.productname},
-                unit_amount:Math.round((item.productprice/150)*100)
-            },
-            quantity:item.quantity
-        }))
+        // const stripecart=cart.products.map((item)=>({
+        //     price_data:{
+        //         currency:'usd',
+        //         product_data:{name:item.product.productname},
+        //         unit_amount:Math.round((item.productprice/150)*100)
+        //     },
+        //     quantity:item.quantity
+        // }))
 
-      //  return res.send(stripecart)
+   
 
 
 
-        const session = await stripe.checkout.sessions.create({
-            line_items:[...stripecart],
-            mode: 'payment',
-            success_url: `${YOUR_DOMAIN}/checkout/success`,
-            cancel_url: `${YOUR_DOMAIN}/checkout/cancel`,
-          });
+        // const session = await stripe.checkout.sessions.create({
+        //     line_items:[...stripecart],
+        //     mode: 'payment',
+        //     success_url: `${YOUR_DOMAIN}/checkout/success`,
+        //     cancel_url: `${YOUR_DOMAIN}/checkout/cancel`,
+        //   });
         
-          const checkouturl=session.url
-         return res.send( {checkouturl});
+        //   const checkouturl=session.url
+        //  return res.send( {checkouturl});
 
 
 
