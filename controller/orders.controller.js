@@ -12,24 +12,9 @@ exports.storeorders=async(req,res)=>{
 
         const storeorders= await createordermodel.find({storeid:store._id})
         .populate({path:"products",
-        populate:{path:'product',select:'productname'}})
+        populate:{path:'product',select:'productname'}}).sort({createdAt:1})
 
-        if(storeorders.length>0)storeorders.forEach(order=>{
-
-            let total=0
-            order.products.forEach(proudct => {
-             
-                total=total+proudct.sumtotal
-              
-
-            });
-
-            
-         order._doc.ordertotal=total
            
-
-        })
-       
         res.send(storeorders)
         
     } catch (error) {
@@ -54,14 +39,8 @@ exports.storeorder =async(req,res)=>{
 
         if (storeorder==null) return res.status(404).send({exceptionmessage:'order not found'})
             
-        let total=0
-        storeorder.products.forEach(proudct => {
-            
-            total=total+proudct.sumtotal
-        });
-        console.log('total price:',total);
-        let modifiedstoreorder={...storeorder._doc,ordertotal:total}
-        res.send(modifiedstoreorder)
+   
+        res.send(storeorder)
         
     } catch (error) {
         console.log('error store order controller: ',error.message);
@@ -86,7 +65,7 @@ exports.completeorder =async(req,res)=>{
         storeorder.orderstatus=status
         await storeorder.save()
         // add send email functionality for completed or cancel and update data in DB 
-        res.send({message:`order status: ${status}`})
+        res.send({message:status})
         
     } catch (error) {
         console.log('error store order controller: ',error.message);
