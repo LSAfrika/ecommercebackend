@@ -1,5 +1,16 @@
 ISSUE TRACKER
+==============CRITICAL===========
+reduce product count when an order has been created 
 
+
+
+
+
+==========IN PROGRESS=========
+
+
+
+============COMPLETED================
 1.refactor logic of user/favorite store -->DONE
 2.add logic for user/favorite product -->DONE
 
@@ -10,10 +21,6 @@ ISSUE TRACKER
 
 
 6. create modle for admin dashboar to have quantity views stock balance  sold product -->DONE
-
-==========IN PROGRESS=========
-
-
 ============FEATURE===========
 add nodemailer
 add stripe payments 

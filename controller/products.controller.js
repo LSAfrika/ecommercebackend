@@ -442,7 +442,7 @@ exports.getfavoriteproducts=async(req,res)=>{
         select:`-productdeactivated  -productprice
          -productdescription -productspecification 
          -productquantity -viewcount -brand -totalsold -__v`
-         //,populate:{path:'store',select:'storename'}
+         ,populate:{path:'store',select:'storename'}
         }})
        //  .populate({path:'favoriteproducts',  populate:{path:'product',populate:{path:'store',select:'storename storeimage'}}})
   
